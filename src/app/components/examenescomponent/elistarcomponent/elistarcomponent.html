@@ -1,0 +1,38 @@
+<h2>Listado de exámenes</h2>
+@if (dataSource.length > 0) {
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="idExamen">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let item">{{ item.idExamen }}</td>
+    </ng-container>
+    <ng-container matColumnDef="tipoExamen">
+      <th mat-header-cell *matHeaderCellDef>Tipo de examen</th>
+      <td mat-cell *matCellDef="let item">{{ item.tipoExamen }}</td>
+    </ng-container>
+    <ng-container matColumnDef="resultado">
+      <th mat-header-cell *matHeaderCellDef>Resultado</th>
+      <td mat-cell *matCellDef="let item">{{ item.resultado }}</td>
+    </ng-container>
+    <ng-container matColumnDef="fechaSolicitud">
+      <th mat-header-cell *matHeaderCellDef>Fecha de solicitud</th>
+      <td mat-cell *matCellDef="let item">{{ item.fechaSolicitud | date:'shortDate' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="fechaResultado">
+      <th mat-header-cell *matHeaderCellDef>Fecha de resultado</th>
+      <td mat-cell *matCellDef="let item">{{ item.fechaResultado | date:'shortDate' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let item">
+        <button matIconButton class="btn-eliminar" aria-label="Eliminar examen"
+          (click)="eliminarExamen(item.idExamen)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+} @else {
+  <p>No hay exámenes disponibles</p>
+}

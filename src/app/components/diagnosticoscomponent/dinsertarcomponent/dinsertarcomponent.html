@@ -1,0 +1,19 @@
+<h2>Registrar diagnóstico</h2>
+<form [formGroup]="formDiagnosticos" (ngSubmit)="insertarDiagnostico()">
+  <mat-form-field>
+    <mat-label>Código CIE-10</mat-label>
+    <input matInput formControlName="codigoCie10">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <input matInput formControlName="descripcion">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Fecha de registro</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fechaRegistro">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button matButton type="submit">Guardar</button>
+</form>
+<p>{{ mensaje }}</p>

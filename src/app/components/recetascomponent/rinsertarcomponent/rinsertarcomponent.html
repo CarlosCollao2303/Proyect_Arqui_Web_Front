@@ -1,0 +1,31 @@
+<h2>Registrar receta</h2>
+<form [formGroup]="formRecetas" (ngSubmit)="insertarReceta()">
+  <mat-form-field>
+    <mat-label>Medicamento</mat-label>
+    <input matInput formControlName="medicamento">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dosis</mat-label>
+    <input matInput formControlName="dosis">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Frecuencia</mat-label>
+    <input matInput formControlName="frecuencia">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Duración (días)</mat-label>
+    <input matInput type="number" min="1" formControlName="duracionDias">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Indicaciones</mat-label>
+    <textarea matInput formControlName="indicaciones"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Fecha de emisión</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fechaEmision">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <button matButton type="submit">Guardar</button>
+</form>
+<p>{{ mensaje }}</p>
