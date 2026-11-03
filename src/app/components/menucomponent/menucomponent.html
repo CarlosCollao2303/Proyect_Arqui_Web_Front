@@ -1,0 +1,13 @@
+<div class="container">
+  <mat-toolbar>
+    <button matButton>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+    </button>
+
+    <button matButton [matMenuTriggerFor]="menuTratamientos" style="color: antiquewhite;">Tratamientos</button>
+    <mat-menu #menuTratamientos="matMenu">
+      <button mat-menu-item routerLink="/tratamientos/listar">Listar</button>
+      <button mat-menu-item routerLink="/tratamientos/insertar">Insertar</button>
+    </mat-menu>
+  </mat-toolbar>
+</div>
