@@ -1,0 +1,46 @@
+<h2>Listado de recetas</h2>
+@if (dataSource.length > 0) {
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="idReceta">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let item">{{ item.idReceta }}</td>
+    </ng-container>
+    <ng-container matColumnDef="medicamento">
+      <th mat-header-cell *matHeaderCellDef>Medicamento</th>
+      <td mat-cell *matCellDef="let item">{{ item.medicamento }}</td>
+    </ng-container>
+    <ng-container matColumnDef="dosis">
+      <th mat-header-cell *matHeaderCellDef>Dosis</th>
+      <td mat-cell *matCellDef="let item">{{ item.dosis }}</td>
+    </ng-container>
+    <ng-container matColumnDef="frecuencia">
+      <th mat-header-cell *matHeaderCellDef>Frecuencia</th>
+      <td mat-cell *matCellDef="let item">{{ item.frecuencia }}</td>
+    </ng-container>
+    <ng-container matColumnDef="duracionDias">
+      <th mat-header-cell *matHeaderCellDef>Duración (días)</th>
+      <td mat-cell *matCellDef="let item">{{ item.duracionDias }}</td>
+    </ng-container>
+    <ng-container matColumnDef="indicaciones">
+      <th mat-header-cell *matHeaderCellDef>Indicaciones</th>
+      <td mat-cell *matCellDef="let item">{{ item.indicaciones }}</td>
+    </ng-container>
+    <ng-container matColumnDef="fechaEmision">
+      <th mat-header-cell *matHeaderCellDef>Fecha de emisión</th>
+      <td mat-cell *matCellDef="let item">{{ item.fechaEmision | date:'shortDate' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let item">
+        <button matIconButton class="btn-eliminar" aria-label="Eliminar receta"
+          (click)="eliminarReceta(item.idReceta)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+} @else {
+  <p>No hay recetas disponibles</p>
+}

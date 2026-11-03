@@ -9,5 +9,23 @@
       <button mat-menu-item routerLink="/tratamientos/listar">Listar</button>
       <button mat-menu-item routerLink="/tratamientos/insertar">Insertar</button>
     </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuDiagnosticos" style="color: antiquewhite;">Diagnósticos</button>
+    <mat-menu #menuDiagnosticos="matMenu">
+      <button mat-menu-item routerLink="/diagnosticos/listar">Listar</button>
+      <button mat-menu-item routerLink="/diagnosticos/insertar">Insertar</button>
+    </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuExamenes" style="color: antiquewhite;">Exámenes</button>
+    <mat-menu #menuExamenes="matMenu">
+      <button mat-menu-item routerLink="/examenes/listar">Listar</button>
+      <button mat-menu-item routerLink="/examenes/insertar">Insertar</button>
+    </mat-menu>
+
+    <button matButton [matMenuTriggerFor]="menuRecetas" style="color: antiquewhite;">Recetas</button>
+    <mat-menu #menuRecetas="matMenu">
+      <button mat-menu-item routerLink="/recetas/listar">Listar</button>
+      <button mat-menu-item routerLink="/recetas/insertar">Insertar</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
