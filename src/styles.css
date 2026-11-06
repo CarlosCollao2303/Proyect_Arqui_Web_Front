@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  --color-primary: #176B87;
+  --color-secondary: #2A9D8F;
+  --color-accent: #75B79E;
+  --color-primary-light: #EAF7F5;
+  --color-background: #F7FAFC;
+  --color-surface: #FFFFFF;
+  --color-text: #243746;
+  --color-text-secondary: #526575;
+  --color-success: #237A48;
+  --color-warning: #9A6200;
+  --color-error: #C53939;
+  --color-border: #DCE5E9;
+
+  --mat-sys-background: var(--color-background);
+  --mat-sys-on-background: var(--color-text);
+  --mat-sys-primary: var(--color-primary);
+  --mat-sys-on-primary: var(--color-surface);
+  --mat-sys-primary-container: var(--color-primary-light);
+  --mat-sys-on-primary-container: var(--color-text);
+  --mat-sys-secondary: var(--color-secondary);
+  --mat-sys-on-secondary: var(--color-surface);
+  --mat-sys-secondary-container: var(--color-primary-light);
+  --mat-sys-on-secondary-container: var(--color-text);
+  --mat-sys-tertiary: var(--color-accent);
+  --mat-sys-on-tertiary: var(--color-text);
+  --mat-sys-error: var(--color-error);
+  --mat-sys-on-error: var(--color-surface);
+  --mat-sys-error-container: #FCE8E8;
+  --mat-sys-on-error-container: var(--color-error);
+  --mat-sys-outline: var(--color-text-secondary);
+  --mat-sys-outline-variant: var(--color-border);
+  --mat-sys-surface: var(--color-background);
+  --mat-sys-on-surface: var(--color-text);
+  --mat-sys-on-surface-variant: var(--color-text-secondary);
+  --mat-sys-surface-bright: var(--color-surface);
+  --mat-sys-surface-container: var(--color-surface);
+  --mat-sys-surface-container-high: var(--color-surface);
+  --mat-sys-surface-container-highest: var(--color-surface);
+  --mat-sys-surface-container-low: var(--color-background);
+  --mat-sys-surface-container-lowest: var(--color-surface);
+  --mat-sys-surface-dim: var(--color-background);
+  --mat-sys-surface-tint: var(--color-primary);
+}
+
+.mat-mdc-menu-panel {
+  --mat-menu-container-color: var(--color-surface);
+  --mat-menu-item-label-text-color: var(--color-text);
+  --mat-menu-item-icon-color: var(--color-primary);
+  --mat-menu-item-hover-state-layer-color: rgba(42, 157, 143, 0.12);
+}
+
+.mat-mdc-menu-panel .mat-mdc-menu-item {
+  color: var(--color-text);
+}

@@ -1,28 +1,28 @@
 <div class="container">
   <mat-toolbar>
-    <button matButton>
+    <button matButton class="nav-button">
       <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
     </button>
 
-    <button matButton [matMenuTriggerFor]="menuTratamientos" style="color: antiquewhite;">Tratamientos</button>
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuTratamientos">Tratamientos</button>
     <mat-menu #menuTratamientos="matMenu">
       <button mat-menu-item routerLink="/tratamientos/listar">Listar</button>
       <button mat-menu-item routerLink="/tratamientos/insertar">Insertar</button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuDiagnosticos" style="color: antiquewhite;">Diagnósticos</button>
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuDiagnosticos">Diagnósticos</button>
     <mat-menu #menuDiagnosticos="matMenu">
       <button mat-menu-item routerLink="/diagnosticos/listar">Listar</button>
       <button mat-menu-item routerLink="/diagnosticos/insertar">Insertar</button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuExamenes" style="color: antiquewhite;">Exámenes</button>
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuExamenes">Exámenes</button>
     <mat-menu #menuExamenes="matMenu">
       <button mat-menu-item routerLink="/examenes/listar">Listar</button>
       <button mat-menu-item routerLink="/examenes/insertar">Insertar</button>
     </mat-menu>
 
-    <button matButton [matMenuTriggerFor]="menuRecetas" style="color: antiquewhite;">Recetas</button>
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuRecetas">Recetas</button>
     <mat-menu #menuRecetas="matMenu">
       <button mat-menu-item routerLink="/recetas/listar">Listar</button>
       <button mat-menu-item routerLink="/recetas/insertar">Insertar</button>
