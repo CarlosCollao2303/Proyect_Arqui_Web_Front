@@ -1,4 +1,4 @@
-<h2>Registrar examen</h2>
+<h2>{{ isEditing ? 'Actualizar examen' : 'Registrar examen' }}</h2>
 <form [formGroup]="formExamenes" (ngSubmit)="insertarExamen()">
   <mat-form-field>
     <mat-label>Tipo de examen</mat-label>
@@ -20,6 +20,6 @@
     <mat-datepicker-toggle matIconSuffix [for]="pickerResultado"></mat-datepicker-toggle>
     <mat-datepicker #pickerResultado></mat-datepicker>
   </mat-form-field>
-  <button matButton type="submit">Guardar</button>
+  <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
 </form>
 <p>{{ mensaje }}</p>

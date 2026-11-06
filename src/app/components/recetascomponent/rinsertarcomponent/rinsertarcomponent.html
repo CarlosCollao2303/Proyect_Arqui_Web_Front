@@ -1,4 +1,4 @@
-<h2>Registrar receta</h2>
+<h2>{{ isEditing ? 'Actualizar receta' : 'Registrar receta' }}</h2>
 <form [formGroup]="formRecetas" (ngSubmit)="insertarReceta()">
   <mat-form-field>
     <mat-label>Medicamento</mat-label>
@@ -26,6 +26,6 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button matButton type="submit">Guardar</button>
+  <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
 </form>
 <p>{{ mensaje }}</p>

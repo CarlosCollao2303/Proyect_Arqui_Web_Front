@@ -1,4 +1,4 @@
-<h2>Registrar diagnóstico</h2>
+<h2>{{ isEditing ? 'Actualizar diagnóstico' : 'Registrar diagnóstico' }}</h2>
 <form [formGroup]="formDiagnosticos" (ngSubmit)="insertarDiagnostico()">
   <mat-form-field>
     <mat-label>Código CIE-10</mat-label>
@@ -14,6 +14,6 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button matButton type="submit">Guardar</button>
+  <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
 </form>
 <p>{{ mensaje }}</p>

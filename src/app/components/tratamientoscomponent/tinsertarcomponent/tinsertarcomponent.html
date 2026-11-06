@@ -1,6 +1,6 @@
 <div class="container">
     <div>
-        <h2>Insertar tratamiento</h2>
+        <h2>{{ isEditing ? 'Actualizar tratamiento' : 'Insertar tratamiento' }}</h2>
     </div>
     <div>
         <form [formGroup]="formTratamientos" (ngSubmit)="insertarTratamiento()">
@@ -11,23 +11,30 @@
             <br>
             <mat-form-field>
                 <mat-label>Fecha de Inicio</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="fechaInicio">
+                <input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker #pickerInicio></mat-datepicker>
             </mat-form-field>
             <br>
             <mat-form-field>
                 <mat-label>Fecha de Fin</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="fechaFin">
+                <input matInput [matDatepicker]="pickerFin" formControlName="fechaFin">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFin></mat-datepicker>
             </mat-form-field>
             <br>
-            <mat-checkbox class="example-margin" formControlName="estado">Activo</mat-checkbox>
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado">
+                    <mat-option value="Activo">Activo</mat-option>
+                    <mat-option value="Pendiente">Pendiente</mat-option>
+                    <mat-option value="Finalizado">Finalizado</mat-option>
+                </mat-select>
+            </mat-form-field>
             <br>
-            <button matButton type="submit">Guardar</button>
+            <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
         </form>
         <p>{{ mensaje }}</p>
     </div>

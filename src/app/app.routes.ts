@@ -34,6 +34,10 @@ export const routes: Routes = [
             {
                 path: 'insertar',
                 component: Tinsertarcomponent,
+            },
+            {
+                path: 'actualizar/:id',
+                component: Tinsertarcomponent,
             }
         ],
     },
@@ -44,6 +48,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', component: Dlistarcomponent },
             { path: 'insertar', component: Dinsertarcomponent },
+            { path: 'actualizar/:id', component: Dinsertarcomponent },
         ],
     },
     {
@@ -53,6 +58,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', component: Elistarcomponent },
             { path: 'insertar', component: Einsertarcomponent },
+            { path: 'actualizar/:id', component: Einsertarcomponent },
         ],
     },
     {
@@ -62,6 +68,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', component: Rlistarcomponent },
             { path: 'insertar', component: Rinsertarcomponent },
+            { path: 'actualizar/:id', component: Rinsertarcomponent },
         ],
     },
 ];
