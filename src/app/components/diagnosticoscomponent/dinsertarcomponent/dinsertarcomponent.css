@@ -3,16 +3,16 @@
   max-width: 650px;
   margin: 35px auto;
   padding: 25px 30px;
-  background-color: #fff;
+  background-color: var(--color-surface);
   border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 18px rgba(36, 55, 70, 0.1);
   font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
 
 h2 {
   text-align: center;
-  color: #2e2e7d;
+  color: var(--color-primary);
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 15px;
@@ -32,15 +32,15 @@ button[type="submit"] {
   width: 100%;
   min-height: 42px;
   margin-top: 5px;
-  background-color: #2e367d;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
 }
 
 button[type="submit"]:hover {
-  background-color: #1b2a5e;
+  background-color: #12566D;
 }
 
 p {
@@ -48,7 +48,7 @@ p {
   text-align: center;
   font-size: 15px;
   font-weight: 600;
-  color: #2d24a9;
+  color: var(--color-secondary);
 }
 
 @media (max-width: 600px) {

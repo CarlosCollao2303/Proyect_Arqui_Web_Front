@@ -10,11 +10,11 @@
 
  padding: 25px 30px;
 
- background-color: #ffffff;
+ background-color: var(--color-surface);
 
  border-radius: 14px;
 
- box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
+ box-shadow: 0 4px 18px rgba(36, 55, 70, 0.1);
 
  font-family: Arial, sans-serif;
 
@@ -30,7 +30,7 @@ h2 {
 
  text-align: center;
 
- color: #2e2e7d;
+ color: var(--color-primary);
 
  font-size: 28px;
 
@@ -86,7 +86,7 @@ mat-checkbox {
 
  padding: 0;
 
- color: #333333;
+ color: var(--color-text);
 
 }
 
@@ -102,9 +102,8 @@ button[type="submit"] {
 
  margin: 5px 0 0 0;
 
- background-color: #2e367d;
-
- color: white;
+ background-color: var(--color-primary);
+ color: var(--color-surface);
 
  font-size: 16px;
 
@@ -124,9 +123,8 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
 
- background-color: #1b2a5e;
-
- box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+ background-color: #12566D;
+ box-shadow: 0 4px 10px rgba(23, 107, 135, 0.3);
 
 }
 
@@ -144,7 +142,7 @@ p {
 
  font-weight: 600;
 
- color: #2d24a9;
+ color: var(--color-secondary);
 
 }
 
@@ -171,4 +169,3 @@ p {
  }
 
 }
-

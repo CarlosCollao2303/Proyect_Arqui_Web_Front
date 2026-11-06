@@ -2,14 +2,14 @@
   display: block;
   padding: 25px;
   font-family: Arial, sans-serif;
-  background-color: #f5f7f5;
+  background-color: var(--color-background);
   min-height: 80vh;
   box-sizing: border-box;
 }
 
 h2 {
   text-align: center;
-  color: #1b3a9d;
+  color: var(--color-primary);
   font-size: 28px;
   font-weight: bold;
   margin: 10px 0 25px;
@@ -27,7 +27,7 @@ h2 {
 .busqueda-id input {
   min-height: 38px;
   padding: 0 10px;
-  border: 1px solid #9da6c8;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
 }
 
@@ -37,36 +37,36 @@ table {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(36, 55, 70, 0.1);
 }
 
 th[mat-header-cell] {
-  background-color: #d6dbf8;
-  color: #212320;
+  background-color: var(--color-primary-light);
+  color: var(--color-text);
   font-size: 14px;
   font-weight: 700;
   padding: 14px 16px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 3px solid #3e4586;
+  border-bottom: 3px solid var(--color-primary);
   white-space: nowrap;
 }
 
 td[mat-cell] {
-  color: #333;
+  color: var(--color-text);
   font-size: 14px;
   padding: 14px 16px;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 tr[mat-row]:nth-child(even) {
-  background-color: #f1f2f8;
+  background-color: var(--color-background);
 }
 
 tr[mat-row]:hover {
-  background-color: #c9d6f3;
+  background-color: rgba(42, 157, 143, 0.12);
   transition: background-color 0.2s ease;
 }
 
@@ -75,23 +75,23 @@ p {
   margin: 30px auto;
   padding: 18px;
   max-width: 500px;
-  background-color: white;
-  color: #3044c8;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
   font-size: 16px;
   font-weight: 600;
   border-radius: 8px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(36, 55, 70, 0.08);
 }
 
 .btn-eliminar {
-  color: rgb(21, 29, 190);
+  color: var(--color-secondary);
   border: none;
   box-shadow: none;
   background: transparent;
 }
 
 .btn-eliminar:hover {
-  background-color: #b8b9f3;
+  background-color: var(--color-primary-light);
 }
 
 @media (max-width: 600px) {
