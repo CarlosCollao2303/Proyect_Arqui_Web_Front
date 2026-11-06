@@ -38,6 +38,22 @@ h2 {
 
 /* Contenedor de la tabla */
 
+.busqueda-id {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ flex-wrap: wrap;
+ margin-bottom: 20px;
+}
+
+.busqueda-id input {
+ min-height: 38px;
+ padding: 0 10px;
+ border: 1px solid #9da6c8;
+ border-radius: 6px;
+}
+
 table {
 
  width: 100%;

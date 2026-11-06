@@ -1,4 +1,12 @@
 <h2>Listado de recetas</h2>
+<div class="busqueda-id">
+  <input #idReceta type="number" min="1" placeholder="ID de la receta">
+  <button matButton type="button" (click)="buscarReceta(idReceta.value)">Buscar por ID</button>
+  <button matButton type="button" (click)="obtenerRecetas()">Mostrar todos</button>
+</div>
+@if (mensajeBusqueda) {
+  <p>{{ mensajeBusqueda }}</p>
+}
 @if (dataSource.length > 0) {
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="idReceta">
@@ -29,8 +37,17 @@
       <th mat-header-cell *matHeaderCellDef>Fecha de emisión</th>
       <td mat-cell *matCellDef="let item">{{ item.fechaEmision | date:'shortDate' }}</td>
     </ng-container>
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <ng-container matColumnDef="actualizar">
+      <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+      <td mat-cell *matCellDef="let item">
+        <button matIconButton class="btn-eliminar" aria-label="Actualizar receta"
+          [routerLink]="['/recetas/actualizar', item.idReceta]">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="eliminar">
+      <th mat-header-cell *matHeaderCellDef>Eliminar</th>
       <td mat-cell *matCellDef="let item">
         <button matIconButton class="btn-eliminar" aria-label="Eliminar receta"
           (click)="eliminarReceta(item.idReceta)">

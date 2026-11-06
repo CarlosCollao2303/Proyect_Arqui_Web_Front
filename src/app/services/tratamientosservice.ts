@@ -16,6 +16,14 @@ export class Tratamientosservice {
     return this.http.get<Tratamientos[]>(`${this.apiURL}/Listar`);
   }
 
+  getTratamientoById(id: number): Observable<Tratamientos> {
+    return this.http.get<Tratamientos>(`${this.apiURL}/${id}`);
+  }
+
+  updateTratamiento(tratamiento: Tratamientos): Observable<Tratamientos> {
+    return this.http.put<Tratamientos>(`${this.apiURL}/Actualizar`, tratamiento);
+  }
+
   deleteTratamiento(id:number):Observable<void>{
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }

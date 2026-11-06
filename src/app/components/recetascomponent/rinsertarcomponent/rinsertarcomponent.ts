@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -14,13 +15,16 @@ import { Recetasservice } from '../../../services/recetasservice';
   templateUrl: './rinsertarcomponent.html',
   styleUrl: './rinsertarcomponent.css',
 })
-export class Rinsertarcomponent {
+export class Rinsertarcomponent implements OnInit {
   formRecetas: FormGroup;
   mensaje = '';
+  isEditing = false;
+  private recetaId = 0;
 
   constructor(
     private service: Recetasservice,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {
     this.formRecetas = this.fb.nonNullable.group({
       medicamento: ['', Validators.required],
@@ -32,6 +36,25 @@ export class Rinsertarcomponent {
     });
   }
 
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (Number.isInteger(id) && id > 0) {
+      this.isEditing = true;
+      this.recetaId = id;
+      this.service.getRecetaById(id).subscribe({
+        next: (receta) => {
+          this.formRecetas.patchValue({
+            ...receta,
+            fechaEmision: new Date(receta.fechaEmision),
+          });
+        },
+        error: (error) => {
+          this.mensaje = `Error al cargar la receta: ${error.message}`;
+        },
+      });
+    }
+  }
+
   insertarReceta(): void {
     if (this.formRecetas.invalid) {
       this.mensaje = 'Por favor, complete todos los campos requeridos.';
@@ -39,14 +62,21 @@ export class Rinsertarcomponent {
     }
 
     const receta: Recetas = {
-      idReceta: 0,
+      idReceta: this.isEditing ? this.recetaId : 0,
       ...this.formRecetas.getRawValue(),
     };
 
-    this.service.insertReceta(receta).subscribe({
+    const request = this.isEditing
+      ? this.service.updateReceta(receta)
+      : this.service.insertReceta(receta);
+    request.subscribe({
       next: () => {
-        this.mensaje = 'Receta registrada correctamente.';
-        this.formRecetas.reset({ duracionDias: 1, fechaEmision: new Date() });
+        this.mensaje = this.isEditing
+          ? 'Receta actualizada correctamente.'
+          : 'Receta registrada correctamente.';
+        if (!this.isEditing) {
+          this.formRecetas.reset({ duracionDias: 1, fechaEmision: new Date() });
+        }
       },
       error: (error) => {
         this.mensaje = `Error al registrar la receta: ${error.message}`;

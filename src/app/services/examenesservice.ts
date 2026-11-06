@@ -16,6 +16,14 @@ export class Examenesservice {
     return this.http.get<Examenes[]>(`${this.apiURL}/Listar`);
   }
 
+  getExamenById(id: number): Observable<Examenes> {
+    return this.http.get<Examenes>(`${this.apiURL}/${id}`);
+  }
+
+  updateExamen(examen: Examenes): Observable<Examenes> {
+    return this.http.put<Examenes>(`${this.apiURL}/Actualizar`, examen);
+  }
+
   deleteExamen(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }

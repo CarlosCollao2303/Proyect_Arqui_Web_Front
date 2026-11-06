@@ -1,5 +1,13 @@
 <div class="container">
     <h2>Listado de tratamientos</h2>
+    <div class="busqueda-id">
+        <input #idTratamiento type="number" min="1" placeholder="ID del tratamiento">
+        <button matButton type="button" (click)="buscarTratamiento(idTratamiento.value)">Buscar por ID</button>
+        <button matButton type="button" (click)="obtenerTratamientos()">Mostrar todos</button>
+    </div>
+    @if (mensajeBusqueda) {
+        <p>{{ mensajeBusqueda }}</p>
+    }
     <div>
         @if(dataSource.length > 0){
         <!--Tabla-->
@@ -35,12 +43,25 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="c5">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{element.estado}}
+                <td mat-cell *matCellDef="let element"> {{mostrarEstado(element.estado)}} </td>
+            </ng-container>
 
+            <ng-container matColumnDef="actualizar">
+                <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button matIconButton class="btn-eliminar" aria-label="Actualizar tratamiento"
+                        [routerLink]="['/tratamientos/actualizar', element.idTratamiento]">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="eliminar">
+                <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                <td mat-cell *matCellDef="let element">
                     <button matIconButton class="btn-eliminar" (click)="eliminarTratamiento(element.idTratamiento)">
                         <mat-icon>delete</mat-icon>
                     </button>
-
                 </td>
             </ng-container>
 

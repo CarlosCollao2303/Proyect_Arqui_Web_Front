@@ -16,6 +16,14 @@ export class Diagnosticosservice {
     return this.http.get<Diagnosticos[]>(`${this.apiURL}/Listar`);
   }
 
+  getDiagnosticoById(id: number): Observable<Diagnosticos> {
+    return this.http.get<Diagnosticos>(`${this.apiURL}/${id}`);
+  }
+
+  updateDiagnostico(diagnostico: Diagnosticos): Observable<Diagnosticos> {
+    return this.http.put<Diagnosticos>(`${this.apiURL}/Actualizar`, diagnostico);
+  }
+
   deleteDiagnostico(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }

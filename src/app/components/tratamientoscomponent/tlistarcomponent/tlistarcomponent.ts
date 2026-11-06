@@ -2,19 +2,21 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button'
 import { MatTableModule } from '@angular/material/table';
+import { RouterLink } from '@angular/router';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 
 
 @Component({
   selector: 'app-tlistarcomponent',
-  imports: [MatIconModule, MatButtonModule, MatTableModule],
+  imports: [MatIconModule, MatButtonModule, MatTableModule, RouterLink],
   templateUrl: './tlistarcomponent.html',
   styleUrl: './tlistarcomponent.css',
 })
 export class Tlistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'actualizar', 'eliminar'];
   dataSource: Tratamientos[] = [];
+  mensajeBusqueda = '';
   constructor(private sService: Tratamientosservice,
     private cdr: ChangeDetectorRef
   ) {}
@@ -24,16 +26,46 @@ export class Tlistarcomponent implements OnInit {
   }
 
   obtenerTratamientos() {
+    this.mensajeBusqueda = '';
     this.sService.getListTratamientos().subscribe({
       next: (data) => {
         this.dataSource = data;
         this.cdr.detectChanges();
-      },error: err =>{
+      },
+      error: (err) => {
         console.log('Error al obtener los tratamientos:', err);
         this.cdr.detectChanges();
-      }
-    })
+      },
+    });
   }
+
+  buscarTratamiento(idValue: string): void {
+    const id = Number(idValue);
+    if (!Number.isInteger(id) || id < 1) {
+      this.mensajeBusqueda = 'Ingrese un ID válido.';
+      return;
+    }
+
+    this.sService.getTratamientoById(id).subscribe({
+      next: (tratamiento) => {
+        this.dataSource = [tratamiento];
+        this.mensajeBusqueda = '';
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.dataSource = [];
+        this.mensajeBusqueda = `No se encontró el tratamiento: ${error.message}`;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  mostrarEstado(estado: string | boolean): string {
+    if (estado === true) return 'Activo';
+    if (estado === false) return 'Pendiente';
+    return estado;
+  }
+
   eliminarTratamiento(id: number) {
     this.sService.deleteTratamiento(id).subscribe({
       next: () => {

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Tratamientos } from '../../../models/Tratamientos';
@@ -12,23 +13,47 @@ import { Tratamientos } from '../../../models/Tratamientos';
 @Component({
   selector: 'app-tinsertarcomponent',
     providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatCheckboxModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatSelectModule, ReactiveFormsModule],
   templateUrl: './tinsertarcomponent.html',
   styleUrl: './tinsertarcomponent.css',
 })
-export class Tinsertarcomponent {
+export class Tinsertarcomponent implements OnInit {
   formTratamientos: any;
   mensaje: string = '';
+  isEditing = false;
+  private tratamientoId = 0;
 
   constructor(private sT: Tratamientosservice,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {
     this.formTratamientos = this.fb.group({
       descripcion: ['',Validators.required],
       fechaInicio: [new Date(),Validators.required],
       fechaFin: [new Date(),Validators.required],
-      estado: [true, Validators.required]
+      estado: ['Activo', Validators.required]
     })
+  }
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (Number.isInteger(id) && id > 0) {
+      this.isEditing = true;
+      this.tratamientoId = id;
+      this.sT.getTratamientoById(id).subscribe({
+        next: (tratamiento) => {
+          this.formTratamientos.patchValue({
+            ...tratamiento,
+            fechaInicio: new Date(tratamiento.fechaInicio),
+            fechaFin: new Date(tratamiento.fechaFin),
+            estado: this.normalizarEstado(tratamiento.estado),
+          });
+        },
+        error: (error) => {
+          this.mensaje = `Error al cargar el tratamiento: ${error.message}`;
+        },
+      });
+    }
   }
 
   insertarTratamiento() {
@@ -37,21 +62,33 @@ export class Tinsertarcomponent {
       return;
     }
     const tra: Tratamientos = {
-      idTratamiento: 0,
+      idTratamiento: this.isEditing ? this.tratamientoId : 0,
       descripcion: this.formTratamientos.value.descripcion,
       fechaInicio: this.formTratamientos.value.fechaInicio,
       fechaFin: this.formTratamientos.value.fechaFin,
       estado: this.formTratamientos.value.estado
     }
-    this.sT.insertTratamiento(tra).subscribe({
+    const request = this.isEditing
+      ? this.sT.updateTratamiento(tra)
+      : this.sT.insertTratamiento(tra);
+    request.subscribe({
       next:(respuesta)=>{
-        this.mensaje = 'Tratamiento insertado correctamente.';
+        this.mensaje = this.isEditing
+          ? 'Tratamiento actualizado correctamente.'
+          : 'Tratamiento insertado correctamente.';
+        if (this.isEditing) return;
         this.formTratamientos.reset({
-          estado: true,
+          estado: 'Activo',
         })
       },error:(error)=>{
-        this.mensaje = 'Error al insertar el tratamiento: ' + error.message;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.message}`;
       }
     })
+  }
+
+  private normalizarEstado(estado: string | boolean): string {
+    if (estado === true) return 'Activo';
+    if (estado === false) return 'Pendiente';
+    return estado;
   }
 }
