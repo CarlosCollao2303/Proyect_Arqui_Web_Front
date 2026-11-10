@@ -15,4 +15,8 @@ export class Historiasclinicasservice {
   getListHistorias(): Observable<HistoriasClinicas[]> {
     return this.http.get<HistoriasClinicas[]>(`${this.apiURL}/Listar`);
   }
+
+  insertHistoria(historia: HistoriasClinicas): Observable<HistoriasClinicas> {
+    return this.http.post<HistoriasClinicas>(`${this.apiURL}/Registrar`, historia);
+  }
 }
