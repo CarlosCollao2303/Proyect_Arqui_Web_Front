@@ -27,5 +27,17 @@
       <button mat-menu-item routerLink="/recetas/listar">Listar</button>
       <button mat-menu-item routerLink="/recetas/insertar">Insertar</button>
     </mat-menu>
+
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuCitas">Citas</button>
+    <mat-menu #menuCitas="matMenu">
+      <button mat-menu-item routerLink="/citas/listar">Listar</button>
+      <button mat-menu-item routerLink="/citas/insertar">Insertar</button>
+    </mat-menu>
+
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuHistorias">Historias clínicas</button>
+    <mat-menu #menuHistorias="matMenu">
+      <button mat-menu-item routerLink="/historiasclinicas/listar">Listar</button>
+      <button mat-menu-item routerLink="/historiasclinicas/insertar">Insertar</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
