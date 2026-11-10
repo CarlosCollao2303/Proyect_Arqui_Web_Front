@@ -1,0 +1,28 @@
+<div class="container">
+    <div>
+        <h2>Registrar historia clínica</h2>
+    </div>
+    <div>
+        <form [formGroup]="formHistorias" (ngSubmit)="insertarHistoria()">
+            <mat-form-field>
+                <mat-label>Paciente</mat-label>
+                <mat-select formControlName="paciente">
+                    @for (p of listaPacientes(); track p.idUsuario) {
+                    <mat-option [value]="p.idUsuario">{{p.nombres}} {{p.apellidos}} - DNI {{p.dni}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Fecha de creación</mat-label>
+                <input matInput [matDatepicker]="pickerCreacion" formControlName="fechaCreacion">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerCreacion"></mat-datepicker-toggle>
+                <mat-datepicker #pickerCreacion></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <button matButton type="submit">Guardar</button>
+        </form>
+        <p>{{ mensaje }}</p>
+    </div>
+</div>
