@@ -2,23 +2,23 @@
 
 :host {
 
- display: block;
+      display: block;
 
- max-width: 650px;
+      max-width: 650px;
 
- margin: 35px auto;
+      margin: 35px auto;
 
- padding: 25px 30px;
+      padding: 25px 30px;
 
- background-color: var(--color-surface);
+      background-color: var(--color-surface);
 
- border-radius: 14px;
+      border-radius: 14px;
 
- box-shadow: 0 4px 18px rgba(36, 55, 70, 0.1);
+      box-shadow: 0 4px 18px rgba(36, 55, 70, 0.1);
 
- font-family: Arial, sans-serif;
+      font-family: Arial, sans-serif;
 
- box-sizing: border-box;
+      box-sizing: border-box;
 
 }
 
@@ -28,15 +28,15 @@
 
 h2 {
 
- text-align: center;
+      text-align: center;
 
- color: var(--color-primary);
+      color: var(--color-primary);
 
- font-size: 28px;
+      font-size: 28px;
 
- font-weight: 700;
+      font-weight: 700;
 
- margin: 0 0 15px 0;
+      margin: 0 0 15px 0;
 
 }
 
@@ -46,11 +46,11 @@ h2 {
 
 form {
 
- display: flex;
+      display: flex;
 
- flex-direction: column;
+      flex-direction: column;
 
- gap: 0;
+      gap: 0;
 
 }
 
@@ -60,9 +60,9 @@ form {
 
 mat-form-field {
 
- width: 100%;
+      width: 100%;
 
- margin: 0;
+      margin: 0;
 
 }
 
@@ -72,7 +72,7 @@ mat-form-field {
 
 mat-form-field br {
 
- display: none;
+      display: none;
 
 }
 
@@ -82,11 +82,11 @@ mat-form-field br {
 
 mat-checkbox {
 
- margin: 0;
+      margin: 0;
 
- padding: 0;
+      padding: 0;
 
- color: var(--color-text);
+      color: var(--color-text);
 
 }
 
@@ -96,24 +96,24 @@ mat-checkbox {
 
 button[type="submit"] {
 
- width: 100%;
+      width: 100%;
 
- min-height: 42px;
+      min-height: 42px;
 
- margin: 5px 0 0 0;
+      margin: 5px 0 0 0;
 
- background-color: var(--color-primary);
- color: var(--color-surface);
+      background-color: var(--color-primary);
+      color: var(--color-surface);
 
- font-size: 16px;
+      font-size: 16px;
 
- font-weight: bold;
+      font-weight: bold;
 
- border-radius: 8px;
+      border-radius: 8px;
 
- transition: background-color 0.3s ease,
+      transition: background-color 0.3s ease,
 
-       box-shadow 0.3s ease;
+            box-shadow 0.3s ease;
 
 }
 
@@ -122,40 +122,23 @@ button[type="submit"] {
 /* Efecto del botón */
 
 button[type="submit"]:hover {
- background-color: #12566D;
- box-shadow: 0 4px 10px rgba(23, 107, 135, 0.3);
+      background-color: #12566D;
+      box-shadow: 0 4px 10px rgba(23, 107, 135, 0.3);
 }
-
-.btn-cancelar {
- width: 100%;
- min-height: 42px;
- margin-top: 8px;
- background-color: var(--color-text-secondary);
- color: var(--color-surface);
- font-size: 16px;
- font-weight: bold;
- border-radius: 8px;
-}
-
-.btn-cancelar:hover {
- background-color: var(--color-text);
-}
-
-
 
 /* Mensaje */
 
 p {
 
- margin: 10px 0 0 0;
+      margin: 10px 0 0 0;
 
- text-align: center;
+      text-align: center;
 
- font-size: 15px;
+      font-size: 15px;
 
- font-weight: 600;
+      font-weight: 600;
 
- color: var(--color-secondary);
+      color: var(--color-secondary);
 
 }
 
@@ -165,20 +148,20 @@ p {
 
 @media (max-width: 600px) {
 
- :host {
+      :host {
 
-  margin: 15px;
+            margin: 15px;
 
-  padding: 20px;
+            padding: 20px;
 
- }
+      }
 
 
 
- h2 {
+      h2 {
 
-  font-size: 24px;
+            font-size: 24px;
 
- }
+      }
 
 }

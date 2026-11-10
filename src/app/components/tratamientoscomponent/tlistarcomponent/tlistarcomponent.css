@@ -2,17 +2,17 @@
 
 :host {
 
- display: block;
+    display: block;
 
- padding: 25px;
+    padding: 25px;
 
- font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
 
- background-color: var(--color-background);
+    background-color: var(--color-background);
 
- min-height: 80vh;
+    min-height: 80vh;
 
- box-sizing: border-box;
+    box-sizing: border-box;
 
 }
 
@@ -22,15 +22,15 @@
 
 h2 {
 
- text-align: center;
+    text-align: center;
 
- color: var(--color-primary);
+    color: var(--color-primary);
 
- font-size: 28px;
+    font-size: 28px;
 
- font-weight: bold;
+    font-weight: bold;
 
- margin: 10px 0 25px;
+    margin: 10px 0 25px;
 
 }
 
@@ -39,34 +39,34 @@ h2 {
 /* Contenedor de la tabla */
 
 .busqueda-id {
- display: flex;
- justify-content: center;
- align-items: center;
- gap: 10px;
- flex-wrap: wrap;
- margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 .busqueda-id input {
- min-height: 38px;
- padding: 0 10px;
- border: 1px solid var(--color-border);
- border-radius: 6px;
+    min-height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
 }
 
 table {
 
- width: 100%;
+    width: 100%;
 
- border-collapse: collapse;
+    border-collapse: collapse;
 
- background-color: white;
+    background-color: white;
 
- border-radius: 10px;
+    border-radius: 10px;
 
- overflow: hidden;
+    overflow: hidden;
 
- box-shadow: 0 4px 12px rgba(36, 55, 70, 0.1);
+    box-shadow: 0 4px 12px rgba(36, 55, 70, 0.1);
 
 }
 
@@ -84,24 +84,24 @@ table {
 
 th[mat-header-cell] {
 
- background-color: var(--color-primary-light);
- color: var(--color-text);
+    background-color: var(--color-primary-light);
+    color: var(--color-text);
 
- font-size: 14px;
+    font-size: 14px;
 
- font-weight: 700;
+    font-weight: 700;
 
- padding: 14px 16px;
+    padding: 14px 16px;
 
- text-align: center;
+    text-align: center;
 
- text-transform: uppercase;
+    text-transform: uppercase;
 
- letter-spacing: 0.5px;
+    letter-spacing: 0.5px;
 
- border-bottom: 3px solid var(--color-primary);
+    border-bottom: 3px solid var(--color-primary);
 
- white-space: nowrap;
+    white-space: nowrap;
 
 }
 
@@ -113,16 +113,35 @@ th[mat-header-cell] {
 
 td[mat-cell] {
 
- color: var(--color-text);
+    color: var(--color-text);
 
- font-size: 14px;
+    font-size: 14px;
 
- padding: 14px 16px;
+    padding: 14px 16px;
 
- text-align: center;
+    text-align: center;
 
- border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
 
+}
+
+.estado-tratamiento {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.estado-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.estado-pendiente {
+    color: var(--color-warning);
+}
+
+.estado-completado {
+    color: var(--color-success);
 }
 
 
@@ -131,7 +150,7 @@ td[mat-cell] {
 
 tr[mat-row]:nth-child(even) {
 
- background-color: var(--color-background);
+    background-color: var(--color-background);
 
 }
 
@@ -141,9 +160,9 @@ tr[mat-row]:nth-child(even) {
 
 tr[mat-row]:hover {
 
- background-color: rgba(42, 157, 143, 0.12);
+    background-color: rgba(42, 157, 143, 0.12);
 
- transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
 
 }
 
@@ -153,24 +172,24 @@ tr[mat-row]:hover {
 
 p {
 
- text-align: center;
+    text-align: center;
 
- margin: 30px auto;
+    margin: 30px auto;
 
- padding: 18px;
+    padding: 18px;
 
- max-width: 500px;
+    max-width: 500px;
 
- background-color: var(--color-surface);
- color: var(--color-primary);
+    background-color: var(--color-surface);
+    color: var(--color-primary);
 
- font-size: 16px;
+    font-size: 16px;
 
- font-weight: 600;
+    font-weight: 600;
 
- border-radius: 8px;
+    border-radius: 8px;
 
- box-shadow: 0 3px 10px rgba(36, 55, 70, 0.08);
+    box-shadow: 0 3px 10px rgba(36, 55, 70, 0.08);
 
 }
 
@@ -180,50 +199,30 @@ p {
 
 @media (max-width: 600px) {
 
- :host {
+    :host {
 
-  padding: 12px;
+        padding: 12px;
 
- }
-
-
-
- h2 {
-
-  font-size: 23px;
-
- }
+    }
 
 
 
- th[mat-header-cell],
+    h2 {
 
- td[mat-cell] {
+        font-size: 23px;
 
-  padding: 10px 6px;
-
-  font-size: 12px;
-
- }
-
-}
-
-.btn-eliminar {
-
-  color: var(--color-secondary);
-
-  border: none;
-
-  box-shadow: none;
-
-  background: transparent;
-
-}
+    }
 
 
 
-.btn-eliminar:hover {
+    th[mat-header-cell],
 
-  background-color: var(--color-primary-light);
+    td[mat-cell] {
+
+        padding: 10px 6px;
+
+        font-size: 12px;
+
+    }
 
 }

@@ -2,13 +2,14 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { LucideArrowLeft } from '@lucide/angular';
 import { finalize, timeout } from 'rxjs';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 
 @Component({
   selector: 'app-ddetallecomponent',
-  imports: [DatePipe, MatButtonModule, RouterLink],
+  imports: [DatePipe, MatButtonModule, RouterLink, LucideArrowLeft],
   templateUrl: './ddetallecomponent.html',
   styleUrl: './ddetallecomponent.css',
 })
@@ -22,7 +23,7 @@ export class Ddetallecomponent implements OnInit {
     private router: Router,
     private service: Diagnosticosservice,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const navigationState = this.router.getCurrentNavigation()?.extras.state;

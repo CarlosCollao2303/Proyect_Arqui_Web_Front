@@ -6,14 +6,15 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Tratamientos } from '../../../models/Tratamientos';
 
 
 @Component({
   selector: 'app-tinsertarcomponent',
-    providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, RouterLink],
+  providers: [provideNativeDateAdapter()],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, RouterLink, LucideCalendarDays, LucideCircleX, LucideSave],
   templateUrl: './tinsertarcomponent.html',
   styleUrl: './tinsertarcomponent.css',
 })
@@ -28,9 +29,9 @@ export class Tinsertarcomponent implements OnInit {
   ) {
     this.formTratamientos = this.fb.group({
       idTratamiento: [0],
-      descripcion: ['',Validators.required],
-      fechaInicio: [new Date(),Validators.required],
-      fechaFin: [new Date(),Validators.required],
+      descripcion: ['', Validators.required],
+      fechaInicio: [new Date(), Validators.required],
+      fechaFin: [new Date(), Validators.required],
       estado: ['Activo', Validators.required]
     })
   }
@@ -56,7 +57,7 @@ export class Tinsertarcomponent implements OnInit {
   }
 
   insertarTratamiento() {
-    if(this.formTratamientos.invalid){
+    if (this.formTratamientos.invalid) {
       this.mensaje = 'Por favor, complete todos los campos requeridos.';
       return;
     }
@@ -71,7 +72,7 @@ export class Tinsertarcomponent implements OnInit {
       ? this.sT.updateTratamiento(tra)
       : this.sT.insertTratamiento(tra);
     request.subscribe({
-      next:(respuesta)=>{
+      next: (respuesta) => {
         this.mensaje = this.isEditing
           ? 'Tratamiento actualizado correctamente.'
           : 'Tratamiento insertado correctamente.';
@@ -79,7 +80,7 @@ export class Tinsertarcomponent implements OnInit {
         this.formTratamientos.reset({
           estado: 'Activo',
         })
-      },error:(error)=>{
+      }, error: (error) => {
         this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.message}`;
       }
     })

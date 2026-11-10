@@ -8,4 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './citascomponent.html',
   styleUrl: './citascomponent.css',
 })
-export class Citascomponent {}
+export class Citascomponent { }

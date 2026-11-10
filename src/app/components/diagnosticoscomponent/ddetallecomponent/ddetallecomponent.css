@@ -52,14 +52,9 @@ button {
   color: var(--color-surface);
 }
 
-.volver-button {
-  --mat-text-button-label-text-color: var(--color-surface);
-  --mdc-text-button-label-text-color: var(--color-surface);
-}
-
 .volver-button-label {
   display: inline-block;
-  color: var(--color-surface);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 

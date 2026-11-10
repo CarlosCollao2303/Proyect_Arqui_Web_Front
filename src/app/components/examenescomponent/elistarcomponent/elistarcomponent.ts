@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
+import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
 
 @Component({
   selector: 'app-elistarcomponent',
-  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
+  imports: [DatePipe, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
   templateUrl: './elistarcomponent.html',
   styleUrl: './elistarcomponent.css',
 })
@@ -25,7 +25,7 @@ export class Elistarcomponent implements OnInit {
   constructor(
     private service: Examenesservice,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerExamenes();

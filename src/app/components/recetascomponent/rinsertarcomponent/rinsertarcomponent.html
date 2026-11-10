@@ -1,10 +1,10 @@
 <h2>{{ isEditing ? 'Actualizar receta' : 'Registrar receta' }}</h2>
 <form [formGroup]="formRecetas" (ngSubmit)="insertarReceta()">
   @if (isEditing) {
-    <mat-form-field>
-      <mat-label>ID de la receta</mat-label>
-      <input matInput type="number" formControlName="idReceta" readonly>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>ID de la receta</mat-label>
+    <input matInput type="number" formControlName="idReceta" readonly>
+  </mat-form-field>
   }
   <mat-form-field>
     <mat-label>Medicamento</mat-label>
@@ -29,12 +29,20 @@
   <mat-form-field>
     <mat-label>Fecha de emisión</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="fechaEmision">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matIconSuffix [for]="picker">
+      <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+    </mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-  <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+  <button matButton type="submit" class="btn-primary">
+    <svg lucideSave aria-hidden="true"></svg>
+    {{ isEditing ? 'Actualizar' : 'Guardar' }}
+  </button>
   @if (isEditing) {
-    <button matButton type="button" class="btn-cancelar" routerLink="/recetas/listar">Cancelar</button>
+  <button matButton type="button" class="btn-outline" routerLink="/recetas/listar">
+    <svg lucideCircleX aria-hidden="true"></svg>
+    Cancelar
+  </button>
   }
 </form>
 <p>{{ mensaje }}</p>

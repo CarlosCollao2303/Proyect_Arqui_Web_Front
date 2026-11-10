@@ -1,40 +1,47 @@
 <h2>Listado de recetas</h2>
 <div class="busqueda-id">
   <input #idReceta type="number" min="1" placeholder="ID de la receta">
-  <button matButton type="button" (click)="buscarReceta(idReceta.value)">Buscar por ID</button>
-  <button matButton type="button" (click)="obtenerRecetas()">Mostrar todos</button>
+  <button matButton type="button" class="btn-secondary" (click)="buscarReceta(idReceta.value)">
+    <svg lucideSearch aria-hidden="true"></svg>
+    Buscar por ID
+  </button>
+  <button matButton type="button" class="btn-outline" (click)="obtenerRecetas()">
+    <svg lucideRefreshCw aria-hidden="true"></svg>
+    Mostrar todos
+  </button>
 </div>
 @if (mensajeBusqueda) {
-  <p>{{ mensajeBusqueda }}</p>
+<p>{{ mensajeBusqueda }}</p>
 }
 @if (dataSource.data.length > 0) {
-  <div class="recetas-grid">
-    @for (item of dataSource.connect() | async; track item.idReceta) {
-      <mat-card class="receta-card">
-        <mat-card-header>
-          <mat-card-title>{{ item.medicamento }}</mat-card-title>
-          <mat-card-subtitle>Receta #{{ item.idReceta }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p><strong>Dosis:</strong> {{ item.dosis }}</p>
-          <p><strong>Frecuencia:</strong> {{ item.frecuencia }}</p>
-          <p><strong>Duración:</strong> {{ item.duracionDias }} días</p>
-          <p><strong>Fecha de emisión:</strong> {{ item.fechaEmision | date:'shortDate' }}</p>
-        </mat-card-content>
-        <mat-card-actions align="end">
-          <button matIconButton class="btn-eliminar" aria-label="Actualizar receta"
-            [routerLink]="['/recetas/actualizar', item.idReceta]">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button matIconButton class="btn-eliminar" aria-label="Eliminar receta"
-            (click)="eliminarReceta(item.idReceta)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    }
-  </div>
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de recetas"></mat-paginator>
+<div class="recetas-grid">
+  @for (item of dataSource.connect() | async; track item.idReceta) {
+  <mat-card class="receta-card">
+    <mat-card-header>
+      <mat-card-title>{{ item.medicamento }}</mat-card-title>
+      <mat-card-subtitle>Receta #{{ item.idReceta }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Dosis:</strong> {{ item.dosis }}</p>
+      <p><strong>Frecuencia:</strong> {{ item.frecuencia }}</p>
+      <p><strong>Duración:</strong> {{ item.duracionDias }} días</p>
+      <p><strong>Fecha de emisión:</strong> {{ item.fechaEmision | date:'shortDate' }}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar receta"
+        [routerLink]="['/recetas/actualizar', item.idReceta]">
+        <svg lucidePencil size="18" aria-hidden="true"></svg>
+      </button>
+      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar receta"
+        (click)="eliminarReceta(item.idReceta)">
+        <svg lucideTrash size="18" aria-hidden="true"></svg>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+  aria-label="Paginación de recetas"></mat-paginator>
 } @else {
-  <p>No hay recetas disponibles</p>
+<p>No hay recetas disponibles</p>
 }

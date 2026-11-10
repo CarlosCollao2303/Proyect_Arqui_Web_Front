@@ -17,11 +17,16 @@
                 <mat-label>Fecha de creación</mat-label>
                 <input matInput [matDatepicker]="pickerCreacion" formControlName="fechaCreacion">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerCreacion"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerCreacion">
+                    <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+                </mat-datepicker-toggle>
                 <mat-datepicker #pickerCreacion></mat-datepicker>
             </mat-form-field>
             <br>
-            <button matButton type="submit">Guardar</button>
+            <button matButton type="submit" class="btn-primary">
+                <svg lucideSave aria-hidden="true"></svg>
+                Guardar
+            </button>
         </form>
         <p>{{ mensaje }}</p>
     </div>

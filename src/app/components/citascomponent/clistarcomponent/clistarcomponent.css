@@ -45,6 +45,30 @@ td[mat-cell] {
   border-bottom: 1px solid var(--color-border);
 }
 
+.estado-cita {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.estado-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.estado-pendiente {
+  color: var(--color-warning);
+}
+
+.estado-completado {
+  color: var(--color-success);
+}
+
+.estado-cancelado {
+  color: var(--color-error);
+}
+
 tr[mat-row]:nth-child(even) {
   background-color: var(--color-background);
 }

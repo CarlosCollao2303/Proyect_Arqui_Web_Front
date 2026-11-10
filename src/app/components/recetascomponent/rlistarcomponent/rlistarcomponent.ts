@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
+import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Recetas } from '../../../models/Recetas';
 import { Recetasservice } from '../../../services/recetasservice';
 
 @Component({
   selector: 'app-rlistarcomponent',
-  imports: [AsyncPipe, DatePipe, MatIconModule, MatButtonModule, MatCardModule, MatPaginatorModule, RouterLink],
+  imports: [AsyncPipe, DatePipe, MatButtonModule, MatCardModule, MatPaginatorModule, RouterLink, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
   templateUrl: './rlistarcomponent.html',
   styleUrl: './rlistarcomponent.css',
 })
@@ -25,7 +25,7 @@ export class Rlistarcomponent implements OnInit {
   constructor(
     private service: Recetasservice,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerRecetas();

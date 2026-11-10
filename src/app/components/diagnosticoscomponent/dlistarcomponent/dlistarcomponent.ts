@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
+import { LucideEye, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 
 @Component({
   selector: 'app-dlistarcomponent',
-  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
+  imports: [DatePipe, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink, LucideEye, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
   templateUrl: './dlistarcomponent.html',
   styleUrl: './dlistarcomponent.css',
 })
@@ -25,7 +25,7 @@ export class Dlistarcomponent implements OnInit {
   constructor(
     private service: Diagnosticosservice,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerDiagnosticos();

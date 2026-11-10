@@ -2,11 +2,17 @@
     <h2>Listado de tratamientos</h2>
     <div class="busqueda-id">
         <input #idTratamiento type="number" min="1" placeholder="ID del tratamiento">
-        <button matButton type="button" (click)="buscarTratamiento(idTratamiento.value)">Buscar por ID</button>
-        <button matButton type="button" (click)="obtenerTratamientos()">Mostrar todos</button>
+        <button matButton type="button" class="btn-secondary" (click)="buscarTratamiento(idTratamiento.value)">
+            <svg lucideSearch aria-hidden="true"></svg>
+            Buscar por ID
+        </button>
+        <button matButton type="button" class="btn-outline" (click)="obtenerTratamientos()">
+            <svg lucideRefreshCw aria-hidden="true"></svg>
+            Mostrar todos
+        </button>
     </div>
     @if (mensajeBusqueda) {
-        <p>{{ mensajeBusqueda }}</p>
+    <p>{{ mensajeBusqueda }}</p>
     }
     <div>
         @if(dataSource.data.length > 0){
@@ -43,15 +49,24 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="c5">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{mostrarEstado(element.estado)}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <span class="estado-tratamiento">
+                        @if (mostrarEstado(element.estado) === 'Pendiente') {
+                        <svg lucideClock3 class="estado-icon estado-pendiente" aria-hidden="true"></svg>
+                        } @else {
+                        <svg lucideCircleCheck class="estado-icon estado-completado" aria-hidden="true"></svg>
+                        }
+                        {{mostrarEstado(element.estado)}}
+                    </span>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="actualizar">
                 <th mat-header-cell *matHeaderCellDef> Actualizar </th>
                 <td mat-cell *matCellDef="let element">
-                    <button matIconButton class="btn-eliminar" aria-label="Actualizar tratamiento"
+                    <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar tratamiento"
                         [routerLink]="['/tratamientos/actualizar', element.idTratamiento]">
-                        <mat-icon>edit</mat-icon>
+                        <svg lucidePencil size="18" aria-hidden="true"></svg>
                     </button>
                 </td>
             </ng-container>
@@ -59,8 +74,9 @@
             <ng-container matColumnDef="eliminar">
                 <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                 <td mat-cell *matCellDef="let element">
-                    <button matIconButton class="btn-eliminar" (click)="eliminarTratamiento(element.idTratamiento)">
-                        <mat-icon>delete</mat-icon>
+                    <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar tratamiento"
+                        (click)="eliminarTratamiento(element.idTratamiento)">
+                        <svg lucideTrash size="18" aria-hidden="true"></svg>
                     </button>
                 </td>
             </ng-container>
@@ -68,7 +84,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de tratamientos"></mat-paginator>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+            aria-label="Paginación de tratamientos"></mat-paginator>
         }@else {
         <p>No hay tratamientos disponibles</p>
         }

@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button'
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
+import { LucideCircleCheck, LucideClock3, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 
 
 @Component({
   selector: 'app-tlistarcomponent',
-  imports: [MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
+  imports: [MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink, LucideCircleCheck, LucideClock3, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
   templateUrl: './tlistarcomponent.html',
   styleUrl: './tlistarcomponent.css',
 })
@@ -23,7 +23,7 @@ export class Tlistarcomponent implements OnInit {
   mensajeBusqueda = '';
   constructor(private sService: Tratamientosservice,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.obtenerTratamientos();
@@ -78,7 +78,7 @@ export class Tlistarcomponent implements OnInit {
       next: () => {
         this.obtenerTratamientos();
         this.cdr.detectChanges();
-      },error: err =>{
+      }, error: err => {
         console.log('Error al eliminar el tratamiento:', err);
         this.cdr.detectChanges();
       }

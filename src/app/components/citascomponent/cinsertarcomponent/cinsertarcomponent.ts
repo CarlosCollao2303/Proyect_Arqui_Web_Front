@@ -5,6 +5,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LucideCalendarDays, LucideSave } from '@lucide/angular';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Roles } from '../../../models/Roles';
@@ -15,7 +16,7 @@ import { Rolesservice } from '../../../services/rolesservice';
 @Component({
   selector: 'app-cinsertarcomponent',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatSelectModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, LucideCalendarDays, LucideSave],
   templateUrl: './cinsertarcomponent.html',
   styleUrl: './cinsertarcomponent.css',
 })

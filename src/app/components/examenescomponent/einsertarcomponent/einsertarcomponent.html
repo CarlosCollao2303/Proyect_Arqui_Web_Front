@@ -17,18 +17,28 @@
   <mat-form-field>
     <mat-label>Fecha de solicitud</mat-label>
     <input matInput [matDatepicker]="pickerSolicitud" formControlName="fechaSolicitud">
-    <mat-datepicker-toggle matIconSuffix [for]="pickerSolicitud"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matIconSuffix [for]="pickerSolicitud">
+      <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+    </mat-datepicker-toggle>
     <mat-datepicker #pickerSolicitud></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Fecha de resultado</mat-label>
     <input matInput [matDatepicker]="pickerResultado" formControlName="fechaResultado">
-    <mat-datepicker-toggle matIconSuffix [for]="pickerResultado"></mat-datepicker-toggle>
+    <mat-datepicker-toggle matIconSuffix [for]="pickerResultado">
+      <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+    </mat-datepicker-toggle>
     <mat-datepicker #pickerResultado></mat-datepicker>
   </mat-form-field>
-  <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+  <button matButton type="submit" class="btn-primary">
+    <svg lucideSave aria-hidden="true"></svg>
+    {{ isEditing ? 'Actualizar' : 'Guardar' }}
+  </button>
   @if (isEditing) {
-    <button matButton type="button" class="btn-cancelar" routerLink="/examenes/listar">Cancelar</button>
+    <button matButton type="button" class="btn-outline" routerLink="/examenes/listar">
+      <svg lucideCircleX aria-hidden="true"></svg>
+      Cancelar
+    </button>
   }
 </form>
 <p>{{ mensaje }}</p>
