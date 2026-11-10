@@ -1,0 +1,51 @@
+<div class="container">
+    <div>
+        <h2>Registrar cita</h2>
+    </div>
+    <div>
+        <form [formGroup]="formCitas" (ngSubmit)="insertarCita()">
+            <mat-form-field>
+                <mat-label>Paciente</mat-label>
+                <mat-select formControlName="paciente">
+                    @for (p of usuariosPorRol('PACIENTE'); track p.idUsuario) {
+                    <mat-option [value]="p.idUsuario">{{p.nombres}} {{p.apellidos}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Médico</mat-label>
+                <mat-select formControlName="medico">
+                    @for (m of usuariosPorRol('MEDICO'); track m.idUsuario) {
+                    <mat-option [value]="m.idUsuario">{{m.nombres}} {{m.apellidos}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Fecha programada</mat-label>
+                <input matInput [matDatepicker]="pickerFecha" formControlName="fecha">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFecha></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Tiempo de espera (minutos)</mat-label>
+                <input matInput type="number" min="0" formControlName="tiempoEspera">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado">
+                    <mat-option value="PENDIENTE">Pendiente</mat-option>
+                    <mat-option value="ATENDIDA">Atendida</mat-option>
+                    <mat-option value="CANCELADA">Cancelada</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <button matButton type="submit">Guardar</button>
+        </form>
+        <p>{{ mensaje }}</p>
+    </div>
+</div>
