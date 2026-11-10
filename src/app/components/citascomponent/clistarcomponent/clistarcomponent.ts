@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { LucideCircleCheck, LucideCircleX, LucideClock3 } from '@lucide/angular';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Citasservice } from '../../../services/citasservice';
@@ -8,7 +9,7 @@ import { Usuariosservice } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-clistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [MatTableModule, MatPaginatorModule, LucideCircleCheck, LucideCircleX, LucideClock3],
   templateUrl: './clistarcomponent.html',
   styleUrl: './clistarcomponent.css',
 })
@@ -23,7 +24,7 @@ export class Clistarcomponent implements OnInit {
   constructor(private cS: Citasservice,
     private uS: Usuariosservice,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.listarCitas();

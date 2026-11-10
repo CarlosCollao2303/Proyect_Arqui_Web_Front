@@ -26,7 +26,9 @@
                 <mat-label>Fecha programada</mat-label>
                 <input matInput [matDatepicker]="pickerFecha" formControlName="fecha">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFecha">
+                    <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+                </mat-datepicker-toggle>
                 <mat-datepicker #pickerFecha></mat-datepicker>
             </mat-form-field>
             <br>
@@ -44,7 +46,10 @@
                 </mat-select>
             </mat-form-field>
             <br>
-            <button matButton type="submit">Guardar</button>
+            <button matButton type="submit" class="btn-primary">
+                <svg lucideSave aria-hidden="true"></svg>
+                Guardar
+            </button>
         </form>
         <p>{{ mensaje }}</p>
     </div>

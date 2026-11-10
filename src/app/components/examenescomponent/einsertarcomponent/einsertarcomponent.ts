@@ -5,13 +5,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
 
 @Component({
   selector: 'app-einsertarcomponent',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule, RouterLink],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule, RouterLink, LucideCalendarDays, LucideCircleX, LucideSave],
   templateUrl: './einsertarcomponent.html',
   styleUrl: './einsertarcomponent.css',
 })

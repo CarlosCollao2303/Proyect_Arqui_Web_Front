@@ -19,7 +19,9 @@
                 <mat-label>Fecha de Inicio</mat-label>
                 <input matInput [matDatepicker]="pickerInicio" formControlName="fechaInicio">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerInicio">
+                    <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+                </mat-datepicker-toggle>
                 <mat-datepicker #pickerInicio></mat-datepicker>
             </mat-form-field>
             <br>
@@ -27,7 +29,9 @@
                 <mat-label>Fecha de Fin</mat-label>
                 <input matInput [matDatepicker]="pickerFin" formControlName="fechaFin">
                 <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="pickerFin"></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFin">
+                    <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+                </mat-datepicker-toggle>
                 <mat-datepicker #pickerFin></mat-datepicker>
             </mat-form-field>
             <br>
@@ -40,9 +44,15 @@
                 </mat-select>
             </mat-form-field>
             <br>
-            <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+            <button matButton type="submit" class="btn-primary">
+                <svg lucideSave aria-hidden="true"></svg>
+                {{ isEditing ? 'Actualizar' : 'Guardar' }}
+            </button>
             @if (isEditing) {
-            <button matButton type="button" class="btn-cancelar" routerLink="/tratamientos/listar">Cancelar</button>
+            <button matButton type="button" class="btn-outline" routerLink="/tratamientos/listar">
+                <svg lucideCircleX aria-hidden="true"></svg>
+                Cancelar
+            </button>
             }
         </form>
         <p>{{ mensaje }}</p>

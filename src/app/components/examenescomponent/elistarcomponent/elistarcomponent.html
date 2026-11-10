@@ -1,56 +1,63 @@
 <h2>Listado de exámenes</h2>
 <div class="busqueda-id">
   <input #idExamen type="number" min="1" placeholder="ID del examen">
-  <button matButton type="button" (click)="buscarExamen(idExamen.value)">Buscar por ID</button>
-  <button matButton type="button" (click)="obtenerExamenes()">Mostrar todos</button>
+  <button matButton type="button" class="btn-secondary" (click)="buscarExamen(idExamen.value)">
+    <svg lucideSearch aria-hidden="true"></svg>
+    Buscar por ID
+  </button>
+  <button matButton type="button" class="btn-outline" (click)="obtenerExamenes()">
+    <svg lucideRefreshCw aria-hidden="true"></svg>
+    Mostrar todos
+  </button>
 </div>
 @if (mensajeBusqueda) {
-  <p>{{ mensajeBusqueda }}</p>
+<p>{{ mensajeBusqueda }}</p>
 }
 @if (dataSource.data.length > 0) {
-  <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="idExamen">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let item">{{ item.idExamen }}</td>
-    </ng-container>
-    <ng-container matColumnDef="tipoExamen">
-      <th mat-header-cell *matHeaderCellDef>Tipo de examen</th>
-      <td mat-cell *matCellDef="let item">{{ item.tipoExamen }}</td>
-    </ng-container>
-    <ng-container matColumnDef="descripcion">
-      <th mat-header-cell *matHeaderCellDef>Descripcion</th>
-      <td mat-cell *matCellDef="let item">{{ item.descripcion }}</td>
-    </ng-container>
-    <ng-container matColumnDef="fechaSolicitud">
-      <th mat-header-cell *matHeaderCellDef>Fecha de solicitud</th>
-      <td mat-cell *matCellDef="let item">{{ item.fechaSolicitud | date:'shortDate' }}</td>
-    </ng-container>
-    <ng-container matColumnDef="fechaResultado">
-      <th mat-header-cell *matHeaderCellDef>Fecha de resultado</th>
-      <td mat-cell *matCellDef="let item">{{ item.fechaResultado | date:'shortDate' }}</td>
-    </ng-container>
-    <ng-container matColumnDef="actualizar">
-      <th mat-header-cell *matHeaderCellDef>Actualizar</th>
-      <td mat-cell *matCellDef="let item">
-        <button matIconButton class="btn-eliminar" aria-label="Actualizar examen"
-          [routerLink]="['/examenes/actualizar', item.idExamen]">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="eliminar">
-      <th mat-header-cell *matHeaderCellDef>Eliminar</th>
-      <td mat-cell *matCellDef="let item">
-        <button matIconButton class="btn-eliminar" aria-label="Eliminar examen"
-          (click)="eliminarExamen(item.idExamen)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de exámenes"></mat-paginator>
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="idExamen">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell *matCellDef="let item">{{ item.idExamen }}</td>
+  </ng-container>
+  <ng-container matColumnDef="tipoExamen">
+    <th mat-header-cell *matHeaderCellDef>Tipo de examen</th>
+    <td mat-cell *matCellDef="let item">{{ item.tipoExamen }}</td>
+  </ng-container>
+  <ng-container matColumnDef="descripcion">
+    <th mat-header-cell *matHeaderCellDef>Descripcion</th>
+    <td mat-cell *matCellDef="let item">{{ item.descripcion }}</td>
+  </ng-container>
+  <ng-container matColumnDef="fechaSolicitud">
+    <th mat-header-cell *matHeaderCellDef>Fecha de solicitud</th>
+    <td mat-cell *matCellDef="let item">{{ item.fechaSolicitud | date:'shortDate' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="fechaResultado">
+    <th mat-header-cell *matHeaderCellDef>Fecha de resultado</th>
+    <td mat-cell *matCellDef="let item">{{ item.fechaResultado | date:'shortDate' }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actualizar">
+    <th mat-header-cell *matHeaderCellDef>Actualizar</th>
+    <td mat-cell *matCellDef="let item">
+      <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar examen"
+        [routerLink]="['/examenes/actualizar', item.idExamen]">
+        <svg lucidePencil size="18" aria-hidden="true"></svg>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="eliminar">
+    <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+    <td mat-cell *matCellDef="let item">
+      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar examen"
+        (click)="eliminarExamen(item.idExamen)">
+        <svg lucideTrash size="18" aria-hidden="true"></svg>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+  aria-label="Paginación de exámenes"></mat-paginator>
 } @else {
-  <p>No hay exámenes disponibles</p>
+<p>No hay exámenes disponibles</p>
 }

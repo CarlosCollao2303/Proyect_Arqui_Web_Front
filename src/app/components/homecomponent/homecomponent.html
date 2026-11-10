@@ -1,7 +1,307 @@
-<app-menucomponent></app-menucomponent>
+<div class="landing-page" id="inicio">
+  <div class="announcement-bar">
+    <div class="landing-container announcement-content">
+      <span>Acercamos la atención médica, estés donde estés.</span>
+      <span>SomosSalud · Tecnología al servicio del bienestar</span>
+    </div>
+  </div>
 
-<div class="container" style="text-align: center;margin-top: 5%;">
-    <h2>App de gestión de Streamings</h2>
-    <p>Curso:Arquitectura de Apps Web</p>
-    <p><strong>NRC:8228</strong></p>
+  <header class="landing-header">
+    <nav class="landing-container landing-nav" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="SaludCerca, inicio">
+        <span class="brand-mark"><svg lucideHeartPulse aria-hidden="true"></svg></span>
+        <span>SaludCerca</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        [attr.aria-expanded]="menuAbierto"
+        aria-controls="landing-links"
+        [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+        (click)="alternarMenu()">
+        @if (menuAbierto) {
+          <svg lucideX aria-hidden="true"></svg>
+        } @else {
+          <svg lucideMenu aria-hidden="true"></svg>
+        }
+      </button>
+
+      <div class="landing-links" id="landing-links" [class.open]="menuAbierto">
+        <a href="#inicio" (click)="cerrarMenu()">Inicio</a>
+        <a href="#servicios" (click)="cerrarMenu()">Servicios</a>
+        <a href="#como-funciona" (click)="cerrarMenu()">Cómo funciona</a>
+        <a href="#nosotros" (click)="cerrarMenu()">Nosotros</a>
+      </div>
+
+      <div class="header-actions">
+        <a class="landing-button button-outline" href="#servicios">Conocer servicios</a>
+        <a class="landing-button button-primary" routerLink="/citas/listar">
+          Acceder al sistema
+          <svg lucideArrowRight aria-hidden="true"></svg>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-section">
+      <div class="landing-container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-tag">
+            <svg lucideHeartPulse aria-hidden="true"></svg>
+            Telemedicina para todos
+          </span>
+          <h1>La salud que necesitas, <span>más cerca de ti.</span></h1>
+          <p class="hero-lead">
+            Conectamos a pacientes de zonas alejadas con médicos generales y especialistas.
+            Organiza tus citas, accede a videoconsultas y continúa tu cuidado sin recorrer largas distancias.
+          </p>
+          <div class="hero-actions">
+            <a class="landing-button button-primary" href="#servicios">
+              Descubre SaludCerca
+              <svg lucideArrowRight aria-hidden="true"></svg>
+            </a>
+            <a class="landing-button button-outline" href="#como-funciona">
+              <svg lucideCirclePlay aria-hidden="true"></svg>
+              Cómo funciona
+            </a>
+          </div>
+          <div class="hero-highlights">
+            <span>Atención a distancia</span>
+            <span>Seguimiento digital</span>
+            <span>Fácil de usar</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Vista ilustrativa de los servicios de SaludCerca">
+          <div class="hero-orb"></div>
+          <div class="floating-note note-consultation">
+            <svg lucideVideo aria-hidden="true"></svg>
+            Consulta desde casa
+          </div>
+          <div class="floating-note note-security">
+            <svg lucideShieldCheck aria-hidden="true"></svg>
+            Tu información, protegida
+          </div>
+          <article class="preview-card">
+            <div class="preview-top">
+              <span>SaludCerca</span>
+              <span class="virtual-badge">Atención virtual</span>
+            </div>
+            <div class="professional-preview">
+              <div class="professional-icon"><svg lucideStethoscope aria-hidden="true"></svg></div>
+              <div>
+                <h2>Atención médica</h2>
+                <p>Conexión con profesionales de salud</p>
+                <span class="availability">Cuidado a tu alcance</span>
+              </div>
+            </div>
+            <div class="appointment-preview">
+              <div class="preview-title">
+                <span>Tu cuidado, organizado</span>
+                <span>Salud digital</span>
+              </div>
+              <div class="preview-item"><svg lucideCalendarDays aria-hidden="true"></svg> Agenda y consulta tus citas</div>
+              <div class="preview-item"><svg lucideVideo aria-hidden="true"></svg> Videoconsulta con tu médico</div>
+              <div class="preview-item"><svg lucideClipboardList aria-hidden="true"></svg> Historial clínico digital</div>
+              <a class="landing-button button-primary preview-action" routerLink="/citas/listar">
+                Conoce nuestros servicios
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section problem-section">
+      <div class="landing-container">
+        <div class="section-heading">
+          <span class="section-kicker">El problema que queremos resolver</span>
+          <h2>La distancia no debería ser un obstáculo para cuidar tu salud.</h2>
+          <p>En muchas comunidades, llegar a una consulta médica puede significar horas de viaje, gastos y demoras en la atención.</p>
+        </div>
+        <div class="card-grid">
+          <article class="info-card">
+            <div class="card-icon problem-icon"><svg lucideMapPin aria-hidden="true"></svg></div>
+            <h3>Largas distancias</h3>
+            <p>Los pacientes de zonas alejadas pueden tener que trasladarse durante horas para acceder a un especialista.</p>
+          </article>
+          <article class="info-card">
+            <div class="card-icon problem-icon"><svg lucideClock3 aria-hidden="true"></svg></div>
+            <h3>Demoras en la atención</h3>
+            <p>La disponibilidad limitada de profesionales puede retrasar consultas y el seguimiento de tratamientos.</p>
+          </article>
+          <article class="info-card">
+            <div class="card-icon problem-icon"><svg lucideClipboardList aria-hidden="true"></svg></div>
+            <h3>Seguimiento complicado</h3>
+            <p>Sin herramientas digitales, organizar citas y mantener la información médica puede resultar difícil.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section services-section" id="servicios">
+      <div class="landing-container">
+        <div class="section-heading">
+          <span class="section-kicker">Nuestros servicios</span>
+          <h2>Todo lo importante para tu cuidado, en un solo lugar.</h2>
+          <p>SaludCerca reúne herramientas digitales para facilitar la comunicación entre pacientes y profesionales de salud.</p>
+        </div>
+        <div class="card-grid">
+          <a class="info-card service-card" routerLink="/citas/listar">
+            <div class="card-icon"><svg lucideCalendarDays aria-hidden="true"></svg></div>
+            <h3>Agenda de citas</h3>
+            <p>Organiza tus consultas, revisa las fechas programadas y consulta el estado de tus citas.</p>
+            <span class="card-link">Ver citas <svg lucideArrowRight aria-hidden="true"></svg></span>
+          </a>
+          <article class="info-card">
+            <div class="card-icon"><svg lucideVideo aria-hidden="true"></svg></div>
+            <h3>Videoconsultas</h3>
+            <p>Conecta a distancia con profesionales de salud mediante consultas virtuales.</p>
+          </article>
+          <a class="info-card service-card" routerLink="/historiasclinicas/listar">
+            <div class="card-icon"><svg lucideClipboardList aria-hidden="true"></svg></div>
+            <h3>Historial clínico digital</h3>
+            <p>Consulta la información clínica registrada para facilitar la continuidad de la atención.</p>
+            <span class="card-link">Ver historias clínicas <svg lucideArrowRight aria-hidden="true"></svg></span>
+          </a>
+          <a class="info-card service-card" routerLink="/examenes/listar">
+            <div class="card-icon"><svg lucideFileText aria-hidden="true"></svg></div>
+            <h3>Exámenes y diagnósticos</h3>
+            <p>Centraliza los datos de exámenes y diagnósticos asociados a la atención médica.</p>
+            <span class="card-link">Ver exámenes <svg lucideArrowRight aria-hidden="true"></svg></span>
+          </a>
+          <a class="info-card service-card" routerLink="/tratamientos/listar">
+            <div class="card-icon"><svg lucidePill aria-hidden="true"></svg></div>
+            <h3>Tratamientos y recetas</h3>
+            <p>Facilita el registro y la consulta de tratamientos y recetas indicados por el profesional.</p>
+            <span class="card-link">Ver tratamientos <svg lucideArrowRight aria-hidden="true"></svg></span>
+          </a>
+          <article class="info-card">
+            <div class="card-icon"><svg lucideBell aria-hidden="true"></svg></div>
+            <h3>Recordatorios</h3>
+            <p>Recibe notificaciones relacionadas con tus citas y la toma de medicamentos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" id="como-funciona">
+      <div class="landing-container">
+        <div class="section-heading">
+          <span class="section-kicker">Simple y accesible</span>
+          <h2>¿Cómo funciona SaludCerca?</h2>
+          <p>Una experiencia pensada para que puedas organizar tu atención médica de manera sencilla.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3>Regístrate en la plataforma</h3>
+            <p>Crea tu cuenta para acceder a las funcionalidades disponibles según tu perfil de usuario.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <h3>Organiza tu consulta</h3>
+            <p>Explora médicos por especialidad y gestiona la fecha de tu cita según la disponibilidad.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3>Continúa tu seguimiento</h3>
+            <p>Realiza tu videoconsulta y consulta la información clínica y los recordatorios asociados a tu atención.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section audience-section" id="nosotros">
+      <div class="landing-container">
+        <div class="section-heading">
+          <span class="section-kicker">Una solución para conectar</span>
+          <h2>Más cerca de quienes necesitan atención.</h2>
+          <p>SaludCerca está pensada para facilitar la colaboración entre pacientes y profesionales de salud.</p>
+        </div>
+        <div class="audience-grid">
+          <article class="audience-card">
+            <div class="card-icon"><svg lucideUserRound aria-hidden="true"></svg></div>
+            <div>
+              <h3>Para pacientes</h3>
+              <p>Una forma más práctica de gestionar citas, conectarse con profesionales y revisar su información de salud.</p>
+            </div>
+          </article>
+          <article class="audience-card">
+            <div class="card-icon"><svg lucideStethoscope aria-hidden="true"></svg></div>
+            <div>
+              <h3>Para médicos</h3>
+              <p>Herramientas para organizar su agenda, atender videoconsultas y registrar información clínica de sus pacientes.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section safety-section">
+      <div class="landing-container">
+        <div class="safety-card">
+          <div>
+            <span class="section-kicker">Confianza y responsabilidad</span>
+            <h2>La tecnología debe acercar la salud de forma segura.</h2>
+            <p>SaludCerca contempla controles de acceso según el rol del usuario y medidas para proteger la información clínica.</p>
+          </div>
+          <div class="safety-list">
+            <div><svg lucideCircleCheck aria-hidden="true"></svg> Acceso diferenciado para pacientes, médicos y administradores.</div>
+            <div><svg lucideCircleCheck aria-hidden="true"></svg> Autenticación y autorización para proteger las funciones del sistema.</div>
+            <div><svg lucideCircleCheck aria-hidden="true"></svg> Información clínica organizada para apoyar la continuidad de la atención.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section closing-section" id="contacto">
+      <div class="landing-container">
+        <span class="section-kicker">SomosSalud presenta</span>
+        <h2>La distancia no tiene por qué alejarte del cuidado que mereces.</h2>
+        <p>Conoce la propuesta de SaludCerca y descubre cómo la telemedicina puede contribuir a acercar los servicios de salud a más comunidades.</p>
+        <a class="landing-button button-primary" routerLink="/citas/listar">
+          Acceder a las funcionalidades
+          <svg lucideArrowRight aria-hidden="true"></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="landing-container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand footer-brand" href="#inicio">
+            <span class="brand-mark"><svg lucideHeartPulse aria-hidden="true"></svg></span>
+            <span>SaludCerca</span>
+          </a>
+          <p>Una iniciativa de SomosSalud para contribuir a un acceso más cercano, práctico y equitativo a los servicios de salud mediante tecnología.</p>
+        </div>
+        <div>
+          <h2>Explora</h2>
+          <div class="footer-links">
+            <a href="#servicios">Servicios</a>
+            <a href="#como-funciona">Cómo funciona</a>
+            <a href="#nosotros">Usuarios</a>
+          </div>
+        </div>
+        <div>
+          <h2>Sobre el proyecto</h2>
+          <div class="footer-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#nosotros">SomosSalud</a>
+            <a href="#contacto">Conoce la propuesta</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <span>© 2026 SomosSalud · SaludCerca. Proyecto académico.</span>
+        <span>Tu salud, más cerca de ti.</span>
+      </div>
+      <p class="disclaimer">Esta landing page presenta la propuesta del proyecto. No realiza diagnósticos ni sustituye una consulta con un profesional de salud.</p>
+    </div>
+  </footer>
 </div>

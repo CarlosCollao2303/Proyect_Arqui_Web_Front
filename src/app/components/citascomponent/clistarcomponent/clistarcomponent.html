@@ -31,13 +31,25 @@
 
             <ng-container matColumnDef="c6">
                 <th mat-header-cell *matHeaderCellDef> Estado </th>
-                <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <span class="estado-cita">
+                        @if (element.estado === 'PENDIENTE') {
+                        <svg lucideClock3 class="estado-icon estado-pendiente" aria-hidden="true"></svg>
+                        } @else if (element.estado === 'ATENDIDA') {
+                        <svg lucideCircleCheck class="estado-icon estado-completado" aria-hidden="true"></svg>
+                        } @else if (element.estado === 'CANCELADA') {
+                        <svg lucideCircleX class="estado-icon estado-cancelado" aria-hidden="true"></svg>
+                        }
+                        {{element.estado}}
+                    </span>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de citas"></mat-paginator>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+            aria-label="Paginación de citas"></mat-paginator>
         } @else {
         <p>No hay citas registradas</p>
         }

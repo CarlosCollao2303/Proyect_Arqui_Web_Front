@@ -1,34 +1,14 @@
 import { Routes } from '@angular/router';
-import { Homecomponent } from './components/homecomponent/homecomponent';
-import { Tratamientoscomponent } from './components/tratamientoscomponent/tratamientoscomponent';
-import { Tlistarcomponent } from './components/tratamientoscomponent/tlistarcomponent/tlistarcomponent';
-import { Tinsertarcomponent } from './components/tratamientoscomponent/tinsertarcomponent/tinsertarcomponent';
-import { Diagnosticoscomponent } from './components/diagnosticoscomponent/diagnosticoscomponent';
-import { Dlistarcomponent } from './components/diagnosticoscomponent/dlistarcomponent/dlistarcomponent';
-import { Dinsertarcomponent } from './components/diagnosticoscomponent/dinsertarcomponent/dinsertarcomponent';
-import { Ddetallecomponent } from './components/diagnosticoscomponent/ddetallecomponent/ddetallecomponent';
-import { Examenescomponent } from './components/examenescomponent/examenescomponent';
-import { Elistarcomponent } from './components/examenescomponent/elistarcomponent/elistarcomponent';
-import { Einsertarcomponent } from './components/examenescomponent/einsertarcomponent/einsertarcomponent';
-import { Recetascomponent } from './components/recetascomponent/recetascomponent';
-import { Rlistarcomponent } from './components/recetascomponent/rlistarcomponent/rlistarcomponent';
-import { Rinsertarcomponent } from './components/recetascomponent/rinsertarcomponent/rinsertarcomponent';
-import { Citascomponent } from './components/citascomponent/citascomponent';
-import { Clistarcomponent } from './components/citascomponent/clistarcomponent/clistarcomponent';
-import { Cinsertarcomponent } from './components/citascomponent/cinsertarcomponent/cinsertarcomponent';
-import { Historiasclinicascomponent } from './components/historiasclinicascomponent/historiasclinicascomponent';
-import { Hlistarcomponent } from './components/historiasclinicascomponent/hlistarcomponent/hlistarcomponent';
-import { Hinsertarcomponent } from './components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent';
 
 export const routes: Routes = [
     {
         path: '',
-        component:Homecomponent,
+        loadComponent: () => import('./components/homecomponent/homecomponent').then((module) => module.Homecomponent),
     },
     {
         path: 'tratamientos',
-        component: Tratamientoscomponent,
-        children:[
+        loadComponent: () => import('./components/tratamientoscomponent/tratamientoscomponent').then((module) => module.Tratamientoscomponent),
+        children: [
             {
                 path: '',
                 redirectTo: 'listar',
@@ -36,65 +16,65 @@ export const routes: Routes = [
             },
             {
                 path: 'listar',
-                component: Tlistarcomponent,
+                loadComponent: () => import('./components/tratamientoscomponent/tlistarcomponent/tlistarcomponent').then((module) => module.Tlistarcomponent),
             },
             {
                 path: 'insertar',
-                component: Tinsertarcomponent,
+                loadComponent: () => import('./components/tratamientoscomponent/tinsertarcomponent/tinsertarcomponent').then((module) => module.Tinsertarcomponent),
             },
             {
                 path: 'actualizar/:id',
-                component: Tinsertarcomponent,
+                loadComponent: () => import('./components/tratamientoscomponent/tinsertarcomponent/tinsertarcomponent').then((module) => module.Tinsertarcomponent),
             }
         ],
     },
     {
         path: 'diagnosticos',
-        component: Diagnosticoscomponent,
+        loadComponent: () => import('./components/diagnosticoscomponent/diagnosticoscomponent').then((module) => module.Diagnosticoscomponent),
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', component: Dlistarcomponent },
-            { path: 'insertar', component: Dinsertarcomponent },
-            { path: 'detalle/:id', component: Ddetallecomponent },
-            { path: 'actualizar/:id', component: Dinsertarcomponent },
+            { path: 'listar', loadComponent: () => import('./components/diagnosticoscomponent/dlistarcomponent/dlistarcomponent').then((module) => module.Dlistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/diagnosticoscomponent/dinsertarcomponent/dinsertarcomponent').then((module) => module.Dinsertarcomponent) },
+            { path: 'detalle/:id', loadComponent: () => import('./components/diagnosticoscomponent/ddetallecomponent/ddetallecomponent').then((module) => module.Ddetallecomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/diagnosticoscomponent/dinsertarcomponent/dinsertarcomponent').then((module) => module.Dinsertarcomponent) },
         ],
     },
     {
         path: 'examenes',
-        component: Examenescomponent,
+        loadComponent: () => import('./components/examenescomponent/examenescomponent').then((module) => module.Examenescomponent),
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', component: Elistarcomponent },
-            { path: 'insertar', component: Einsertarcomponent },
-            { path: 'actualizar/:id', component: Einsertarcomponent },
+            { path: 'listar', loadComponent: () => import('./components/examenescomponent/elistarcomponent/elistarcomponent').then((module) => module.Elistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/examenescomponent/einsertarcomponent/einsertarcomponent').then((module) => module.Einsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/examenescomponent/einsertarcomponent/einsertarcomponent').then((module) => module.Einsertarcomponent) },
         ],
     },
     {
         path: 'recetas',
-        component: Recetascomponent,
+        loadComponent: () => import('./components/recetascomponent/recetascomponent').then((module) => module.Recetascomponent),
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', component: Rlistarcomponent },
-            { path: 'insertar', component: Rinsertarcomponent },
-            { path: 'actualizar/:id', component: Rinsertarcomponent },
+            { path: 'listar', loadComponent: () => import('./components/recetascomponent/rlistarcomponent/rlistarcomponent').then((module) => module.Rlistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/recetascomponent/rinsertarcomponent/rinsertarcomponent').then((module) => module.Rinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/recetascomponent/rinsertarcomponent/rinsertarcomponent').then((module) => module.Rinsertarcomponent) },
         ],
     },
     {
         path: 'citas',
-        component: Citascomponent,
+        loadComponent: () => import('./components/citascomponent/citascomponent').then((module) => module.Citascomponent),
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', component: Clistarcomponent },
-            { path: 'insertar', component: Cinsertarcomponent },
+            { path: 'listar', loadComponent: () => import('./components/citascomponent/clistarcomponent/clistarcomponent').then((module) => module.Clistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
         ],
     },
     {
         path: 'historiasclinicas',
-        component: Historiasclinicascomponent,
+        loadComponent: () => import('./components/historiasclinicascomponent/historiasclinicascomponent').then((module) => module.Historiasclinicascomponent),
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', component: Hlistarcomponent },
-            { path: 'insertar', component: Hinsertarcomponent },
+            { path: 'listar', loadComponent: () => import('./components/historiasclinicascomponent/hlistarcomponent/hlistarcomponent').then((module) => module.Hlistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent) },
         ],
     },
 ];
