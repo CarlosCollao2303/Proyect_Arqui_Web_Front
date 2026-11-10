@@ -31,43 +31,42 @@ h2 {
   border-radius: 6px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+.recetas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.receta-card {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-top: 4px solid var(--color-primary);
   border-radius: 10px;
-  overflow: hidden;
   box-shadow: 0 4px 12px rgba(36, 55, 70, 0.1);
 }
 
-th[mat-header-cell] {
-  background-color: var(--color-primary-light);
+.receta-card mat-card-title {
+  color: var(--color-primary);
+  font-size: 20px;
+}
+
+.receta-card mat-card-subtitle {
+  color: var(--color-text-secondary);
+}
+
+.receta-card mat-card-content {
+  padding-top: 12px;
+}
+
+.receta-card mat-card-content p {
+  margin: 8px 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
   color: var(--color-text);
+  text-align: left;
   font-size: 14px;
-  font-weight: 700;
-  padding: 14px 16px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 3px solid var(--color-primary);
-  white-space: nowrap;
-}
-
-td[mat-cell] {
-  color: var(--color-text);
-  font-size: 14px;
-  padding: 14px 16px;
-  text-align: center;
-  border-bottom: 1px solid var(--color-border);
-}
-
-tr[mat-row]:nth-child(even) {
-  background-color: var(--color-background);
-}
-
-tr[mat-row]:hover {
-  background-color: rgba(42, 157, 143, 0.12);
-  transition: background-color 0.2s ease;
+  font-weight: normal;
 }
 
 p {
@@ -101,11 +100,5 @@ p {
 
   h2 {
     font-size: 23px;
-  }
-
-  th[mat-header-cell],
-  td[mat-cell] {
-    padding: 10px 6px;
-    font-size: 12px;
   }
 }

@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { Recetas } from '../../../models/Recetas';
@@ -10,22 +11,11 @@ import { Recetasservice } from '../../../services/recetasservice';
 
 @Component({
   selector: 'app-rlistarcomponent',
-  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
+  imports: [AsyncPipe, DatePipe, MatIconModule, MatButtonModule, MatCardModule, MatPaginatorModule, RouterLink],
   templateUrl: './rlistarcomponent.html',
   styleUrl: './rlistarcomponent.css',
 })
 export class Rlistarcomponent implements OnInit {
-  displayedColumns = [
-    'idReceta',
-    'medicamento',
-    'dosis',
-    'frecuencia',
-    'duracionDias',
-    'indicaciones',
-    'fechaEmision',
-    'actualizar',
-    'eliminar',
-  ];
   dataSource = new MatTableDataSource<Recetas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
