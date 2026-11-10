@@ -12,6 +12,9 @@ import { Einsertarcomponent } from './components/examenescomponent/einsertarcomp
 import { Recetascomponent } from './components/recetascomponent/recetascomponent';
 import { Rlistarcomponent } from './components/recetascomponent/rlistarcomponent/rlistarcomponent';
 import { Rinsertarcomponent } from './components/recetascomponent/rinsertarcomponent/rinsertarcomponent';
+import { Citascomponent } from './components/citascomponent/citascomponent';
+import { Clistarcomponent } from './components/citascomponent/clistarcomponent/clistarcomponent';
+import { Cinsertarcomponent } from './components/citascomponent/cinsertarcomponent/cinsertarcomponent';
 
 export const routes: Routes = [
     {
@@ -69,6 +72,15 @@ export const routes: Routes = [
             { path: 'listar', component: Rlistarcomponent },
             { path: 'insertar', component: Rinsertarcomponent },
             { path: 'actualizar/:id', component: Rinsertarcomponent },
+        ],
+    },
+    {
+        path: 'citas',
+        component: Citascomponent,
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', component: Clistarcomponent },
+            { path: 'insertar', component: Cinsertarcomponent },
         ],
     },
 ];
