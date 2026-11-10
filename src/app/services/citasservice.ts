@@ -15,4 +15,8 @@ export class Citasservice {
   getListCitas(): Observable<Citas[]> {
     return this.http.get<Citas[]>(`${this.apiURL}/Listar`);
   }
+
+  insertCita(cita: Citas): Observable<Citas> {
+    return this.http.post<Citas>(`${this.apiURL}/Registrar`, cita);
+  }
 }
