@@ -54,3 +54,20 @@ html {
 .mat-mdc-menu-panel .mat-mdc-menu-item {
   color: var(--color-text);
 }
+
+.mat-mdc-paginator {
+  --mat-paginator-container-background-color: var(--color-surface);
+  --mat-paginator-container-text-color: var(--color-text-secondary);
+  --mat-paginator-enabled-icon-color: var(--color-primary);
+  --mat-paginator-disabled-icon-color: var(--color-border);
+}
+
+.mat-toolbar .nav-button.mat-mdc-button {
+  --mat-button-text-label-text-color: #ffffff;
+  color: #ffffff !important;
+}
+
+.mat-toolbar .nav-button.mat-mdc-button .mdc-button__label,
+.mat-toolbar .nav-button.mat-mdc-button mat-icon {
+  color: #ffffff !important;
+}

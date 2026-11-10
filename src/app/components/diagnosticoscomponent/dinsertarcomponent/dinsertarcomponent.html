@@ -1,5 +1,11 @@
 <h2>{{ isEditing ? 'Actualizar diagnóstico' : 'Registrar diagnóstico' }}</h2>
 <form [formGroup]="formDiagnosticos" (ngSubmit)="insertarDiagnostico()">
+  @if (isEditing) {
+    <mat-form-field>
+      <mat-label>ID del diagnóstico</mat-label>
+      <input matInput type="number" formControlName="idDiagnostico" readonly>
+    </mat-form-field>
+  }
   <mat-form-field>
     <mat-label>Código CIE-10</mat-label>
     <input matInput formControlName="codigoCie10">
@@ -15,5 +21,8 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+  @if (isEditing) {
+    <button matButton type="button" class="btn-cancelar" routerLink="/diagnosticos/listar">Cancelar</button>
+  }
 </form>
 <p>{{ mensaje }}</p>

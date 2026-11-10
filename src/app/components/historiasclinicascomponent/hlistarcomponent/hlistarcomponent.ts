@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
@@ -7,13 +8,16 @@ import { Usuariosservice } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-hlistarcomponent',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatPaginatorModule],
   templateUrl: './hlistarcomponent.html',
   styleUrl: './hlistarcomponent.css',
 })
 export class Hlistarcomponent implements OnInit {
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4'];
-  dataSource: HistoriasClinicas[] = [];
+  dataSource = new MatTableDataSource<HistoriasClinicas>([]);
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) this.dataSource.paginator = paginator;
+  }
   listaUsuarios: Usuarios[] = [];
 
   constructor(private hS: Historiasclinicasservice,
@@ -29,7 +33,8 @@ export class Hlistarcomponent implements OnInit {
   listarHistorias() {
     this.hS.getListHistorias().subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
       error: (err) => {

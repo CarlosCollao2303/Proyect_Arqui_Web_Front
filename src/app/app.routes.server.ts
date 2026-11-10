@@ -10,6 +10,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'diagnosticos/detalle/:id',
+    renderMode: RenderMode.Server,
+  },
+  {
     path: 'examenes/actualizar/:id',
     renderMode: RenderMode.Server,
   },

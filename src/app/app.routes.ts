@@ -6,6 +6,7 @@ import { Tinsertarcomponent } from './components/tratamientoscomponent/tinsertar
 import { Diagnosticoscomponent } from './components/diagnosticoscomponent/diagnosticoscomponent';
 import { Dlistarcomponent } from './components/diagnosticoscomponent/dlistarcomponent/dlistarcomponent';
 import { Dinsertarcomponent } from './components/diagnosticoscomponent/dinsertarcomponent/dinsertarcomponent';
+import { Ddetallecomponent } from './components/diagnosticoscomponent/ddetallecomponent/ddetallecomponent';
 import { Examenescomponent } from './components/examenescomponent/examenescomponent';
 import { Elistarcomponent } from './components/examenescomponent/elistarcomponent/elistarcomponent';
 import { Einsertarcomponent } from './components/examenescomponent/einsertarcomponent/einsertarcomponent';
@@ -54,6 +55,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', component: Dlistarcomponent },
             { path: 'insertar', component: Dinsertarcomponent },
+            { path: 'detalle/:id', component: Ddetallecomponent },
             { path: 'actualizar/:id', component: Dinsertarcomponent },
         ],
     },

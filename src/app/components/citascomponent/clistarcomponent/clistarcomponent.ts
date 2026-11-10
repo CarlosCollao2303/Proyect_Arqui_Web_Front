@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Citasservice } from '../../../services/citasservice';
@@ -7,13 +8,16 @@ import { Usuariosservice } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-clistarcomponent',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatPaginatorModule],
   templateUrl: './clistarcomponent.html',
   styleUrl: './clistarcomponent.css',
 })
 export class Clistarcomponent implements OnInit {
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
-  dataSource: Citas[] = [];
+  dataSource = new MatTableDataSource<Citas>([]);
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) this.dataSource.paginator = paginator;
+  }
   listaUsuarios: Usuarios[] = [];
 
   constructor(private cS: Citasservice,
@@ -29,7 +33,8 @@ export class Clistarcomponent implements OnInit {
   listarCitas() {
     this.cS.getListCitas().subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
       error: (err) => {

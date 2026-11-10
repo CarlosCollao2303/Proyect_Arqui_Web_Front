@@ -122,10 +122,23 @@ button[type="submit"] {
 /* Efecto del botón */
 
 button[type="submit"]:hover {
-
  background-color: #12566D;
  box-shadow: 0 4px 10px rgba(23, 107, 135, 0.3);
+}
 
+.btn-cancelar {
+ width: 100%;
+ min-height: 42px;
+ margin-top: 8px;
+ background-color: var(--color-text-secondary);
+ color: var(--color-surface);
+ font-size: 16px;
+ font-weight: bold;
+ border-radius: 8px;
+}
+
+.btn-cancelar:hover {
+ background-color: var(--color-text);
 }
 
 

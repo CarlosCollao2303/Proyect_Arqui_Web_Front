@@ -43,6 +43,21 @@ button[type="submit"]:hover {
   background-color: #12566D;
 }
 
+.btn-cancelar {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 8px;
+  background-color: var(--color-text-secondary);
+  color: var(--color-surface);
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.btn-cancelar:hover {
+  background-color: var(--color-text);
+}
+
 p {
   margin-top: 10px;
   text-align: center;

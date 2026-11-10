@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -11,7 +11,7 @@ import { Recetasservice } from '../../../services/recetasservice';
 @Component({
   selector: 'app-rinsertarcomponent',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './rinsertarcomponent.html',
   styleUrl: './rinsertarcomponent.css',
 })
@@ -19,7 +19,6 @@ export class Rinsertarcomponent implements OnInit {
   formRecetas: FormGroup;
   mensaje = '';
   isEditing = false;
-  private recetaId = 0;
 
   constructor(
     private service: Recetasservice,
@@ -27,6 +26,7 @@ export class Rinsertarcomponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.formRecetas = this.fb.nonNullable.group({
+      idReceta: [0],
       medicamento: ['', Validators.required],
       dosis: ['', Validators.required],
       frecuencia: ['', Validators.required],
@@ -40,7 +40,6 @@ export class Rinsertarcomponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (Number.isInteger(id) && id > 0) {
       this.isEditing = true;
-      this.recetaId = id;
       this.service.getRecetaById(id).subscribe({
         next: (receta) => {
           this.formRecetas.patchValue({
@@ -62,7 +61,7 @@ export class Rinsertarcomponent implements OnInit {
     }
 
     const receta: Recetas = {
-      idReceta: this.isEditing ? this.recetaId : 0,
+      idReceta: this.isEditing ? this.formRecetas.getRawValue().idReceta : 0,
       ...this.formRecetas.getRawValue(),
     };
 

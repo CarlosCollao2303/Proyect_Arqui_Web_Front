@@ -1,0 +1,32 @@
+<section class="detalle-card">
+  <h2>Detalle del diagnóstico</h2>
+
+  @if (diagnostico) {
+    <dl>
+      <div>
+        <dt>ID</dt>
+        <dd>{{ diagnostico.idDiagnostico }}</dd>
+      </div>
+      <div>
+        <dt>Código CIE-10</dt>
+        <dd>{{ diagnostico.codigoCie10 }}</dd>
+      </div>
+      <div>
+        <dt>Descripción</dt>
+        <dd>{{ diagnostico.descripcion }}</dd>
+      </div>
+      <div>
+        <dt>Fecha de registro</dt>
+        <dd>{{ diagnostico.fechaRegistro | date:'longDate' }}</dd>
+      </div>
+    </dl>
+  } @else if (cargando) {
+    <p>Cargando diagnóstico...</p>
+  } @else if (mensajeError) {
+    <p class="mensaje-error">{{ mensajeError }}</p>
+  }
+
+  <button matButton type="button" class="volver-button" routerLink="/diagnosticos/listar">
+    <span class="volver-button-label">Volver a la lista</span>
+  </button>
+</section>

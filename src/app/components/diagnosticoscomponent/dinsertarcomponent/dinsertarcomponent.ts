@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -11,7 +11,7 @@ import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 @Component({
   selector: 'app-dinsertarcomponent',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './dinsertarcomponent.html',
   styleUrl: './dinsertarcomponent.css',
 })
@@ -19,7 +19,6 @@ export class Dinsertarcomponent implements OnInit {
   formDiagnosticos: FormGroup;
   mensaje = '';
   isEditing = false;
-  private diagnosticoId = 0;
 
   constructor(
     private service: Diagnosticosservice,
@@ -27,6 +26,7 @@ export class Dinsertarcomponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.formDiagnosticos = this.fb.nonNullable.group({
+      idDiagnostico: [0],
       codigoCie10: ['', Validators.required],
       descripcion: ['', Validators.required],
       fechaRegistro: [new Date(), Validators.required],
@@ -37,7 +37,6 @@ export class Dinsertarcomponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (Number.isInteger(id) && id > 0) {
       this.isEditing = true;
-      this.diagnosticoId = id;
       this.service.getDiagnosticoById(id).subscribe({
         next: (diagnostico) => {
           this.formDiagnosticos.patchValue({
@@ -59,7 +58,7 @@ export class Dinsertarcomponent implements OnInit {
     }
 
     const diagnostico: Diagnosticos = {
-      idDiagnostico: this.isEditing ? this.diagnosticoId : 0,
+      idDiagnostico: this.isEditing ? this.formDiagnosticos.getRawValue().idDiagnostico : 0,
       ...this.formDiagnosticos.getRawValue(),
     };
 

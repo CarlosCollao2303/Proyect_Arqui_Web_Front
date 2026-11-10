@@ -7,7 +7,7 @@
 @if (mensajeBusqueda) {
   <p>{{ mensajeBusqueda }}</p>
 }
-@if (dataSource.length > 0) {
+@if (dataSource.data.length > 0) {
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="idReceta">
       <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -58,6 +58,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de recetas"></mat-paginator>
 } @else {
   <p>No hay recetas disponibles</p>
 }

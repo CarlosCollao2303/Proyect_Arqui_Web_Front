@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -11,7 +11,7 @@ import { Examenesservice } from '../../../services/examenesservice';
 @Component({
   selector: 'app-einsertarcomponent',
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatDatepickerModule, MatButtonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './einsertarcomponent.html',
   styleUrl: './einsertarcomponent.css',
 })
@@ -19,7 +19,6 @@ export class Einsertarcomponent implements OnInit {
   formExamenes: FormGroup;
   mensaje = '';
   isEditing = false;
-  private examenId = 0;
 
   constructor(
     private service: Examenesservice,
@@ -27,8 +26,9 @@ export class Einsertarcomponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.formExamenes = this.fb.nonNullable.group({
+      idExamen: [0],
       tipoExamen: ['', Validators.required],
-      resultado: ['', Validators.required],
+      descripcion: ['', Validators.required],
       fechaSolicitud: [new Date(), Validators.required],
       fechaResultado: [new Date(), Validators.required],
     });
@@ -38,7 +38,6 @@ export class Einsertarcomponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (Number.isInteger(id) && id > 0) {
       this.isEditing = true;
-      this.examenId = id;
       this.service.getExamenById(id).subscribe({
         next: (examen) => {
           this.formExamenes.patchValue({
@@ -61,7 +60,7 @@ export class Einsertarcomponent implements OnInit {
     }
 
     const examen: Examenes = {
-      idExamen: this.isEditing ? this.examenId : 0,
+      idExamen: this.isEditing ? this.formExamenes.getRawValue().idExamen : 0,
       ...this.formExamenes.getRawValue(),
     };
 
