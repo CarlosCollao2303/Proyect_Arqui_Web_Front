@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button'
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
@@ -9,13 +10,16 @@ import { Tratamientosservice } from '../../../services/tratamientosservice';
 
 @Component({
   selector: 'app-tlistarcomponent',
-  imports: [MatIconModule, MatButtonModule, MatTableModule, RouterLink],
+  imports: [MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
   templateUrl: './tlistarcomponent.html',
   styleUrl: './tlistarcomponent.css',
 })
 export class Tlistarcomponent implements OnInit {
   displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'actualizar', 'eliminar'];
-  dataSource: Tratamientos[] = [];
+  dataSource = new MatTableDataSource<Tratamientos>([]);
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) this.dataSource.paginator = paginator;
+  }
   mensajeBusqueda = '';
   constructor(private sService: Tratamientosservice,
     private cdr: ChangeDetectorRef
@@ -29,7 +33,8 @@ export class Tlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.sService.getListTratamientos().subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
       error: (err) => {
@@ -48,12 +53,14 @@ export class Tlistarcomponent implements OnInit {
 
     this.sService.getTratamientoById(id).subscribe({
       next: (tratamiento) => {
-        this.dataSource = [tratamiento];
+        this.dataSource.data = [tratamiento];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = '';
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.dataSource = [];
+        this.dataSource.data = [];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = `No se encontró el tratamiento: ${error.message}`;
         this.cdr.detectChanges();
       },

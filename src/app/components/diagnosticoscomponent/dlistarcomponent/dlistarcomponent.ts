@@ -1,21 +1,25 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 
 @Component({
   selector: 'app-dlistarcomponent',
-  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, RouterLink],
+  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
   templateUrl: './dlistarcomponent.html',
   styleUrl: './dlistarcomponent.css',
 })
 export class Dlistarcomponent implements OnInit {
-  displayedColumns = ['idDiagnostico', 'codigoCie10', 'descripcion', 'fechaRegistro', 'actualizar', 'eliminar'];
-  dataSource: Diagnosticos[] = [];
+  displayedColumns = ['idDiagnostico', 'codigoCie10', 'descripcion', 'fechaRegistro', 'detalle', 'actualizar', 'eliminar'];
+  dataSource = new MatTableDataSource<Diagnosticos>([]);
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) this.dataSource.paginator = paginator;
+  }
   mensajeBusqueda = '';
 
   constructor(
@@ -31,7 +35,8 @@ export class Dlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListDiagnosticos().subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -50,12 +55,14 @@ export class Dlistarcomponent implements OnInit {
 
     this.service.getDiagnosticoById(id).subscribe({
       next: (diagnostico) => {
-        this.dataSource = [diagnostico];
+        this.dataSource.data = [diagnostico];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = '';
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.dataSource = [];
+        this.dataSource.data = [];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = `No se encontró el diagnóstico: ${error.message}`;
         this.cdr.detectChanges();
       },

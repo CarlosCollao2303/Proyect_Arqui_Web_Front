@@ -4,6 +4,12 @@
     </div>
     <div>
         <form [formGroup]="formTratamientos" (ngSubmit)="insertarTratamiento()">
+            @if (isEditing) {
+            <mat-form-field>
+                <mat-label>ID del tratamiento</mat-label>
+                <input matInput type="number" formControlName="idTratamiento" readonly>
+            </mat-form-field>
+            }
             <mat-form-field class="example-full-width">
                 <mat-label>Descripcion</mat-label>
                 <input matInput placeholder="Descripcion" formControlName="descripcion">
@@ -35,6 +41,9 @@
             </mat-form-field>
             <br>
             <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+            @if (isEditing) {
+            <button matButton type="button" class="btn-cancelar" routerLink="/tratamientos/listar">Cancelar</button>
+            }
         </form>
         <p>{{ mensaje }}</p>
     </div>

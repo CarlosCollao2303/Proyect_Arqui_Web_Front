@@ -1,5 +1,11 @@
 <h2>{{ isEditing ? 'Actualizar receta' : 'Registrar receta' }}</h2>
 <form [formGroup]="formRecetas" (ngSubmit)="insertarReceta()">
+  @if (isEditing) {
+    <mat-form-field>
+      <mat-label>ID de la receta</mat-label>
+      <input matInput type="number" formControlName="idReceta" readonly>
+    </mat-form-field>
+  }
   <mat-form-field>
     <mat-label>Medicamento</mat-label>
     <input matInput formControlName="medicamento">
@@ -27,5 +33,8 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <button matButton type="submit">{{ isEditing ? 'Actualizar' : 'Guardar' }}</button>
+  @if (isEditing) {
+    <button matButton type="button" class="btn-cancelar" routerLink="/recetas/listar">Cancelar</button>
+  }
 </form>
 <p>{{ mensaje }}</p>

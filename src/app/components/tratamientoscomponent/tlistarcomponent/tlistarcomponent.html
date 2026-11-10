@@ -9,7 +9,7 @@
         <p>{{ mensajeBusqueda }}</p>
     }
     <div>
-        @if(dataSource.length > 0){
+        @if(dataSource.data.length > 0){
         <!--Tabla-->
         <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
 
@@ -68,6 +68,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons aria-label="Paginación de tratamientos"></mat-paginator>
         }@else {
         <p>No hay tratamientos disponibles</p>
         }

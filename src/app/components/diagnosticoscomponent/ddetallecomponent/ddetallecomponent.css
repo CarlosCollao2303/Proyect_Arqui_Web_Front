@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  max-width: 700px;
+  margin: 35px auto;
+  padding: 25px 30px;
+  color: var(--color-text);
+  font-family: Arial, sans-serif;
+}
+
+.detalle-card {
+  padding: 24px;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(36, 55, 70, 0.1);
+}
+
+h2 {
+  margin: 0 0 20px;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+dl {
+  margin: 0;
+}
+
+dl div {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+dt {
+  margin-bottom: 6px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+dd {
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 180px;
+  margin-top: 20px;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.volver-button {
+  --mat-text-button-label-text-color: var(--color-surface);
+  --mdc-text-button-label-text-color: var(--color-surface);
+}
+
+.volver-button-label {
+  display: inline-block;
+  color: var(--color-surface);
+  white-space: nowrap;
+}
+
+.mensaje-error {
+  color: var(--color-error);
+}
+
+@media (max-width: 600px) {
+  :host {
+    margin: 15px;
+    padding: 12px;
+  }
+
+  .detalle-card {
+    padding: 20px;
+  }
+}

@@ -1,21 +1,25 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
 
 @Component({
   selector: 'app-elistarcomponent',
-  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, RouterLink],
+  imports: [DatePipe, MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink],
   templateUrl: './elistarcomponent.html',
   styleUrl: './elistarcomponent.css',
 })
 export class Elistarcomponent implements OnInit {
-  displayedColumns = ['idExamen', 'tipoExamen', 'resultado', 'fechaSolicitud', 'fechaResultado', 'actualizar', 'eliminar'];
-  dataSource: Examenes[] = [];
+  displayedColumns = ['idExamen', 'tipoExamen', 'descripcion', 'fechaSolicitud', 'fechaResultado', 'actualizar', 'eliminar'];
+  dataSource = new MatTableDataSource<Examenes>([]);
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) this.dataSource.paginator = paginator;
+  }
   mensajeBusqueda = '';
 
   constructor(
@@ -31,7 +35,8 @@ export class Elistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListExamenes().subscribe({
       next: (data) => {
-        this.dataSource = data;
+        this.dataSource.data = data;
+        this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -50,12 +55,14 @@ export class Elistarcomponent implements OnInit {
 
     this.service.getExamenById(id).subscribe({
       next: (examen) => {
-        this.dataSource = [examen];
+        this.dataSource.data = [examen];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = '';
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.dataSource = [];
+        this.dataSource.data = [];
+        this.dataSource.paginator?.firstPage();
         this.mensajeBusqueda = `No se encontró el examen: ${error.message}`;
         this.cdr.detectChanges();
       },
