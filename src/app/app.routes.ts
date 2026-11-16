@@ -87,4 +87,14 @@ export const routes: Routes = [
             { path: 'actualizar/:id', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
         ],
     },
+    {
+        path: 'detallehistorial',
+        loadComponent: () => import('./components/detallehistorialcomponent/detallehistorialcomponent').then((module) => module.Detallehistorialcomponent),
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', loadComponent: () => import('./components/detallehistorialcomponent/dhlistarcomponent/dhlistarcomponent').then((module) => module.Dhlistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/detallehistorialcomponent/dhinsertarcomponent/dhinsertarcomponent').then((module) => module.Dhinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/detallehistorialcomponent/dhinsertarcomponent/dhinsertarcomponent').then((module) => module.Dhinsertarcomponent) },
+        ],
+    },
 ];

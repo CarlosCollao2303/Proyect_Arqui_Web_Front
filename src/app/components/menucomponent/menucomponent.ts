@@ -11,6 +11,7 @@ import {
   LucideHeartPulse,
   LucideHouse,
   LucideList,
+  LucideNotebookPen,
   LucidePill,
   LucideStethoscope,
 } from '@lucide/angular';
@@ -28,7 +29,8 @@ import {
     LucideHeartPulse,
     LucideHouse,
     LucideList,
-      LucidePill,
+    LucideNotebookPen,
+    LucidePill,
     LucideStethoscope,
   ],
   templateUrl: './menucomponent.html',
