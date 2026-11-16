@@ -1,0 +1,95 @@
+<h2>{{ isEditing ? 'Actualizar detalle de historial' : 'Registrar detalle de historial' }}</h2>
+<form [formGroup]="formDetalle" (ngSubmit)="insertarDetalle()">
+  @if (isEditing) {
+  <mat-form-field>
+    <mat-label>ID del detalle</mat-label>
+    <input matInput type="number" formControlName="idDetalleHistorial" readonly>
+  </mat-form-field>
+  }
+
+  <!-- Llaves foráneas obligatorias -->
+  <mat-form-field>
+    <mat-label>Historia clínica</mat-label>
+    <mat-select formControlName="historia">
+      @for (h of listaHistorias; track h.idHistoriaClinica) {
+      <mat-option [value]="h.idHistoriaClinica">Historia #{{ h.idHistoriaClinica }} - {{ nombrePaciente(h.idPaciente) }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Médico</mat-label>
+    <mat-select formControlName="medico">
+      @for (m of medicos(); track m.idUsuario) {
+      <mat-option [value]="m.idUsuario">{{ m.nombres }} {{ m.apellidos }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Llaves foráneas opcionales -->
+  <mat-form-field>
+    <mat-label>Examen (opcional)</mat-label>
+    <mat-select formControlName="examen">
+      <mat-option [value]="null">Ninguno</mat-option>
+      @for (e of listaExamenes; track e.idExamen) {
+      <mat-option [value]="e.idExamen">#{{ e.idExamen }} - {{ e.tipoExamen }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Diagnóstico (opcional)</mat-label>
+    <mat-select formControlName="diagnostico">
+      <mat-option [value]="null">Ninguno</mat-option>
+      @for (d of listaDiagnosticos; track d.idDiagnostico) {
+      <mat-option [value]="d.idDiagnostico">{{ d.codigoCie10 }} - {{ d.descripcion }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Tratamiento (opcional)</mat-label>
+    <mat-select formControlName="tratamiento">
+      <mat-option [value]="null">Ninguno</mat-option>
+      @for (t of listaTratamientos; track t.idTratamiento) {
+      <mat-option [value]="t.idTratamiento">#{{ t.idTratamiento }} - {{ t.descripcion }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Receta (opcional)</mat-label>
+    <mat-select formControlName="receta">
+      <mat-option [value]="null">Ninguna</mat-option>
+      @for (r of listaRecetas; track r.idReceta) {
+      <mat-option [value]="r.idReceta">#{{ r.idReceta }} - {{ r.medicamento }} ({{ r.dosis }})</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Campos propios de la tabla -->
+  <mat-form-field>
+    <mat-label>Motivo de consulta</mat-label>
+    <textarea matInput formControlName="motivoConsulta"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Datos cifrados / notas confidenciales (opcional)</mat-label>
+    <textarea matInput formControlName="cifradoDatos"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Fecha de registro</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fechaRegistro">
+    <mat-datepicker-toggle matIconSuffix [for]="picker">
+      <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
+    </mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button matButton type="submit" class="btn-primary">
+    <svg lucideSave aria-hidden="true"></svg>
+    {{ isEditing ? 'Actualizar' : 'Guardar' }}
+  </button>
+  @if (isEditing) {
+  <button matButton type="button" class="btn-outline" routerLink="/detallehistorial/listar">
+    <svg lucideCircleX aria-hidden="true"></svg>
+    Cancelar
+  </button>
+  }
+</form>
+<p>{{ mensaje }}</p>
