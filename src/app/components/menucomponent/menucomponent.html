@@ -58,5 +58,14 @@
       <button mat-menu-item routerLink="/historiasclinicas/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/historiasclinicas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuEspecialidades">
+      <svg lucideStethoscope size="20" aria-hidden="true"></svg>
+      <span>Especialidades</span>
+    </button>
+    <mat-menu #menuEspecialidades="matMenu">
+      <button mat-menu-item routerLink="/especialidades/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
+      <button mat-menu-item routerLink="/especialidades/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
+    </mat-menu>
+
   </mat-toolbar>
 </div>

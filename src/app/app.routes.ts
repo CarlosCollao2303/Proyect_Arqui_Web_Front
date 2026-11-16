@@ -77,4 +77,14 @@ export const routes: Routes = [
             { path: 'insertar', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent) },
         ],
     },
+    {
+        path: 'especialidades',
+        loadComponent: () => import('./components/especialidadescomponent/especialidadescomponent').then((module) => module.Especialidadescomponent),
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', loadComponent: () => import('./components/especialidadescomponent/eslistarcomponent/eslistarcomponent').then((module) => module.Eslistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
+        ],
+    },
 ];
