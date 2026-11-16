@@ -1,0 +1,41 @@
+<h2>Listado de especialidades</h2>
+<div class="busqueda-id">
+  <input #idEspecialidad type="number" min="1" placeholder="ID de la especialidad">
+  <button matButton type="button" class="btn-secondary" (click)="buscarEspecialidad(idEspecialidad.value)">
+    <svg lucideSearch aria-hidden="true"></svg>
+    Buscar por ID
+  </button>
+  <button matButton type="button" class="btn-outline" (click)="obtenerEspecialidades()">
+    <svg lucideRefreshCw aria-hidden="true"></svg>
+    Mostrar todos
+  </button>
+</div>
+@if (mensajeBusqueda) {
+<p>{{ mensajeBusqueda }}</p>
+}
+@if (dataSource.data.length > 0) {
+<div class="especialidades-grid">
+  @for (item of dataSource.connect() | async; track item.idEspecialidad) {
+  <mat-card class="especialidad-card">
+    <mat-card-header>
+      <mat-card-title>{{ item.nombre }}</mat-card-title>
+      <mat-card-subtitle>Especialidad #{{ item.idEspecialidad }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar especialidad"
+        [routerLink]="['/especialidades/actualizar', item.idEspecialidad]">
+        <svg lucidePencil size="18" aria-hidden="true"></svg>
+      </button>
+      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar especialidad"
+        (click)="eliminarEspecialidad(item.idEspecialidad)">
+        <svg lucideTrash size="18" aria-hidden="true"></svg>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+  aria-label="Paginación de especialidades"></mat-paginator>
+} @else {
+<p>No hay especialidades disponibles</p>
+}
