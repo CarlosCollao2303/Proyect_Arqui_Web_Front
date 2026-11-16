@@ -1,0 +1,50 @@
+<h2>Listado de detalles de historial</h2>
+<div class="busqueda-id">
+  <input #idDetalle type="number" min="1" placeholder="ID del detalle">
+  <button matButton type="button" class="btn-secondary" (click)="buscarDetalle(idDetalle.value)">
+    <svg lucideSearch aria-hidden="true"></svg>
+    Buscar por ID
+  </button>
+  <button matButton type="button" class="btn-outline" (click)="obtenerDetalles()">
+    <svg lucideRefreshCw aria-hidden="true"></svg>
+    Mostrar todos
+  </button>
+</div>
+@if (mensajeBusqueda) {
+<p>{{ mensajeBusqueda }}</p>
+}
+@if (dataSource.data.length > 0) {
+<div class="detalles-grid">
+  @for (item of dataSource.connect() | async; track item.idDetalleHistorial) {
+  <mat-card class="detalle-card">
+    <mat-card-header>
+      <mat-card-title>{{ item.motivoConsulta }}</mat-card-title>
+      <mat-card-subtitle>Detalle #{{ item.idDetalleHistorial }} · Historia #{{ item.idHistoriaClinica }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Paciente:</strong> {{ nombrePaciente(item.idHistoriaClinica) }}</p>
+      <p><strong>Médico:</strong> {{ nombreUsuario(item.idMedico) }}</p>
+      <p><strong>Examen:</strong> {{ nombreExamen(item.idExamen) }}</p>
+      <p><strong>Diagnóstico:</strong> {{ nombreDiagnostico(item.idDiagnostico) }}</p>
+      <p><strong>Tratamiento:</strong> {{ nombreTratamiento(item.idTratamiento) }}</p>
+      <p><strong>Receta:</strong> {{ nombreReceta(item.idReceta) }}</p>
+      <p><strong>Fecha de registro:</strong> {{ item.fechaRegistro | date:'shortDate':'UTC' }}</p>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar detalle"
+        [routerLink]="['/detallehistorial/actualizar', item.idDetalleHistorial]">
+        <svg lucidePencil size="18" aria-hidden="true"></svg>
+      </button>
+      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar detalle"
+        (click)="eliminarDetalle(item.idDetalleHistorial)">
+        <svg lucideTrash size="18" aria-hidden="true"></svg>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+  aria-label="Paginación de detalles de historial"></mat-paginator>
+} @else {
+<p>No hay detalles de historial disponibles</p>
+}
