@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { LucideEye, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Recetas } from '../../../models/Recetas';
 import { Recetasservice } from '../../../services/recetasservice';
-import { ordenarListado } from '../../../utils/listados';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-rlistarcomponent',
@@ -22,6 +22,8 @@ export class Rlistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(
     private service: Recetasservice,
@@ -36,7 +38,7 @@ export class Rlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListRecetas().subscribe({
       next: (data) => {
-        this.dataSource.data = ordenarListado(data, (r) => r.idReceta);
+        this.dataSource.data = ordenarListado(data, (r) => r.idReceta, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

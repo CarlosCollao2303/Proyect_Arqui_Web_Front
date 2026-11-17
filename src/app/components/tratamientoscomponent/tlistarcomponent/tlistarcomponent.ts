@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { LucideCircleCheck, LucideClock3, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
-import { ordenarListado } from '../../../utils/listados';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 
 @Component({
@@ -22,6 +22,8 @@ export class Tlistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
   constructor(private sService: Tratamientosservice,
     private cdr: ChangeDetectorRef
   ) { }
@@ -34,7 +36,7 @@ export class Tlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.sService.getListTratamientos().subscribe({
       next: (data) => {
-        this.dataSource.data = ordenarListado(data, (t) => t.idTratamiento);
+        this.dataSource.data = ordenarListado(data, (t) => t.idTratamiento, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

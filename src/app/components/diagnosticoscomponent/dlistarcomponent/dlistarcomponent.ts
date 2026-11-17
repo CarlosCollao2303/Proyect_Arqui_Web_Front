@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { LucideEye, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
-import { ordenarListado } from '../../../utils/listados';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-dlistarcomponent',
@@ -22,6 +22,8 @@ export class Dlistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(
     private service: Diagnosticosservice,
@@ -36,7 +38,7 @@ export class Dlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListDiagnosticos().subscribe({
       next: (data) => {
-        this.dataSource.data = ordenarListado(data, (d) => d.idDiagnostico);
+        this.dataSource.data = ordenarListado(data, (d) => d.idDiagnostico, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

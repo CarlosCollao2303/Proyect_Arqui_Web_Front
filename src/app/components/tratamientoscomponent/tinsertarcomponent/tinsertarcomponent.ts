@@ -79,7 +79,7 @@ export class Tinsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/tratamientos/listar']);
+          this.router.navigate(['/tratamientos/listar'], { state: { idActualizado: tra.idTratamiento } });
           return;
         }
         this.mensaje = 'Tratamiento insertado correctamente.';

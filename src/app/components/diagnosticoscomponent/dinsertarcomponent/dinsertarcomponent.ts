@@ -74,7 +74,7 @@ export class Dinsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/diagnosticos/listar']);
+          this.router.navigate(['/diagnosticos/listar'], { state: { idActualizado: diagnostico.idDiagnostico } });
           return;
         }
         this.mensaje = 'Diagnóstico registrado correctamente.';

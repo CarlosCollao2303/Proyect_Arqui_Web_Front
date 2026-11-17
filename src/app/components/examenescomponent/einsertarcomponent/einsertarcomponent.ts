@@ -77,7 +77,7 @@ export class Einsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/examenes/listar']);
+          this.router.navigate(['/examenes/listar'], { state: { idActualizado: examen.idExamen } });
           return;
         }
         this.mensaje = 'Examen registrado correctamente.';

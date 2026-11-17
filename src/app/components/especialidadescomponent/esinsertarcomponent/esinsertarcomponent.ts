@@ -66,7 +66,7 @@ export class Esinsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/especialidades/listar']);
+          this.router.navigate(['/especialidades/listar'], { state: { idActualizado: especialidad.idEspecialidad } });
           return;
         }
         this.mensaje = 'Especialidad registrada correctamente.';

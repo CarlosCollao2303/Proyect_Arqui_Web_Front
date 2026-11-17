@@ -54,7 +54,7 @@
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.registro-actualizado]="row.idExamen === idActualizado"></tr>
 </table>
 <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
   aria-label="Paginación de exámenes"></mat-paginator>

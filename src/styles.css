@@ -223,3 +223,18 @@ button.mat-mdc-icon-button.btn-icon-danger:hover {
   vertical-align: middle;
   color: var(--color-secondary);
 }
+
+/* Registro recién actualizado: queda primero en su listado y resaltado para no perderlo */
+tr.registro-actualizado {
+  background-color: var(--color-primary-light) !important;
+}
+
+tr.registro-actualizado td:first-child {
+  box-shadow: inset 4px 0 0 var(--color-secondary);
+}
+
+mat-card.registro-actualizado {
+  background-color: var(--color-primary-light) !important;
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}

@@ -77,7 +77,7 @@ export class Rinsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/recetas/listar']);
+          this.router.navigate(['/recetas/listar'], { state: { idActualizado: receta.idReceta } });
           return;
         }
         this.mensaje = 'Receta registrada correctamente.';

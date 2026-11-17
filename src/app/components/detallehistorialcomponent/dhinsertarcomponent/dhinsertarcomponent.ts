@@ -153,7 +153,7 @@ export class Dhinsertarcomponent implements OnInit {
     request.subscribe({
       next: () => {
         if (this.isEditing) {
-          this.router.navigate(['/detallehistorial/listar']);
+          this.router.navigate(['/detallehistorial/listar'], { state: { idActualizado: detalle.idDetalleHistorial } });
           return;
         }
         this.mensaje = 'Detalle de historial registrado correctamente.';

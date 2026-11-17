@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
-import { ordenarListado } from '../../../utils/listados';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-elistarcomponent',
@@ -22,6 +22,8 @@ export class Elistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(
     private service: Examenesservice,
@@ -36,7 +38,7 @@ export class Elistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListExamenes().subscribe({
       next: (data) => {
-        this.dataSource.data = ordenarListado(data, (e) => e.idExamen);
+        this.dataSource.data = ordenarListado(data, (e) => e.idExamen, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
