@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -9,6 +9,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Tratamientos } from '../../../models/Tratamientos';
+import { fechaLocal } from '../../../utils/fechas';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class Tinsertarcomponent implements OnInit {
   constructor(private sT: Tratamientosservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formTratamientos = this.fb.group({
       idTratamiento: [0],
@@ -44,13 +47,15 @@ export class Tinsertarcomponent implements OnInit {
         next: (tratamiento) => {
           this.formTratamientos.patchValue({
             ...tratamiento,
-            fechaInicio: new Date(tratamiento.fechaInicio),
-            fechaFin: new Date(tratamiento.fechaFin),
+            fechaInicio: fechaLocal(tratamiento.fechaInicio),
+            fechaFin: fechaLocal(tratamiento.fechaFin),
             estado: this.normalizarEstado(tratamiento.estado),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el tratamiento: ${error.message}`;
+          this.mensaje = `Error al cargar el tratamiento: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -72,16 +77,19 @@ export class Tinsertarcomponent implements OnInit {
       ? this.sT.updateTratamiento(tra)
       : this.sT.insertTratamiento(tra);
     request.subscribe({
-      next: (respuesta) => {
-        this.mensaje = this.isEditing
-          ? 'Tratamiento actualizado correctamente.'
-          : 'Tratamiento insertado correctamente.';
-        if (this.isEditing) return;
+      next: () => {
+        if (this.isEditing) {
+          this.router.navigate(['/tratamientos/listar'], { state: { idActualizado: tra.idTratamiento } });
+          return;
+        }
+        this.mensaje = 'Tratamiento insertado correctamente.';
         this.formTratamientos.reset({
           estado: 'Activo',
-        })
+        });
+        this.cdr.detectChanges();
       }, error: (error) => {
-        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       }
     })
   }

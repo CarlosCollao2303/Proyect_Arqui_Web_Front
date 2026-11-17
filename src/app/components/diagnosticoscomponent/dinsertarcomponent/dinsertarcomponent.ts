@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-dinsertarcomponent',
@@ -25,6 +26,8 @@ export class Dinsertarcomponent implements OnInit {
     private service: Diagnosticosservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formDiagnosticos = this.fb.nonNullable.group({
       idDiagnostico: [0],
@@ -42,11 +45,13 @@ export class Dinsertarcomponent implements OnInit {
         next: (diagnostico) => {
           this.formDiagnosticos.patchValue({
             ...diagnostico,
-            fechaRegistro: new Date(diagnostico.fechaRegistro),
+            fechaRegistro: fechaLocal(diagnostico.fechaRegistro),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el diagnóstico: ${error.message}`;
+          this.mensaje = `Error al cargar el diagnóstico: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -68,13 +73,17 @@ export class Dinsertarcomponent implements OnInit {
       : this.service.insertDiagnostico(diagnostico);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Diagnóstico actualizado correctamente.'
-          : 'Diagnóstico registrado correctamente.';
-        if (!this.isEditing) this.formDiagnosticos.reset({ fechaRegistro: new Date() });
+        if (this.isEditing) {
+          this.router.navigate(['/diagnosticos/listar'], { state: { idActualizado: diagnostico.idDiagnostico } });
+          return;
+        }
+        this.mensaje = 'Diagnóstico registrado correctamente.';
+        this.formDiagnosticos.reset({ fechaRegistro: new Date() });
+        this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al registrar el diagnóstico: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} el diagnóstico: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

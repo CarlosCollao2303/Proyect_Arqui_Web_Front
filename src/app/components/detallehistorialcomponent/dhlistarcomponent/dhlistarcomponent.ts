@@ -20,6 +20,7 @@ import { Examenesservice } from '../../../services/examenesservice';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Recetasservice } from '../../../services/recetasservice';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-dhlistarcomponent',
@@ -33,6 +34,8 @@ export class Dhlistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   // Listas de las tablas foráneas, para mostrar nombres en vez de solo IDs
   listaUsuarios: Usuarios[] = [];
@@ -102,7 +105,7 @@ export class Dhlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListDetalles().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (d) => d.idDetalleHistorial, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

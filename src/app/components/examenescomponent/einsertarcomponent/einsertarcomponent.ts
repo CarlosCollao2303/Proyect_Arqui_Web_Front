@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-einsertarcomponent',
@@ -25,13 +26,16 @@ export class Einsertarcomponent implements OnInit {
     private service: Examenesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formExamenes = this.fb.nonNullable.group({
       idExamen: [0],
       tipoExamen: ['', Validators.required],
       descripcion: ['', Validators.required],
       fechaSolicitud: [new Date(), Validators.required],
-      fechaResultado: [new Date(), Validators.required],
+      // Opcional: vacío = examen pendiente (el back acepta null).
+      fechaResultado: [null as Date | null],
     });
   }
 
@@ -43,12 +47,14 @@ export class Einsertarcomponent implements OnInit {
         next: (examen) => {
           this.formExamenes.patchValue({
             ...examen,
-            fechaSolicitud: new Date(examen.fechaSolicitud),
-            fechaResultado: new Date(examen.fechaResultado),
+            fechaSolicitud: fechaLocal(examen.fechaSolicitud),
+            fechaResultado: fechaLocal(examen.fechaResultado),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el examen: ${error.message}`;
+          this.mensaje = `Error al cargar el examen: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -70,18 +76,20 @@ export class Einsertarcomponent implements OnInit {
       : this.service.insertExamen(examen);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Examen actualizado correctamente.'
-          : 'Examen registrado correctamente.';
-        if (!this.isEditing) {
-          this.formExamenes.reset({
-            fechaSolicitud: new Date(),
-            fechaResultado: new Date(),
-          });
+        if (this.isEditing) {
+          this.router.navigate(['/examenes/listar'], { state: { idActualizado: examen.idExamen } });
+          return;
         }
+        this.mensaje = 'Examen registrado correctamente.';
+        this.formExamenes.reset({
+          fechaSolicitud: new Date(),
+          fechaResultado: null,
+        });
+        this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al registrar el examen: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} el examen: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

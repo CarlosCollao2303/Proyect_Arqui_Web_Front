@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,6 +22,8 @@ export class Esinsertarcomponent implements OnInit {
     private service: Especialidadesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formEspecialidades = this.fb.nonNullable.group({
       idEspecialidad: [0],
@@ -35,9 +37,13 @@ export class Esinsertarcomponent implements OnInit {
     if (Number.isInteger(id) && id > 0) {
       this.isEditing = true;
       this.service.getEspecialidadById(id).subscribe({
-        next: (especialidad) => this.formEspecialidades.patchValue(especialidad),
+        next: (especialidad) => {
+          this.formEspecialidades.patchValue(especialidad);
+          this.cdr.detectChanges();
+        },
         error: (error) => {
           this.mensaje = `Error al cargar la especialidad: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -59,15 +65,17 @@ export class Esinsertarcomponent implements OnInit {
       : this.service.insertEspecialidad(especialidad);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Especialidad actualizada correctamente.'
-          : 'Especialidad registrada correctamente.';
-        if (!this.isEditing) {
-          this.formEspecialidades.reset();
+        if (this.isEditing) {
+          this.router.navigate(['/especialidades/listar'], { state: { idActualizado: especialidad.idEspecialidad } });
+          return;
         }
+        this.mensaje = 'Especialidad registrada correctamente.';
+        this.formEspecialidades.reset();
+        this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al guardar la especialidad: ${error.error?.message ?? error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} la especialidad: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

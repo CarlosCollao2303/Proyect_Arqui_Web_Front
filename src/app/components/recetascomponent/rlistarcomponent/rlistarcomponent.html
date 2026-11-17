@@ -16,7 +16,7 @@
 @if (dataSource.data.length > 0) {
 <div class="recetas-grid">
   @for (item of dataSource.connect() | async; track item.idReceta) {
-  <mat-card class="receta-card">
+  <mat-card class="receta-card" [class.registro-actualizado]="item.idReceta === idActualizado">
     <mat-card-header>
       <mat-card-title>{{ item.medicamento }}</mat-card-title>
       <mat-card-subtitle>Receta #{{ item.idReceta }}</mat-card-subtitle>

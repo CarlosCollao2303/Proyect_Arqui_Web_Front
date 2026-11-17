@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Especialidades } from '../../../models/Especialidades';
 import { Especialidadesservice } from '../../../services/especialidadesservice';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-eslistarcomponent',
@@ -21,6 +22,8 @@ export class Eslistarcomponent implements OnInit {
     if (paginator) this.dataSource.paginator = paginator;
   }
   mensajeBusqueda = '';
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(
     private service: Especialidadesservice,
@@ -35,7 +38,7 @@ export class Eslistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListEspecialidades().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (e) => e.idEspecialidad, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
