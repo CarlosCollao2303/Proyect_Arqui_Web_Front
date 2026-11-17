@@ -89,6 +89,15 @@ export const routes: Routes = [
         ],
     },
     {
+        path: 'notificaciones',
+        loadComponent: () => import('./components/notificacionescomponent/notificacionescomponent').then((module) => module.Notificacionescomponent),
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', loadComponent: () => import('./components/notificacionescomponent/nlistarcomponent/nlistarcomponent').then((module) => module.Nlistarcomponent) },
+            { path: 'enviar', loadComponent: () => import('./components/notificacionescomponent/nenviarcomponent/nenviarcomponent').then((module) => module.Nenviarcomponent) },
+        ],
+    },
+    {
         path: 'detallehistorial',
         loadComponent: () => import('./components/detallehistorialcomponent/detallehistorialcomponent').then((module) => module.Detallehistorialcomponent),
         children: [

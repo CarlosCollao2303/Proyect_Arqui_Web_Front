@@ -75,5 +75,14 @@
       <button mat-menu-item routerLink="/detallehistorial/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/detallehistorial/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
+
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuNotificaciones">
+      <svg lucideBell size="20" aria-hidden="true"></svg>
+      <span>Notificaciones</span>
+    </button>
+    <mat-menu #menuNotificaciones="matMenu">
+      <button mat-menu-item routerLink="/notificaciones/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
+      <button mat-menu-item routerLink="/notificaciones/enviar"><svg lucideSend aria-hidden="true"></svg>Enviar correo</button>
+    </mat-menu>
   </mat-toolbar>
 </div>
