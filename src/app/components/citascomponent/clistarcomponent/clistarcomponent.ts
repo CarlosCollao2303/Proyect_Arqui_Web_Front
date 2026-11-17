@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { LucideCircleCheck, LucideCircleX, LucideClock3 } from '@lucide/angular';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { LucideCircleCheck, LucideCircleX, LucideClock3, LucideVideo } from '@lucide/angular';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Citasservice } from '../../../services/citasservice';
@@ -9,12 +11,12 @@ import { Usuariosservice } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-clistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule, LucideCircleCheck, LucideCircleX, LucideClock3],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucideCircleCheck, LucideCircleX, LucideClock3, LucideVideo],
   templateUrl: './clistarcomponent.html',
   styleUrl: './clistarcomponent.css',
 })
 export class Clistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'videollamada'];
   dataSource = new MatTableDataSource<Citas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
