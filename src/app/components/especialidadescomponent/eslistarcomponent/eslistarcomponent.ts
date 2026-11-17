@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Especialidades } from '../../../models/Especialidades';
 import { Especialidadesservice } from '../../../services/especialidadesservice';
+import { ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-eslistarcomponent',
@@ -35,7 +36,7 @@ export class Eslistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListEspecialidades().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (e) => e.idEspecialidad);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

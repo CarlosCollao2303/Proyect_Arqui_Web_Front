@@ -20,6 +20,7 @@ import { Examenesservice } from '../../../services/examenesservice';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Recetasservice } from '../../../services/recetasservice';
+import { ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-dhlistarcomponent',
@@ -102,7 +103,7 @@ export class Dhlistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListDetalles().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (d) => d.idDetalleHistorial);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

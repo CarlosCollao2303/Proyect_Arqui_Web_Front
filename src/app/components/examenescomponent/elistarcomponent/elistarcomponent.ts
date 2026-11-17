@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
+import { ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-elistarcomponent',
@@ -35,7 +36,7 @@ export class Elistarcomponent implements OnInit {
     this.mensajeBusqueda = '';
     this.service.getListExamenes().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (e) => e.idExamen);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
