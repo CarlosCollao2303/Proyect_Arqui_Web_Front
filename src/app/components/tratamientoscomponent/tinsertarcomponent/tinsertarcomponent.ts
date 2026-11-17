@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -27,6 +27,7 @@ export class Tinsertarcomponent implements OnInit {
   constructor(private sT: Tratamientosservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formTratamientos = this.fb.group({
@@ -76,15 +77,16 @@ export class Tinsertarcomponent implements OnInit {
       ? this.sT.updateTratamiento(tra)
       : this.sT.insertTratamiento(tra);
     request.subscribe({
-      next: (respuesta) => {
-        this.mensaje = this.isEditing
-          ? 'Tratamiento actualizado correctamente.'
-          : 'Tratamiento insertado correctamente.';
-        this.cdr.detectChanges();
-        if (this.isEditing) return;
+      next: () => {
+        if (this.isEditing) {
+          this.router.navigate(['/tratamientos/listar']);
+          return;
+        }
+        this.mensaje = 'Tratamiento insertado correctamente.';
         this.formTratamientos.reset({
           estado: 'Activo',
-        })
+        });
+        this.cdr.detectChanges();
       }, error: (error) => {
         this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();

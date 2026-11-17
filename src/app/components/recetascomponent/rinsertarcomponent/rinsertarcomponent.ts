@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -26,6 +26,7 @@ export class Rinsertarcomponent implements OnInit {
     private service: Recetasservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formRecetas = this.fb.nonNullable.group({
@@ -75,12 +76,12 @@ export class Rinsertarcomponent implements OnInit {
       : this.service.insertReceta(receta);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Receta actualizada correctamente.'
-          : 'Receta registrada correctamente.';
-        if (!this.isEditing) {
-          this.formRecetas.reset({ duracionDias: 1, fechaEmision: new Date() });
+        if (this.isEditing) {
+          this.router.navigate(['/recetas/listar']);
+          return;
         }
+        this.mensaje = 'Receta registrada correctamente.';
+        this.formRecetas.reset({ duracionDias: 1, fechaEmision: new Date() });
         this.cdr.detectChanges();
       },
       error: (error) => {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -57,6 +57,7 @@ export class Dhinsertarcomponent implements OnInit {
     private rS: Recetasservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formDetalle = this.fb.group({
@@ -151,12 +152,12 @@ export class Dhinsertarcomponent implements OnInit {
       : this.service.insertDetalle(detalle);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Detalle de historial actualizado correctamente.'
-          : 'Detalle de historial registrado correctamente.';
-        if (!this.isEditing) {
-          this.formDetalle.reset({ idDetalleHistorial: 0, fechaRegistro: new Date(), cifradoDatos: '' });
+        if (this.isEditing) {
+          this.router.navigate(['/detallehistorial/listar']);
+          return;
         }
+        this.mensaje = 'Detalle de historial registrado correctamente.';
+        this.formDetalle.reset({ idDetalleHistorial: 0, fechaRegistro: new Date(), cifradoDatos: '' });
         this.cdr.detectChanges();
       },
       error: (error) => {

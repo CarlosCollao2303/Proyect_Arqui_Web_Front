@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -26,6 +26,7 @@ export class Dinsertarcomponent implements OnInit {
     private service: Diagnosticosservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formDiagnosticos = this.fb.nonNullable.group({
@@ -72,10 +73,12 @@ export class Dinsertarcomponent implements OnInit {
       : this.service.insertDiagnostico(diagnostico);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Diagnóstico actualizado correctamente.'
-          : 'Diagnóstico registrado correctamente.';
-        if (!this.isEditing) this.formDiagnosticos.reset({ fechaRegistro: new Date() });
+        if (this.isEditing) {
+          this.router.navigate(['/diagnosticos/listar']);
+          return;
+        }
+        this.mensaje = 'Diagnóstico registrado correctamente.';
+        this.formDiagnosticos.reset({ fechaRegistro: new Date() });
         this.cdr.detectChanges();
       },
       error: (error) => {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -26,6 +26,7 @@ export class Einsertarcomponent implements OnInit {
     private service: Examenesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formExamenes = this.fb.nonNullable.group({
@@ -75,15 +76,15 @@ export class Einsertarcomponent implements OnInit {
       : this.service.insertExamen(examen);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Examen actualizado correctamente.'
-          : 'Examen registrado correctamente.';
-        if (!this.isEditing) {
-          this.formExamenes.reset({
-            fechaSolicitud: new Date(),
-            fechaResultado: null,
-          });
+        if (this.isEditing) {
+          this.router.navigate(['/examenes/listar']);
+          return;
         }
+        this.mensaje = 'Examen registrado correctamente.';
+        this.formExamenes.reset({
+          fechaSolicitud: new Date(),
+          fechaResultado: null,
+        });
         this.cdr.detectChanges();
       },
       error: (error) => {

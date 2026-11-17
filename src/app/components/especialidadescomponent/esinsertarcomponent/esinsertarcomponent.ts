@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,6 +22,7 @@ export class Esinsertarcomponent implements OnInit {
     private service: Especialidadesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private cdr: ChangeDetectorRef,
   ) {
     this.formEspecialidades = this.fb.nonNullable.group({
@@ -64,12 +65,12 @@ export class Esinsertarcomponent implements OnInit {
       : this.service.insertEspecialidad(especialidad);
     request.subscribe({
       next: () => {
-        this.mensaje = this.isEditing
-          ? 'Especialidad actualizada correctamente.'
-          : 'Especialidad registrada correctamente.';
-        if (!this.isEditing) {
-          this.formEspecialidades.reset();
+        if (this.isEditing) {
+          this.router.navigate(['/especialidades/listar']);
+          return;
         }
+        this.mensaje = 'Especialidad registrada correctamente.';
+        this.formEspecialidades.reset();
         this.cdr.detectChanges();
       },
       error: (error) => {
