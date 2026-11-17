@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +26,7 @@ export class Dinsertarcomponent implements OnInit {
     private service: Diagnosticosservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formDiagnosticos = this.fb.nonNullable.group({
       idDiagnostico: [0],
@@ -45,9 +46,11 @@ export class Dinsertarcomponent implements OnInit {
             ...diagnostico,
             fechaRegistro: fechaLocal(diagnostico.fechaRegistro),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
           this.mensaje = `Error al cargar el diagnóstico: ${error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -73,9 +76,11 @@ export class Dinsertarcomponent implements OnInit {
           ? 'Diagnóstico actualizado correctamente.'
           : 'Diagnóstico registrado correctamente.';
         if (!this.isEditing) this.formDiagnosticos.reset({ fechaRegistro: new Date() });
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.mensaje = `Error al registrar el diagnóstico: ${error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

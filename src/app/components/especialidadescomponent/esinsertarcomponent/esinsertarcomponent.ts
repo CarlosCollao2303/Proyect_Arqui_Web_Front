@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,7 @@ export class Esinsertarcomponent implements OnInit {
     private service: Especialidadesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formEspecialidades = this.fb.nonNullable.group({
       idEspecialidad: [0],
@@ -35,9 +36,13 @@ export class Esinsertarcomponent implements OnInit {
     if (Number.isInteger(id) && id > 0) {
       this.isEditing = true;
       this.service.getEspecialidadById(id).subscribe({
-        next: (especialidad) => this.formEspecialidades.patchValue(especialidad),
+        next: (especialidad) => {
+          this.formEspecialidades.patchValue(especialidad);
+          this.cdr.detectChanges();
+        },
         error: (error) => {
           this.mensaje = `Error al cargar la especialidad: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -65,9 +70,11 @@ export class Esinsertarcomponent implements OnInit {
         if (!this.isEditing) {
           this.formEspecialidades.reset();
         }
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.mensaje = `Error al guardar la especialidad: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +26,7 @@ export class Rinsertarcomponent implements OnInit {
     private service: Recetasservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formRecetas = this.fb.nonNullable.group({
       idReceta: [0],
@@ -48,9 +49,11 @@ export class Rinsertarcomponent implements OnInit {
             ...receta,
             fechaEmision: fechaLocal(receta.fechaEmision),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
           this.mensaje = `Error al cargar la receta: ${error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -78,9 +81,11 @@ export class Rinsertarcomponent implements OnInit {
         if (!this.isEditing) {
           this.formRecetas.reset({ duracionDias: 1, fechaEmision: new Date() });
         }
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.mensaje = `Error al registrar la receta: ${error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

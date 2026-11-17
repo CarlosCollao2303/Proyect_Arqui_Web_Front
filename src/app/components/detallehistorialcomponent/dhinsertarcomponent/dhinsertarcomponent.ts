@@ -98,6 +98,7 @@ export class Dhinsertarcomponent implements OnInit {
         },
         error: (error) => {
           this.mensaje = `Error al cargar el detalle: ${error.error?.message ?? error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -156,9 +157,11 @@ export class Dhinsertarcomponent implements OnInit {
         if (!this.isEditing) {
           this.formDetalle.reset({ idDetalleHistorial: 0, fechaRegistro: new Date(), cifradoDatos: '' });
         }
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.mensaje = `Error al guardar el detalle: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }

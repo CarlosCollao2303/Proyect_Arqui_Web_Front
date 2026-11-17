@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +26,7 @@ export class Einsertarcomponent implements OnInit {
     private service: Examenesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formExamenes = this.fb.nonNullable.group({
       idExamen: [0],
@@ -48,9 +49,11 @@ export class Einsertarcomponent implements OnInit {
             fechaSolicitud: fechaLocal(examen.fechaSolicitud),
             fechaResultado: fechaLocal(examen.fechaResultado),
           });
+          this.cdr.detectChanges();
         },
         error: (error) => {
           this.mensaje = `Error al cargar el examen: ${error.message}`;
+          this.cdr.detectChanges();
         },
       });
     }
@@ -81,9 +84,11 @@ export class Einsertarcomponent implements OnInit {
             fechaResultado: null,
           });
         }
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.mensaje = `Error al registrar el examen: ${error.message}`;
+        this.cdr.detectChanges();
       },
     });
   }
