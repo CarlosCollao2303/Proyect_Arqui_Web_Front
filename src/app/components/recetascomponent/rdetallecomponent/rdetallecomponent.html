@@ -1,0 +1,45 @@
+<section class="detalle-card">
+  <h2>Detalle de la receta</h2>
+
+  @if (receta) {
+  <dl>
+    <div>
+      <dt>ID</dt>
+      <dd>{{ receta.idReceta }}</dd>
+    </div>
+    <div>
+      <dt>Medicamento</dt>
+      <dd>{{ receta.medicamento }}</dd>
+    </div>
+    <div>
+      <dt>Dosis</dt>
+      <dd>{{ receta.dosis }}</dd>
+    </div>
+    <div>
+      <dt>Frecuencia</dt>
+      <dd>{{ receta.frecuencia }}</dd>
+    </div>
+    <div>
+      <dt>Duración</dt>
+      <dd>{{ receta.duracionDias }} días</dd>
+    </div>
+    <div>
+      <dt>Indicaciones</dt>
+      <dd>{{ receta.indicaciones || 'Sin indicaciones adicionales' }}</dd>
+    </div>
+    <div>
+      <dt>Fecha de emisión</dt>
+      <dd>{{ receta.fechaEmision | date:'longDate' }}</dd>
+    </div>
+  </dl>
+  } @else if (cargando) {
+  <p>Cargando receta...</p>
+  } @else if (mensajeError) {
+  <p class="mensaje-error">{{ mensajeError }}</p>
+  }
+
+  <button matButton type="button" class="btn-outline volver-button" routerLink="/recetas/listar">
+    <svg lucideArrowLeft aria-hidden="true"></svg>
+    <span class="volver-button-label">Volver a la lista</span>
+  </button>
+</section>
