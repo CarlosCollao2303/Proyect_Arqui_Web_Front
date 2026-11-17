@@ -45,6 +45,17 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="videollamada">
+                <th mat-header-cell *matHeaderCellDef> Videollamada </th>
+                <td mat-cell *matCellDef="let element">
+                    <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Ingresar a la videollamada"
+                        [disabled]="element.estado === 'CANCELADA'"
+                        [routerLink]="['/citas/videollamada', element.idCita]">
+                        <svg lucideVideo size="18" aria-hidden="true"></svg>
+                    </button>
+                </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import {
+  LucideBell,
   LucideCalendarDays,
   LucideClipboardList,
   LucideFilePlus,
@@ -13,6 +14,7 @@ import {
   LucideList,
   LucideNotebookPen,
   LucidePill,
+  LucideSend,
   LucideStethoscope,
 } from '@lucide/angular';
 
@@ -22,6 +24,7 @@ import {
     MatButtonModule,
     MatMenuModule,
     RouterLink,
+    LucideBell,
     LucideCalendarDays,
     LucideClipboardList,
     LucideFilePlus,
@@ -31,6 +34,7 @@ import {
     LucideList,
     LucideNotebookPen,
     LucidePill,
+    LucideSend,
     LucideStethoscope,
   ],
   templateUrl: './menucomponent.html',
