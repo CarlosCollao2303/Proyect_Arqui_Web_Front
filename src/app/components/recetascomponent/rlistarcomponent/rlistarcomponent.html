@@ -28,6 +28,10 @@
       <p><strong>Fecha de emisión:</strong> {{ item.fechaEmision | date:'shortDate' }}</p>
     </mat-card-content>
     <mat-card-actions align="end">
+      <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Ver detalle de la receta"
+        [routerLink]="['/recetas/detalle', item.idReceta]" [state]="{ receta: item }">
+        <svg lucideEye size="18" aria-hidden="true"></svg>
+      </button>
       <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar receta"
         [routerLink]="['/recetas/actualizar', item.idReceta]">
         <svg lucidePencil size="18" aria-hidden="true"></svg>

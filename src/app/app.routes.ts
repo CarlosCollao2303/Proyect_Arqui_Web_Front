@@ -55,6 +55,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/recetascomponent/rlistarcomponent/rlistarcomponent').then((module) => module.Rlistarcomponent) },
+            { path: 'detalle/:id', loadComponent: () => import('./components/recetascomponent/rdetallecomponent/rdetallecomponent').then((module) => module.Rdetallecomponent) },
             { path: 'insertar', loadComponent: () => import('./components/recetascomponent/rinsertarcomponent/rinsertarcomponent').then((module) => module.Rinsertarcomponent) },
             { path: 'actualizar/:id', loadComponent: () => import('./components/recetascomponent/rinsertarcomponent/rinsertarcomponent').then((module) => module.Rinsertarcomponent) },
         ],
