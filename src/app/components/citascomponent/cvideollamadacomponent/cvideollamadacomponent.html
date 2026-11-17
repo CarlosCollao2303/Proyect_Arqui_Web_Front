@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Videollamada de la cita</h2>
+
+    @if (videollamada) {
+    <div class="detalle-cita">
+        <span><svg lucideUserRound size="18" aria-hidden="true"></svg> <strong>Paciente:</strong> {{videollamada.paciente}}</span>
+        <span><svg lucideStethoscope size="18" aria-hidden="true"></svg> <strong>Médico:</strong> {{videollamada.medico}}</span>
+        <span><svg lucideCalendarClock size="18" aria-hidden="true"></svg> <strong>Fecha:</strong> {{videollamada.fecha}}</span>
+        <span><strong>Estado:</strong> {{videollamada.estado}}</span>
+    </div>
+
+    <div class="acciones">
+        @if (!enLlamada) {
+        <button matButton type="button" class="btn-primary" [disabled]="conectando"
+            (click)="ingresar(videollamada.medico)">
+            <svg lucideVideo aria-hidden="true"></svg>
+            Ingresar como médico
+        </button>
+        <button matButton type="button" class="btn-secondary" [disabled]="conectando"
+            (click)="ingresar(videollamada.paciente)">
+            <svg lucideVideo aria-hidden="true"></svg>
+            Ingresar como paciente
+        </button>
+        } @else {
+        <button matButton type="button" class="btn-danger" (click)="salir()">
+            <svg lucidePhoneOff aria-hidden="true"></svg>
+            Salir de la videollamada
+        </button>
+        }
+    </div>
+    }
+
+    <!-- Aquí la API iframe de Jitsi Meet inserta la videollamada -->
+    <div #contenedorJitsi class="jitsi-contenedor" [class.activo]="enLlamada"></div>
+
+    @if (mensaje) {
+    <p class="mensaje">{{ mensaje }}</p>
+    }
+
+    <div class="acciones">
+        <button matButton type="button" class="btn-outline" routerLink="/citas/listar">
+            <svg lucideArrowLeft aria-hidden="true"></svg>
+            Volver al listado
+        </button>
+    </div>
+</div>
