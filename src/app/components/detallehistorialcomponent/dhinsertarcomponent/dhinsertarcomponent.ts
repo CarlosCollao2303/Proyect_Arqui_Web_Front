@@ -160,7 +160,7 @@ export class Dhinsertarcomponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al guardar el detalle: ${error.error?.message ?? error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} el detalle: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       },
     });

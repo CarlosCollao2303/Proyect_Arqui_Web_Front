@@ -53,7 +53,7 @@ export class Tinsertarcomponent implements OnInit {
           this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el tratamiento: ${error.message}`;
+          this.mensaje = `Error al cargar el tratamiento: ${error.error?.message ?? error.message}`;
           this.cdr.detectChanges();
         },
       });
@@ -86,7 +86,7 @@ export class Tinsertarcomponent implements OnInit {
           estado: 'Activo',
         })
       }, error: (error) => {
-        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'insertar'} el tratamiento: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       }
     })

@@ -49,7 +49,7 @@ export class Dinsertarcomponent implements OnInit {
           this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el diagnóstico: ${error.message}`;
+          this.mensaje = `Error al cargar el diagnóstico: ${error.error?.message ?? error.message}`;
           this.cdr.detectChanges();
         },
       });
@@ -79,7 +79,7 @@ export class Dinsertarcomponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al registrar el diagnóstico: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} el diagnóstico: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       },
     });

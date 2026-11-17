@@ -73,7 +73,7 @@ export class Esinsertarcomponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al guardar la especialidad: ${error.error?.message ?? error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} la especialidad: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       },
     });

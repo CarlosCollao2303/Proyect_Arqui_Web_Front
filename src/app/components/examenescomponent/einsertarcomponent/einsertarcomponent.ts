@@ -52,7 +52,7 @@ export class Einsertarcomponent implements OnInit {
           this.cdr.detectChanges();
         },
         error: (error) => {
-          this.mensaje = `Error al cargar el examen: ${error.message}`;
+          this.mensaje = `Error al cargar el examen: ${error.error?.message ?? error.message}`;
           this.cdr.detectChanges();
         },
       });
@@ -87,7 +87,7 @@ export class Einsertarcomponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error) => {
-        this.mensaje = `Error al registrar el examen: ${error.message}`;
+        this.mensaje = `Error al ${this.isEditing ? 'actualizar' : 'registrar'} el examen: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       },
     });
