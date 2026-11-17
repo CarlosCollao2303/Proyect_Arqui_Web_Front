@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-dinsertarcomponent',
@@ -42,7 +43,7 @@ export class Dinsertarcomponent implements OnInit {
         next: (diagnostico) => {
           this.formDiagnosticos.patchValue({
             ...diagnostico,
-            fechaRegistro: new Date(diagnostico.fechaRegistro),
+            fechaRegistro: fechaLocal(diagnostico.fechaRegistro),
           });
         },
         error: (error) => {

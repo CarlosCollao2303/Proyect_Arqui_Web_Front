@@ -23,6 +23,7 @@ import { Examenesservice } from '../../../services/examenesservice';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Recetasservice } from '../../../services/recetasservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-dhinsertarcomponent',
@@ -91,7 +92,7 @@ export class Dhinsertarcomponent implements OnInit {
             receta: d.idReceta,
             motivoConsulta: d.motivoConsulta,
             cifradoDatos: d.cifradoDatos,
-            fechaRegistro: d.fechaRegistro ? new Date(`${d.fechaRegistro}T00:00:00`) : new Date(),
+            fechaRegistro: fechaLocal(d.fechaRegistro) ?? new Date(),
           });
           this.cdr.detectChanges();
         },

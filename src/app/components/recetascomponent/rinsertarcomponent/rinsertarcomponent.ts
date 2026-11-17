@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Recetas } from '../../../models/Recetas';
 import { Recetasservice } from '../../../services/recetasservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-rinsertarcomponent',
@@ -45,7 +46,7 @@ export class Rinsertarcomponent implements OnInit {
         next: (receta) => {
           this.formRecetas.patchValue({
             ...receta,
-            fechaEmision: new Date(receta.fechaEmision),
+            fechaEmision: fechaLocal(receta.fechaEmision),
           });
         },
         error: (error) => {

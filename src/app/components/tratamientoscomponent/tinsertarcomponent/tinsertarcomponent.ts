@@ -9,6 +9,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Tratamientos } from '../../../models/Tratamientos';
+import { fechaLocal } from '../../../utils/fechas';
 
 
 @Component({
@@ -44,8 +45,8 @@ export class Tinsertarcomponent implements OnInit {
         next: (tratamiento) => {
           this.formTratamientos.patchValue({
             ...tratamiento,
-            fechaInicio: new Date(tratamiento.fechaInicio),
-            fechaFin: new Date(tratamiento.fechaFin),
+            fechaInicio: fechaLocal(tratamiento.fechaInicio),
+            fechaFin: fechaLocal(tratamiento.fechaFin),
             estado: this.normalizarEstado(tratamiento.estado),
           });
         },

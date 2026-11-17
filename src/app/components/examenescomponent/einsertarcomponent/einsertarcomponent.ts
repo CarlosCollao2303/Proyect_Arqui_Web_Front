@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Examenes } from '../../../models/Examenes';
 import { Examenesservice } from '../../../services/examenesservice';
+import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
   selector: 'app-einsertarcomponent',
@@ -43,7 +44,7 @@ export class Einsertarcomponent implements OnInit {
         next: (examen) => {
           this.formExamenes.patchValue({
             ...examen,
-            fechaSolicitud: new Date(examen.fechaSolicitud),
+            fechaSolicitud: fechaLocal(examen.fechaSolicitud),
             fechaResultado: new Date(examen.fechaResultado),
           });
         },
