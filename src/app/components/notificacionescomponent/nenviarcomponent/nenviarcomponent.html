@@ -1,0 +1,39 @@
+<div class="container">
+    <div>
+        <h2>Enviar notificación por correo</h2>
+    </div>
+    <div>
+        <form [formGroup]="formNotificacion" (ngSubmit)="enviarNotificacion()">
+            <mat-form-field>
+                <mat-label>Usuario</mat-label>
+                <mat-select formControlName="usuario">
+                    @for (u of listaUsuarios; track u.idUsuario) {
+                    <mat-option [value]="u.idUsuario">{{u.nombres}} {{u.apellidos}} ({{u.correo}})</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Tipo de notificación</mat-label>
+                <mat-select formControlName="tipo">
+                    @for (t of tipos; track t.value) {
+                    <mat-option [value]="t.value">{{t.viewValue}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Mensaje</mat-label>
+                <textarea matInput rows="5" formControlName="mensaje"
+                    placeholder="Le recordamos que su cita es mañana a las 9:00 a. m."></textarea>
+                <mat-hint align="end">{{formNotificacion.value.mensaje?.length ?? 0}} / 1000</mat-hint>
+            </mat-form-field>
+            <br>
+            <button matButton type="submit" class="btn-primary" [disabled]="enviando">
+                <svg lucideSend aria-hidden="true"></svg>
+                Enviar correo
+            </button>
+        </form>
+        <p>{{ mensaje }}</p>
+    </div>
+</div>
