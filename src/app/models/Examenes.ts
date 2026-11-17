@@ -3,5 +3,6 @@ export class Examenes {
     tipoExamen: string='';
     descripcion: string='';
     fechaSolicitud: Date=new Date();
-    fechaResultado: Date=new Date();
+    // null = examen pendiente (aún sin resultado)
+    fechaResultado: Date | null = null;
 }

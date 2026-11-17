@@ -32,7 +32,8 @@ export class Einsertarcomponent implements OnInit {
       tipoExamen: ['', Validators.required],
       descripcion: ['', Validators.required],
       fechaSolicitud: [new Date(), Validators.required],
-      fechaResultado: [new Date(), Validators.required],
+      // Opcional: vacío = examen pendiente (el back acepta null).
+      fechaResultado: [null as Date | null],
     });
   }
 
@@ -45,7 +46,7 @@ export class Einsertarcomponent implements OnInit {
           this.formExamenes.patchValue({
             ...examen,
             fechaSolicitud: fechaLocal(examen.fechaSolicitud),
-            fechaResultado: new Date(examen.fechaResultado),
+            fechaResultado: fechaLocal(examen.fechaResultado),
           });
         },
         error: (error) => {
@@ -77,7 +78,7 @@ export class Einsertarcomponent implements OnInit {
         if (!this.isEditing) {
           this.formExamenes.reset({
             fechaSolicitud: new Date(),
-            fechaResultado: new Date(),
+            fechaResultado: null,
           });
         }
       },

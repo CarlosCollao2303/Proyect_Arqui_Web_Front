@@ -25,6 +25,7 @@
   <mat-form-field>
     <mat-label>Fecha de resultado</mat-label>
     <input matInput [matDatepicker]="pickerResultado" formControlName="fechaResultado">
+    <mat-hint>Dejar vacío si el resultado está pendiente</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="pickerResultado">
       <svg matDatepickerToggleIcon lucideCalendarDays aria-hidden="true"></svg>
     </mat-datepicker-toggle>
