@@ -87,6 +87,14 @@
       <button mat-menu-item routerLink="/usuarios/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
 
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuReportes">
+      <svg lucideChartColumn size="20" aria-hidden="true"></svg>
+      <span>Reportes</span>
+    </button>
+    <mat-menu #menuReportes="matMenu">
+      <button mat-menu-item routerLink="/reportes/examenes-pendientes"><svg lucideClock3 aria-hidden="true"></svg>Exámenes pendientes</button>
+    </mat-menu>
+
     <button matButton class="nav-button" [matMenuTriggerFor]="menuDetalleHistorial">
       <svg lucideNotebookPen size="20" aria-hidden="true"></svg>
       <span>Detalle historial</span>
