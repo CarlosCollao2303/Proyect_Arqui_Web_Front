@@ -1,0 +1,92 @@
+<div class="container">
+    <h2>Listado de usuarios</h2>
+    <div class="busqueda-id">
+        <input #idUsuario type="number" min="1" placeholder="ID del usuario">
+        <button matButton type="button" class="btn-secondary" (click)="buscarUsuario(idUsuario.value)">
+            <svg lucideSearch aria-hidden="true"></svg>
+            Buscar por ID
+        </button>
+        <button matButton type="button" class="btn-outline" (click)="obtenerUsuarios()">
+            <svg lucideRefreshCw aria-hidden="true"></svg>
+            Mostrar todos
+        </button>
+    </div>
+    @if (mensajeBusqueda) {
+    <p>{{ mensajeBusqueda }}</p>
+    }
+    <div>
+        @if (dataSource.data.length > 0) {
+        <div class="tabla-scroll">
+            <table mat-table [dataSource]="dataSource" class="mat-shadow-2">
+
+                <ng-container matColumnDef="c1">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idUsuario}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c2">
+                    <th mat-header-cell *matHeaderCellDef> Nombres </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nombres}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c3">
+                    <th mat-header-cell *matHeaderCellDef> Apellidos </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c4">
+                    <th mat-header-cell *matHeaderCellDef> DNI </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dni}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c5">
+                    <th mat-header-cell *matHeaderCellDef> Correo </th>
+                    <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c6">
+                    <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+                    <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c7">
+                    <th mat-header-cell *matHeaderCellDef> Rol </th>
+                    <td mat-cell *matCellDef="let element"> {{nombreRol(element.idRol)}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="c8">
+                    <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+                    <td mat-cell *matCellDef="let element"> {{nombreEspecialidad(element.idEspecialidad)}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actualizar">
+                    <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar usuario"
+                            [routerLink]="['/usuarios/actualizar', element.idUsuario]">
+                            <svg lucidePencil size="18" aria-hidden="true"></svg>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="eliminar">
+                    <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar usuario"
+                            (click)="eliminarUsuario(element.idUsuario)">
+                            <svg lucideTrash size="18" aria-hidden="true"></svg>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.registro-actualizado]="row.idUsuario === idActualizado"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons
+            aria-label="Paginación de usuarios"></mat-paginator>
+        } @else {
+        <p>No hay usuarios disponibles</p>
+        }
+    </div>
+</div>

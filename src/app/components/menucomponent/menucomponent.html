@@ -77,6 +77,15 @@
       <button mat-menu-item routerLink="/roles/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
 
+    <button matButton class="nav-button" [matMenuTriggerFor]="menuUsuarios">
+      <svg lucideUsers size="20" aria-hidden="true"></svg>
+      <span>Usuarios</span>
+    </button>
+    <mat-menu #menuUsuarios="matMenu">
+      <button mat-menu-item routerLink="/usuarios/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
+      <button mat-menu-item routerLink="/usuarios/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
+    </mat-menu>
+
     <button matButton class="nav-button" [matMenuTriggerFor]="menuDetalleHistorial">
       <svg lucideNotebookPen size="20" aria-hidden="true"></svg>
       <span>Detalle historial</span>
