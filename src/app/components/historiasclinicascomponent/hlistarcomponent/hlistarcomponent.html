@@ -26,6 +26,16 @@
                 <td mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="eliminar">
+                <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                <td mat-cell *matCellDef="let element">
+                    <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar historia clínica"
+                        (click)="eliminarHistoria(element.idHistoriaClinica)">
+                        <svg lucideTrash size="18" aria-hidden="true"></svg>
+                    </button>
+                </td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

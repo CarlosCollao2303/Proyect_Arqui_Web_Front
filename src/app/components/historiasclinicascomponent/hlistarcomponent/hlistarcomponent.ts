@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { LucideTrash } from '@lucide/angular';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
@@ -8,12 +10,12 @@ import { Usuariosservice } from '../../../services/usuariosservice';
 
 @Component({
   selector: 'app-hlistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, LucideTrash],
   templateUrl: './hlistarcomponent.html',
   styleUrl: './hlistarcomponent.css',
 })
 export class Hlistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'eliminar'];
   dataSource = new MatTableDataSource<HistoriasClinicas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
@@ -57,5 +59,17 @@ export class Hlistarcomponent implements OnInit {
 
   buscarPaciente(idPaciente: number): Usuarios | undefined {
     return this.listaUsuarios.find(u => u.idUsuario === idPaciente);
+  }
+
+  eliminarHistoria(id: number) {
+    this.hS.deleteHistoria(id).subscribe({
+      next: () => {
+        this.listarHistorias();
+        this.cdr.detectChanges();
+      }, error: err => {
+        console.log('Error al eliminar la historia clínica:', err);
+        this.cdr.detectChanges();
+      }
+    })
   }
 }
