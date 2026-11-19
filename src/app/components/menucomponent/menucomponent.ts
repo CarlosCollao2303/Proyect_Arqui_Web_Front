@@ -14,6 +14,7 @@ import {
   LucideList,
   LucideNotebookPen,
   LucidePill,
+  LucideSearch,
   LucideSend,
   LucideStethoscope,
 } from '@lucide/angular';
@@ -34,6 +35,7 @@ import {
     LucideList,
     LucideNotebookPen,
     LucidePill,
+    LucideSearch,
     LucideSend,
     LucideStethoscope,
   ],

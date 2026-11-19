@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Citas } from '../models/Citas';
 import { Videollamada } from '../models/Videollamada';
+import { CitaEstado } from '../models/CitaEstado';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,9 @@ export class Citasservice {
 
   getVideollamada(idCita: number): Observable<Videollamada> {
     return this.http.get<Videollamada>(`${this.apiURL}/${idCita}/videollamada`);
+  }
+
+  getEstadoCita(id: number): Observable<CitaEstado> {
+    return this.http.get<CitaEstado>(`${this.apiURL}/${id}/estado`);
   }
 }
