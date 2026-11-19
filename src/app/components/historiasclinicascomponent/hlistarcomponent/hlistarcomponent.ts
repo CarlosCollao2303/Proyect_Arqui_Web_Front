@@ -2,25 +2,29 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
-import { LucideTrash } from '@lucide/angular';
+import { RouterLink } from '@angular/router';
+import { LucidePencil, LucideTrash } from '@lucide/angular';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-hlistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, LucideTrash],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucidePencil, LucideTrash],
   templateUrl: './hlistarcomponent.html',
   styleUrl: './hlistarcomponent.css',
 })
 export class Hlistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'eliminar'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'actualizar', 'eliminar'];
   dataSource = new MatTableDataSource<HistoriasClinicas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
   }
   listaUsuarios: Usuarios[] = [];
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(private hS: Historiasclinicasservice,
     private uS: Usuariosservice,
@@ -35,7 +39,7 @@ export class Hlistarcomponent implements OnInit {
   listarHistorias() {
     this.hS.getListHistorias().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (h) => h.idHistoriaClinica, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },
