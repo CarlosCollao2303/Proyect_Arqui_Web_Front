@@ -90,6 +90,7 @@ export const routes: Routes = [
             { path: 'listar', loadComponent: () => import('./components/especialidadescomponent/eslistarcomponent/eslistarcomponent').then((module) => module.Eslistarcomponent) },
             { path: 'insertar', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
             { path: 'actualizar/:id', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
+            { path: 'medicos', loadComponent: () => import('./components/especialidadescomponent/esmedicoscomponent/esmedicoscomponent').then((module) => module.Esmedicoscomponent) },
         ],
     },
     {
