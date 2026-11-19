@@ -93,6 +93,16 @@ export const routes: Routes = [
         ],
     },
     {
+        path: 'roles',
+        loadComponent: () => import('./components/rolescomponent/rolescomponent').then((module) => module.Rolescomponent),
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', loadComponent: () => import('./components/rolescomponent/rolistarcomponent/rolistarcomponent').then((module) => module.Rolistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/rolescomponent/roinsertarcomponent/roinsertarcomponent').then((module) => module.Roinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/rolescomponent/roinsertarcomponent/roinsertarcomponent').then((module) => module.Roinsertarcomponent) },
+        ],
+    },
+    {
         path: 'notificaciones',
         loadComponent: () => import('./components/notificacionescomponent/notificacionescomponent').then((module) => module.Notificacionescomponent),
         children: [

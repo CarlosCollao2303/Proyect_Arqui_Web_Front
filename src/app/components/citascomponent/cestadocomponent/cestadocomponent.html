@@ -31,7 +31,7 @@
     <p><strong>Hora:</strong> {{ hora(citaEstado.hora) }}</p>
     <p><strong>Paciente:</strong> {{ citaEstado.paciente }}</p>
     <p><strong>Médico:</strong> {{ citaEstado.medico }}</p>
-    <p><strong>Especialidad:</strong> {{ citaEstado.especialidad }}</p>
+    <p><strong>Especialidad:</strong> {{ citaEstado.especialidad?.trim() || 'Sin especialidad' }}</p>
   </mat-card-content>
 </mat-card>
 }
