@@ -7,5 +7,5 @@ export class CitaEstado {
     estado: string = '';
     paciente: string = '';
     medico: string = '';
-    especialidad: string = '';
+    especialidad: string | null = null;
 }
