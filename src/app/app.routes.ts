@@ -115,6 +115,14 @@ export const routes: Routes = [
         ],
     },
     {
+        path: 'reportes',
+        loadComponent: () => import('./components/reportescomponent/reportescomponent').then((module) => module.Reportescomponent),
+        children: [
+            { path: '', redirectTo: 'examenes-pendientes', pathMatch: 'full' },
+            { path: 'examenes-pendientes', loadComponent: () => import('./components/reportescomponent/repexamenespendientescomponent/repexamenespendientescomponent').then((module) => module.Repexamenespendientescomponent) },
+        ],
+    },
+    {
         path: 'notificaciones',
         loadComponent: () => import('./components/notificacionescomponent/notificacionescomponent').then((module) => module.Notificacionescomponent),
         children: [
