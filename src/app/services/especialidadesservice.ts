@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Especialidades } from '../models/Especialidades';
+import { MedicoPorEspecialidad } from '../models/MedicoPorEspecialidad';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +31,9 @@ export class Especialidadesservice {
 
   deleteEspecialidad(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  getMedicosPorEspecialidad(id: number): Observable<MedicoPorEspecialidad[]> {
+    return this.http.get<MedicoPorEspecialidad[]>(`${this.apiURL}/${id}/medicos`);
   }
 }
