@@ -68,6 +68,7 @@ export const routes: Routes = [
             { path: 'listar', loadComponent: () => import('./components/citascomponent/clistarcomponent/clistarcomponent').then((module) => module.Clistarcomponent) },
             { path: 'insertar', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
             { path: 'actualizar/:id', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
+            { path: 'estado', loadComponent: () => import('./components/citascomponent/cestadocomponent/cestadocomponent').then((module) => module.Cestadocomponent) },
             { path: 'videollamada/:id', loadComponent: () => import('./components/citascomponent/cvideollamadacomponent/cvideollamadacomponent').then((module) => module.Cvideollamadacomponent) },
         ],
     },
