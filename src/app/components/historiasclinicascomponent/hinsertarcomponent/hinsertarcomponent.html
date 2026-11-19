@@ -1,9 +1,16 @@
 <div class="container">
     <div>
-        <h2>Registrar historia clínica</h2>
+        <h2>{{ isEditing ? 'Actualizar historia clínica' : 'Registrar historia clínica' }}</h2>
     </div>
     <div>
         <form [formGroup]="formHistorias" (ngSubmit)="insertarHistoria()">
+            @if (isEditing) {
+            <mat-form-field>
+                <mat-label>ID de la historia clínica</mat-label>
+                <input matInput type="number" formControlName="idHistoriaClinica" readonly>
+            </mat-form-field>
+            <br>
+            }
             <mat-form-field>
                 <mat-label>Paciente</mat-label>
                 <mat-select formControlName="paciente">
@@ -25,8 +32,14 @@
             <br>
             <button matButton type="submit" class="btn-primary">
                 <svg lucideSave aria-hidden="true"></svg>
-                Guardar
+                {{ isEditing ? 'Actualizar' : 'Guardar' }}
             </button>
+            @if (isEditing) {
+            <button matButton type="button" class="btn-outline" routerLink="/historiasclinicas/listar">
+                <svg lucideCircleX aria-hidden="true"></svg>
+                Cancelar
+            </button>
+            }
         </form>
         <p>{{ mensaje }}</p>
     </div>

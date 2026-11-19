@@ -34,6 +34,14 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
+    path: 'citas/actualizar/:id',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: 'historiasclinicas/actualizar/:id',
+    renderMode: RenderMode.Server,
+  },
+  {
     // La videollamada usa la API iframe de Jitsi, que solo existe en el navegador.
     path: 'citas/videollamada/:id',
     renderMode: RenderMode.Client,
