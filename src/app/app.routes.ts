@@ -120,6 +120,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'examenes-pendientes', pathMatch: 'full' },
             { path: 'examenes-pendientes', loadComponent: () => import('./components/reportescomponent/repexamenespendientescomponent/repexamenespendientescomponent').then((module) => module.Repexamenespendientescomponent) },
+            { path: 'examenes-por-paciente', loadComponent: () => import('./components/reportescomponent/repexamenespacientecomponent/repexamenespacientecomponent').then((module) => module.Repexamenespacientecomponent) },
         ],
     },
     {
