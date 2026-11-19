@@ -17,8 +17,20 @@ export class Citasservice {
     return this.http.get<Citas[]>(`${this.apiURL}/Listar`);
   }
 
+  getCitaById(id: number): Observable<Citas> {
+    return this.http.get<Citas>(`${this.apiURL}/${id}`);
+  }
+
   insertCita(cita: Citas): Observable<Citas> {
     return this.http.post<Citas>(`${this.apiURL}/Registrar`, cita);
+  }
+
+  updateCita(cita: Citas): Observable<Citas> {
+    return this.http.put<Citas>(`${this.apiURL}/Actualizar`, cita);
+  }
+
+  deleteCita(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
 
   getVideollamada(idCita: number): Observable<Videollamada> {
