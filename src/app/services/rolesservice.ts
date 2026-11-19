@@ -15,4 +15,20 @@ export class Rolesservice {
   getListRoles(): Observable<Roles[]> {
     return this.http.get<Roles[]>(`${this.apiURL}/Listar`);
   }
+
+  getRolById(id: number): Observable<Roles> {
+    return this.http.get<Roles>(`${this.apiURL}/ListarPorId/${id}`);
+  }
+
+  insertRol(rol: Roles): Observable<Roles> {
+    return this.http.post<Roles>(`${this.apiURL}/Registrar`, rol);
+  }
+
+  updateRol(rol: Roles): Observable<Roles> {
+    return this.http.put<Roles>(`${this.apiURL}/Actualizar`, rol);
+  }
+
+  deleteRol(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
 }

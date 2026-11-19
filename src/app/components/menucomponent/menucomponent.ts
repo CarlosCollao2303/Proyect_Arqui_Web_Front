@@ -16,6 +16,7 @@ import {
   LucidePill,
   LucideSearch,
   LucideSend,
+  LucideShieldCheck,
   LucideStethoscope,
 } from '@lucide/angular';
 
@@ -37,6 +38,7 @@ import {
     LucidePill,
     LucideSearch,
     LucideSend,
+    LucideShieldCheck,
     LucideStethoscope,
   ],
   templateUrl: './menucomponent.html',
