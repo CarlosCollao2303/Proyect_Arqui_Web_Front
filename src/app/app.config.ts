@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 function createSpanishPaginatorIntl(): MatPaginatorIntl {
   const paginatorIntl = new MatPaginatorIntl();
@@ -30,5 +31,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideHttpClient(),
     { provide: MatPaginatorIntl, useFactory: createSpanishPaginatorIntl },
+    provideCharts(withDefaultRegisterables()),
   ],
 };

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Examenes } from '../models/Examenes';
 import { ExamenPendiente } from '../models/ExamenPendiente';
+import { CantidadExamenes } from '../models/CantidadExamenes';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,13 @@ export class Examenesservice {
 
   getExamenesPendientes(): Observable<ExamenPendiente[]> {
     return this.http.get<ExamenPendiente[]>(`${this.apiURL}/pendientes`);
+  }
+
+  getCantidadExamenesPorPaciente(): Observable<CantidadExamenes[]> {
+    return this.http.get<CantidadExamenes[]>(`${this.apiURL}/cantidad-por-paciente`);
+  }
+
+  getCantidadExamenesDePaciente(id: number): Observable<CantidadExamenes> {
+    return this.http.get<CantidadExamenes>(`${this.apiURL}/cantidad-por-paciente/${id}`);
   }
 }
