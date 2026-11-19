@@ -103,6 +103,17 @@ export const routes: Routes = [
         ],
     },
     {
+        path: 'usuarios',
+        loadComponent: () => import('./components/usuarioscomponent/usuarioscomponent').then((module) => module.Usuarioscomponent),
+        children: [
+            { path: '', redirectTo: 'listar', pathMatch: 'full' },
+            { path: 'listar', loadComponent: () => import('./components/usuarioscomponent/ulistarcomponent/ulistarcomponent').then((module) => module.Ulistarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
+            { path: 'asignar/:id', loadComponent: () => import('./components/usuarioscomponent/uasignarcomponent/uasignarcomponent').then((module) => module.Uasignarcomponent) },
+        ],
+    },
+    {
         path: 'notificaciones',
         loadComponent: () => import('./components/notificacionescomponent/notificacionescomponent').then((module) => module.Notificacionescomponent),
         children: [

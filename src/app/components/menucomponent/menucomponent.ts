@@ -18,6 +18,7 @@ import {
   LucideSend,
   LucideShieldCheck,
   LucideStethoscope,
+  LucideUsers,
 } from '@lucide/angular';
 
 @Component({
@@ -40,6 +41,7 @@ import {
     LucideSend,
     LucideShieldCheck,
     LucideStethoscope,
+    LucideUsers,
   ],
   templateUrl: './menucomponent.html',
   styleUrl: './menucomponent.css',
