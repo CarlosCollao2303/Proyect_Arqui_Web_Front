@@ -1,0 +1,57 @@
+<h2>Asignar rol y especialidad</h2>
+@if (usuario) {
+<mat-card class="usuario-card">
+  <mat-card-header>
+    <mat-card-title>{{ usuario.nombres }} {{ usuario.apellidos }}</mat-card-title>
+    <mat-card-subtitle>Usuario #{{ usuario.idUsuario }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p><strong>DNI:</strong> {{ usuario.dni }}</p>
+    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+    <p><strong>Rol actual:</strong> {{ nombreRol(usuario.idRol) }}</p>
+    <p><strong>Especialidad actual:</strong> {{ nombreEspecialidad(usuario.idEspecialidad) }}</p>
+  </mat-card-content>
+</mat-card>
+
+<div class="asignar-bloque">
+  <mat-form-field>
+    <mat-label>Rol</mat-label>
+    <mat-select [formControl]="rolControl">
+      @for (r of listaRoles; track r.idRol) {
+      <mat-option [value]="r.idRol">{{ r.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button matButton type="button" class="btn-primary" [disabled]="asignando" (click)="asignarRol()">
+    <svg lucideShieldCheck aria-hidden="true"></svg>
+    Asignar rol
+  </button>
+</div>
+
+<div class="asignar-bloque">
+  <mat-form-field>
+    <mat-label>Especialidad</mat-label>
+    <mat-select [formControl]="especialidadControl">
+      @for (e of listaEspecialidades; track e.idEspecialidad) {
+      <mat-option [value]="e.idEspecialidad">{{ e.nombre }}</mat-option>
+      }
+    </mat-select>
+    @if (!esMedico()) {
+    <mat-hint>Solo se puede asignar especialidad a usuarios con rol MEDICO</mat-hint>
+    }
+  </mat-form-field>
+  <button matButton type="button" class="btn-primary" [disabled]="asignando || !esMedico()" (click)="asignarEspecialidad()">
+    <svg lucideStethoscope aria-hidden="true"></svg>
+    Asignar especialidad
+  </button>
+</div>
+}
+
+@if (mensaje) {
+<p class="mensaje">{{ mensaje }}</p>
+}
+
+<button matButton type="button" class="btn-outline volver" routerLink="/usuarios/listar">
+  <svg lucideArrowLeft aria-hidden="true"></svg>
+  Volver al listado
+</button>

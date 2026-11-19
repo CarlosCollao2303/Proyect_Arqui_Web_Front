@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { RouterLink } from '@angular/router';
-import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
+import { LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash, LucideUserCog } from '@lucide/angular';
 import { Usuarios } from '../../../models/Usuarios';
 import { Roles } from '../../../models/Roles';
 import { Especialidades } from '../../../models/Especialidades';
@@ -14,12 +14,12 @@ import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/list
 
 @Component({
   selector: 'app-ulistarcomponent',
-  imports: [MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
+  imports: [MatButtonModule, MatTableModule, MatPaginatorModule, RouterLink, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash, LucideUserCog],
   templateUrl: './ulistarcomponent.html',
   styleUrl: './ulistarcomponent.css',
 })
 export class Ulistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'actualizar', 'eliminar'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'asignar', 'actualizar', 'eliminar'];
   dataSource = new MatTableDataSource<Usuarios>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;

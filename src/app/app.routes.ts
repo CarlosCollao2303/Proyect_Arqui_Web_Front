@@ -110,6 +110,7 @@ export const routes: Routes = [
             { path: 'listar', loadComponent: () => import('./components/usuarioscomponent/ulistarcomponent/ulistarcomponent').then((module) => module.Ulistarcomponent) },
             { path: 'insertar', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
             { path: 'actualizar/:id', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
+            { path: 'asignar/:id', loadComponent: () => import('./components/usuarioscomponent/uasignarcomponent/uasignarcomponent').then((module) => module.Uasignarcomponent) },
         ],
     },
     {

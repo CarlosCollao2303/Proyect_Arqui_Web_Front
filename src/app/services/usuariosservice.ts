@@ -28,6 +28,14 @@ export class Usuariosservice {
     return this.http.put<Usuarios>(`${this.apiURL}/Actualizar`, usuario);
   }
 
+  asignarRol(idUsuario: number, idRol: number): Observable<Usuarios> {
+    return this.http.put<Usuarios>(`${this.apiURL}/AsignarRol/${idUsuario}/${idRol}`, null);
+  }
+
+  asignarEspecialidad(idUsuario: number, idEspecialidad: number): Observable<Usuarios> {
+    return this.http.put<Usuarios>(`${this.apiURL}/AsignarEspecialidad/${idUsuario}/${idEspecialidad}`, null);
+  }
+
   deleteUsuario(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
   }
