@@ -3,25 +3,28 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { LucideCircleCheck, LucideCircleX, LucideClock3, LucideTrash, LucideVideo } from '@lucide/angular';
+import { LucideCircleCheck, LucideCircleX, LucideClock3, LucidePencil, LucideTrash, LucideVideo } from '@lucide/angular';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Citasservice } from '../../../services/citasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
+import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
   selector: 'app-clistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucideCircleCheck, LucideCircleX, LucideClock3, LucideTrash, LucideVideo],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucideCircleCheck, LucideCircleX, LucideClock3, LucidePencil, LucideTrash, LucideVideo],
   templateUrl: './clistarcomponent.html',
   styleUrl: './clistarcomponent.css',
 })
 export class Clistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'videollamada', 'eliminar'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'videollamada', 'actualizar', 'eliminar'];
   dataSource = new MatTableDataSource<Citas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
   }
   listaUsuarios: Usuarios[] = [];
+  // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
+  idActualizado = idActualizadoDeLaNavegacion();
 
   constructor(private cS: Citasservice,
     private uS: Usuariosservice,
@@ -36,7 +39,7 @@ export class Clistarcomponent implements OnInit {
   listarCitas() {
     this.cS.getListCitas().subscribe({
       next: (data) => {
-        this.dataSource.data = data;
+        this.dataSource.data = ordenarListado(data, (c) => c.idCita, this.idActualizado);
         this.dataSource.paginator?.firstPage();
         this.cdr.detectChanges();
       },

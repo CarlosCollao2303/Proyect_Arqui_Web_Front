@@ -67,6 +67,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/citascomponent/clistarcomponent/clistarcomponent').then((module) => module.Clistarcomponent) },
             { path: 'insertar', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
             { path: 'videollamada/:id', loadComponent: () => import('./components/citascomponent/cvideollamadacomponent/cvideollamadacomponent').then((module) => module.Cvideollamadacomponent) },
         ],
     },
