@@ -40,7 +40,8 @@ export class Repesperamedicocomponent implements OnInit {
     maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
     plugins: {
-      legend: { display: true, position: 'bottom' },
+      // Cada serie usa su propio marcador en la leyenda: la línea punteada se ve como línea
+      legend: { display: true, position: 'bottom', labels: { usePointStyle: true } },
       tooltip: {
         callbacks: {
           title: (items) => {
@@ -145,6 +146,7 @@ export class Repesperamedicocomponent implements OnInit {
           borderDash: [6, 6],
           borderWidth: 2,
           pointRadius: 0,
+          pointStyle: 'line',
           order: 2,
         },
         {
@@ -156,6 +158,7 @@ export class Repesperamedicocomponent implements OnInit {
           borderColor: COLOR_CITAS,
           borderRadius: 6,
           maxBarThickness: 56,
+          pointStyle: 'rect',
           order: 3,
         },
       ],
