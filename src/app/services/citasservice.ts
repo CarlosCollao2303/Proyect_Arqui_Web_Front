@@ -6,6 +6,7 @@ import { Citas } from '../models/Citas';
 import { Videollamada } from '../models/Videollamada';
 import { CitaEstado } from '../models/CitaEstado';
 import { CitasEspecialidad } from '../models/CitasEspecialidad';
+import { EsperaMedico } from '../models/EsperaMedico';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,9 @@ export class Citasservice {
 
   getCitasPorEspecialidad(): Observable<CitasEspecialidad[]> {
     return this.http.get<CitasEspecialidad[]>(`${this.apiURL}/estado-por-especialidad`);
+  }
+
+  getEsperaPorMedico(): Observable<EsperaMedico[]> {
+    return this.http.get<EsperaMedico[]>(`${this.apiURL}/espera-por-medico`);
   }
 }
