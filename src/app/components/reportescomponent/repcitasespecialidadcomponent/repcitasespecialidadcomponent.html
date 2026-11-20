@@ -1,0 +1,91 @@
+<div class="container">
+    <h2>Citas por especialidad y estado</h2>
+    <p class="descripcion">Demanda de cada especialidad y cuántas de sus citas se atendieron, siguen pendientes o se cancelaron.</p>
+
+    @if (mensaje) {
+    <p class="aviso">{{ mensaje }}</p>
+    } @else if (!cargando) {
+    @if (lista.length > 0) {
+    <div class="resumen">
+        <div class="tarjeta">
+            <span class="valor">{{ totalCitas }}</span>
+            <span class="etiqueta">Citas registradas</span>
+        </div>
+        <div class="tarjeta">
+            <span class="valor">{{ porcentajeAtendidas | number: '1.0-1' }}%</span>
+            <span class="etiqueta">Se atendieron</span>
+        </div>
+        <div class="tarjeta" [class.alerta]="mayorCancelacion">
+            @if (mayorCancelacion) {
+            <span class="valor">{{ mayorCancelacion.especialidad }}</span>
+            <span class="etiqueta">Más cancelaciones ({{ tasaCancelacion(mayorCancelacion) | number: '1.0-1' }}%)</span>
+            } @else {
+            <span class="valor">Ninguna</span>
+            <span class="etiqueta">Especialidades con citas canceladas</span>
+            }
+        </div>
+    </div>
+
+    <div class="vista">
+        <button matButton type="button" [class]="verPorcentaje ? 'btn-outline' : 'btn-secondary'"
+            [attr.aria-pressed]="!verPorcentaje" (click)="cambiarVista(false)">
+            <svg lucideHash aria-hidden="true"></svg>
+            Cantidades
+        </button>
+        <button matButton type="button" [class]="verPorcentaje ? 'btn-secondary' : 'btn-outline'"
+            [attr.aria-pressed]="verPorcentaje" (click)="cambiarVista(true)">
+            <svg lucidePercent aria-hidden="true"></svg>
+            Porcentajes
+        </button>
+    </div>
+
+    @if (esNavegador) {
+    <div class="grafico">
+        <canvas baseChart [type]="chartType" [data]="chartData" [options]="chartOptions"
+            aria-label="Gráfico de barras apiladas de citas por especialidad y estado" role="img"></canvas>
+    </div>
+    }
+
+    <table mat-table [dataSource]="lista" class="mat-shadow-2">
+
+        <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.especialidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef> Atendidas </th>
+            <td mat-cell *matCellDef="let element"> {{element.atendidas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef> Pendientes </th>
+            <td mat-cell *matCellDef="let element"> {{element.pendientes}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c4">
+            <th mat-header-cell *matHeaderCellDef> Canceladas </th>
+            <td mat-cell *matCellDef="let element"> {{element.canceladas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c5">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let element"> <strong>{{element.total}}</strong> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c6">
+            <th mat-header-cell *matHeaderCellDef> % Cancelación </th>
+            <td mat-cell *matCellDef="let element" [class.alerta]="tasaCancelacion(element) >= alertaCancelacion">
+                {{ tasaCancelacion(element) | number: '1.0-1' }}%
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <p class="nota">Se resaltan las especialidades que cancelan {{ alertaCancelacion }}% o más de sus citas.</p>
+    } @else {
+    <p class="aviso">Todavía no hay citas registradas.</p>
+    }
+    }
+</div>
