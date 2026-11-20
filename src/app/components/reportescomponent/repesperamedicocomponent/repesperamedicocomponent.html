@@ -1,0 +1,71 @@
+<div class="container">
+    <h2>Tiempo de espera por médico</h2>
+    <p class="descripcion">Cuántas citas atendió cada médico y cuántos minutos esperaron sus pacientes en promedio.</p>
+
+    @if (mensaje) {
+    <p class="aviso">{{ mensaje }}</p>
+    } @else if (!cargando) {
+    @if (lista.length > 0) {
+    <div class="resumen">
+        <div class="tarjeta">
+            <span class="valor">{{ totalAtendidas }}</span>
+            <span class="etiqueta">Citas atendidas</span>
+        </div>
+        <div class="tarjeta">
+            <span class="valor">{{ promedioGeneral | number: '1.0-1' }} min</span>
+            <span class="etiqueta">Espera promedio general</span>
+        </div>
+        <div class="tarjeta" [class.alerta]="medicosSobrePromedio > 0">
+            <span class="valor">{{ lista[0].medico }}</span>
+            <span class="etiqueta">Mayor espera ({{ lista[0].esperaPromedio | number: '1.0-1' }} min)</span>
+        </div>
+    </div>
+
+    @if (esNavegador) {
+    <div class="grafico">
+        <canvas baseChart [type]="chartType" [data]="chartData" [options]="chartOptions"
+            aria-label="Gráfico combinado de citas atendidas y tiempo de espera promedio por médico" role="img"></canvas>
+    </div>
+    }
+
+    <table mat-table [dataSource]="lista" class="mat-shadow-2">
+
+        <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef> Médico </th>
+            <td mat-cell *matCellDef="let element"> {{element.medico}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.especialidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef> Citas atendidas </th>
+            <td mat-cell *matCellDef="let element"> {{element.citasAtendidas}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c4">
+            <th mat-header-cell *matHeaderCellDef> Espera promedio </th>
+            <td mat-cell *matCellDef="let element" [class.alerta]="sobrePromedio(element)">
+                {{ element.esperaPromedio | number: '1.0-1' }} min
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c5">
+            <th mat-header-cell *matHeaderCellDef> Espera máxima </th>
+            <td mat-cell *matCellDef="let element"> {{element.esperaMaxima}} min </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <p class="nota">
+        Se resaltan los {{ medicosSobrePromedio }} médicos que superan la espera promedio general.
+        Solo se consideran citas atendidas.
+    </p>
+    } @else {
+    <p class="aviso">Todavía no hay citas atendidas.</p>
+    }
+    }
+</div>
