@@ -7,6 +7,7 @@ import {
   LucideBell,
   LucideCalendarDays,
   LucideChartColumn,
+  LucideChartColumnStacked,
   LucideClipboardList,
   LucideClock3,
   LucideFilePlus,
@@ -20,6 +21,7 @@ import {
   LucideSend,
   LucideShieldCheck,
   LucideStethoscope,
+  LucideTimer,
   LucideUsers,
 } from '@lucide/angular';
 
@@ -32,6 +34,7 @@ import {
     LucideBell,
     LucideCalendarDays,
     LucideChartColumn,
+    LucideChartColumnStacked,
     LucideClipboardList,
     LucideClock3,
     LucideFilePlus,
@@ -45,6 +48,7 @@ import {
     LucideSend,
     LucideShieldCheck,
     LucideStethoscope,
+    LucideTimer,
     LucideUsers,
   ],
   templateUrl: './menucomponent.html',

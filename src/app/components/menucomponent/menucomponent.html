@@ -94,6 +94,8 @@
     <mat-menu #menuReportes="matMenu">
       <button mat-menu-item routerLink="/reportes/examenes-pendientes"><svg lucideClock3 aria-hidden="true"></svg>Exámenes pendientes</button>
       <button mat-menu-item routerLink="/reportes/examenes-por-paciente"><svg lucideChartColumn aria-hidden="true"></svg>Exámenes por paciente</button>
+      <button mat-menu-item routerLink="/reportes/citas-por-especialidad"><svg lucideChartColumnStacked aria-hidden="true"></svg>Citas por especialidad</button>
+      <button mat-menu-item routerLink="/reportes/espera-por-medico"><svg lucideTimer aria-hidden="true"></svg>Espera por médico</button>
     </mat-menu>
 
     <button matButton class="nav-button" [matMenuTriggerFor]="menuDetalleHistorial">
