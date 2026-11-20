@@ -122,6 +122,7 @@ export const routes: Routes = [
             { path: 'examenes-pendientes', loadComponent: () => import('./components/reportescomponent/repexamenespendientescomponent/repexamenespendientescomponent').then((module) => module.Repexamenespendientescomponent) },
             { path: 'examenes-por-paciente', loadComponent: () => import('./components/reportescomponent/repexamenespacientecomponent/repexamenespacientecomponent').then((module) => module.Repexamenespacientecomponent) },
             { path: 'citas-por-especialidad', loadComponent: () => import('./components/reportescomponent/repcitasespecialidadcomponent/repcitasespecialidadcomponent').then((module) => module.Repcitasespecialidadcomponent) },
+            { path: 'espera-por-medico', loadComponent: () => import('./components/reportescomponent/repesperamedicocomponent/repesperamedicocomponent').then((module) => module.Repesperamedicocomponent) },
         ],
     },
     {
