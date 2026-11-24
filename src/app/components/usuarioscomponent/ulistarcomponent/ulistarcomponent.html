@@ -1,12 +1,26 @@
 <div class="container">
-    <h2>Listado de usuarios</h2>
-    <div class="busqueda-id">
-        <input #idUsuario type="number" min="1" placeholder="ID del usuario">
-        <button matButton type="button" class="btn-secondary" (click)="buscarUsuario(idUsuario.value)">
-            <svg lucideSearch aria-hidden="true"></svg>
-            Buscar por ID
+    <h2>{{ esMedico ? (verTodosLosPacientes ? 'Todos los pacientes' : 'Mis pacientes') : 'Listado de usuarios' }}</h2>
+    @if (esMedico) {
+    <div class="vista">
+        <button matButton type="button" [class]="verTodosLosPacientes ? 'btn-outline' : 'btn-secondary'"
+            [attr.aria-pressed]="!verTodosLosPacientes" (click)="cambiarVista(false)">
+            <svg lucideUserRoundCheck aria-hidden="true"></svg>
+            Mis pacientes
         </button>
-        <button matButton type="button" class="btn-outline" (click)="obtenerUsuarios()">
+        <button matButton type="button" [class]="verTodosLosPacientes ? 'btn-secondary' : 'btn-outline'"
+            [attr.aria-pressed]="verTodosLosPacientes" (click)="cambiarVista(true)">
+            <svg lucideUsers aria-hidden="true"></svg>
+            Todos los pacientes
+        </button>
+    </div>
+    }
+    <div class="busqueda-id">
+        <input #textoBusqueda type="text" placeholder="Nombre o DNI" (keyup.enter)="buscarUsuario(textoBusqueda.value)">
+        <button matButton type="button" class="btn-secondary" (click)="buscarUsuario(textoBusqueda.value)">
+            <svg lucideSearch aria-hidden="true"></svg>
+            Buscar
+        </button>
+        <button matButton type="button" class="btn-outline" (click)="textoBusqueda.value = ''; obtenerUsuarios()">
             <svg lucideRefreshCw aria-hidden="true"></svg>
             Mostrar todos
         </button>
