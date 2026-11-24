@@ -95,6 +95,8 @@ export const routes: Routes = [
     {
         path: 'historiasclinicas',
         loadComponent: () => import('./components/historiasclinicascomponent/historiasclinicascomponent').then((module) => module.Historiasclinicascomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/historiasclinicascomponent/hlistarcomponent/hlistarcomponent').then((module) => module.Hlistarcomponent) },
@@ -157,6 +159,8 @@ export const routes: Routes = [
     {
         path: 'detallehistorial',
         loadComponent: () => import('./components/detallehistorialcomponent/detallehistorialcomponent').then((module) => module.Detallehistorialcomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/detallehistorialcomponent/dhlistarcomponent/dhlistarcomponent').then((module) => module.Dhlistarcomponent) },
