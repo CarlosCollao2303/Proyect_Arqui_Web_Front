@@ -158,6 +158,8 @@ export const routes: Routes = [
     {
         path: 'notificaciones',
         loadComponent: () => import('./components/notificacionescomponent/notificacionescomponent').then((module) => module.Notificacionescomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/notificacionescomponent/nlistarcomponent/nlistarcomponent').then((module) => module.Nlistarcomponent) },
