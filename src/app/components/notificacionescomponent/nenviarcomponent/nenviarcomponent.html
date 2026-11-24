@@ -1,39 +1,38 @@
 <div class="container">
-    <div>
-        <h2>Enviar notificación por correo</h2>
-    </div>
-    <div>
-        <form [formGroup]="formNotificacion" (ngSubmit)="enviarNotificacion()">
-            <mat-form-field>
-                <mat-label>Usuario</mat-label>
-                <mat-select formControlName="usuario">
-                    @for (u of listaUsuarios; track u.idUsuario) {
-                    <mat-option [value]="u.idUsuario">{{u.nombres}} {{u.apellidos}} ({{u.correo}})</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <mat-label>Tipo de notificación</mat-label>
-                <mat-select formControlName="tipo">
-                    @for (t of tipos; track t.value) {
-                    <mat-option [value]="t.value">{{t.viewValue}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <mat-label>Mensaje</mat-label>
-                <textarea matInput rows="5" formControlName="mensaje"
-                    placeholder="Le recordamos que su cita es mañana a las 9:00 a. m."></textarea>
-                <mat-hint align="end">{{formNotificacion.value.mensaje?.length ?? 0}} / 1000</mat-hint>
-            </mat-form-field>
-            <br>
-            <button matButton type="submit" class="btn-primary" [disabled]="enviando">
-                <svg lucideSend aria-hidden="true"></svg>
-                Enviar correo
-            </button>
-        </form>
-        <p>{{ mensaje }}</p>
-    </div>
+    <h2>Notificar cita por correo</h2>
+    <p class="descripcion">Elija la cita: el mensaje se arma solo con sus datos (paciente, médico, fecha y estado).</p>
+
+    <mat-form-field>
+        <mat-label>Cita</mat-label>
+        <mat-select [value]="idCitaSeleccionada" (selectionChange)="seleccionarCita($event.value)">
+            @for (c of citas; track c.idCita) {
+            <mat-option [value]="c.idCita">{{ etiquetaCita(c) }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    @if (vistaPrevia) {
+    <mat-card class="vista-previa">
+        <mat-card-header>
+            <mat-card-title>{{ vistaPrevia.asunto }}</mat-card-title>
+            <mat-card-subtitle>
+                Para: {{ vistaPrevia.destinatario }} ({{ vistaPrevia.correo }}) · {{ tipoLegible(vistaPrevia.tipo) }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="texto">{{ vistaPrevia.mensaje }}</p>
+            @if (vistaPrevia.tipo === 'RECORDATORIO') {
+            <p class="nota">El correo incluye el botón para entrar a la videollamada.</p>
+            }
+        </mat-card-content>
+    </mat-card>
+    }
+
+    <button matButton type="button" class="btn-enviar" [disabled]="enviando || !vistaPrevia" (click)="enviarNotificacion()">
+        <svg lucideSend aria-hidden="true"></svg>
+        Enviar correo
+    </button>
+    @if (mensaje) {
+    <p>{{ mensaje }}</p>
+    }
 </div>
