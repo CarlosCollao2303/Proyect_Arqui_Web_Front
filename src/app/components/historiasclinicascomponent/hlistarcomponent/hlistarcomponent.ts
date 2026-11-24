@@ -8,6 +8,7 @@ import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
@@ -28,10 +29,19 @@ export class Hlistarcomponent implements OnInit {
 
   constructor(private hS: Historiasclinicasservice,
     private uS: Usuariosservice,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loginService: Loginservice
   ) {}
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.listarHistorias();
     this.listarUsuarios();
   }
