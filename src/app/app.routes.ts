@@ -43,6 +43,8 @@ export const routes: Routes = [
     {
         path: 'diagnosticos',
         loadComponent: () => import('./components/diagnosticoscomponent/diagnosticoscomponent').then((module) => module.Diagnosticoscomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/diagnosticoscomponent/dlistarcomponent/dlistarcomponent').then((module) => module.Dlistarcomponent) },
@@ -54,6 +56,8 @@ export const routes: Routes = [
     {
         path: 'examenes',
         loadComponent: () => import('./components/examenescomponent/examenescomponent').then((module) => module.Examenescomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/examenescomponent/elistarcomponent/elistarcomponent').then((module) => module.Elistarcomponent) },
@@ -64,6 +68,8 @@ export const routes: Routes = [
     {
         path: 'recetas',
         loadComponent: () => import('./components/recetascomponent/recetascomponent').then((module) => module.Recetascomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/recetascomponent/rlistarcomponent/rlistarcomponent').then((module) => module.Rlistarcomponent) },
