@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LucideArrowLeft, LucideCalendarClock, LucideCopy, LucideExternalLink, LucidePhoneOff, LucideSmartphone, LucideStethoscope, LucideUserRound, LucideVideo } from '@lucide/angular';
 import { Videollamada } from '../../../models/Videollamada';
 import { Citasservice } from '../../../services/citasservice';
+import { Loginservice } from '../../../services/loginservice';
 
 // external_api.js (la API iframe de Jitsi Meet) se carga en tiempo de ejecución
 // y deja la clase JitsiMeetExternalAPI en window; por eso se declara y no se importa.
@@ -30,8 +31,23 @@ export class Cvideollamadacomponent implements OnInit, OnDestroy {
   constructor(private cS: Citasservice,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private loginService: Loginservice,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
+
+  // Cada uno entra con su propio nombre; el ADMIN puede entrar como cualquiera
+  get puedeEntrarComoMedico(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN', 'MEDICO']);
+  }
+
+  get puedeEntrarComoPaciente(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN', 'PACIENTE']);
+  }
+
+  // El paciente no tiene acceso al listado de citas: vuelve a "Mis citas"
+  get rutaVolver(): string {
+    return this.loginService.hasAnyRole(['ADMIN', 'MEDICO']) ? '/citas/listar' : '/citas/estado';
+  }
 
   ngOnInit(): void {
     // Recuperar el id de la cita desde la URL
