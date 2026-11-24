@@ -73,6 +73,15 @@ export class Menucomponent {
     return this.loginService.getRoles().join(', ');
   }
 
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
+  // ADMIN o MEDICO: el personal que gestiona la informacion clinica
+  get esPersonal(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN', 'MEDICO']);
+  }
+
   cerrarSesion(): void {
     this.loginService.logout();
     void this.router.navigateByUrl('/login', { replaceUrl: true });
