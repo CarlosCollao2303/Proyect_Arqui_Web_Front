@@ -81,11 +81,13 @@ export const routes: Routes = [
     {
         path: 'citas',
         loadComponent: () => import('./components/citascomponent/citascomponent').then((module) => module.Citascomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO', 'PACIENTE'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', loadComponent: () => import('./components/citascomponent/clistarcomponent/clistarcomponent').then((module) => module.Clistarcomponent) },
-            { path: 'insertar', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
-            { path: 'actualizar/:id', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent) },
+            { path: 'listar', loadComponent: () => import('./components/citascomponent/clistarcomponent/clistarcomponent').then((module) => module.Clistarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'insertar', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/citascomponent/cinsertarcomponent/cinsertarcomponent').then((module) => module.Cinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
             { path: 'estado', loadComponent: () => import('./components/citascomponent/cestadocomponent/cestadocomponent').then((module) => module.Cestadocomponent) },
             { path: 'videollamada/:id', loadComponent: () => import('./components/citascomponent/cvideollamadacomponent/cvideollamadacomponent').then((module) => module.Cvideollamadacomponent) },
         ],
