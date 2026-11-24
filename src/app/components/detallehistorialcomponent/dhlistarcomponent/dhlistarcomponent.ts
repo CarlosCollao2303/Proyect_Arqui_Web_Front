@@ -20,6 +20,7 @@ import { Examenesservice } from '../../../services/examenesservice';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
 import { Recetasservice } from '../../../services/recetasservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
@@ -54,7 +55,13 @@ export class Dhlistarcomponent implements OnInit {
     private tS: Tratamientosservice,
     private rS: Recetasservice,
     private cdr: ChangeDetectorRef,
+    private loginService: Loginservice,
   ) { }
+
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
 
   ngOnInit(): void {
     this.obtenerDetalles();

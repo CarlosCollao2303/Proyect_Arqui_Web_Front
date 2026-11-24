@@ -9,10 +9,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
-import { Roles } from '../../../models/Roles';
 import { Citasservice } from '../../../services/citasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
-import { Rolesservice } from '../../../services/rolesservice';
+import { Loginservice } from '../../../services/loginservice';
 import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
@@ -25,13 +24,15 @@ import { fechaLocal } from '../../../utils/fechas';
 export class Cinsertarcomponent implements OnInit {
   formCitas: any;
   mensaje: string = '';
-  listaUsuarios: Usuarios[] = [];
-  listaRoles: Roles[] = [];
+  listaPacientes: Usuarios[] = [];
+  listaMedicos: Usuarios[] = [];
+  // id del médico logueado (solo si quien registra es MÉDICO)
+  idMedicoLogueado: number | null = null;
   isEditing = false;
 
   constructor(private cS: Citasservice,
     private uS: Usuariosservice,
-    private rS: Rolesservice,
+    private loginService: Loginservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -48,8 +49,11 @@ export class Cinsertarcomponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listarUsuarios();
-    this.listarRoles();
+    this.listarPacientesYMedicos();
+    if (this.esMedico) {
+      this.formCitas.get('medico').disable();
+      this.ponerMedicoLogueado();
+    }
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (Number.isInteger(id) && id > 0) {
@@ -74,33 +78,48 @@ export class Cinsertarcomponent implements OnInit {
     }
   }
 
-  listarUsuarios() {
-    this.uS.getListUsuarios().subscribe({
+
+  // Un MÉDICO registra a su nombre: el campo médico se llena solo y no se puede cambiar
+  get esMedico(): boolean {
+    return !this.loginService.hasAnyRole(['ADMIN']) && this.loginService.hasAnyRole(['MEDICO']);
+  }
+
+  // El back ya los devuelve separados: no hace falta pedir los roles para filtrar
+  listarPacientesYMedicos() {
+    this.uS.getPacientes().subscribe({
       next: (data) => {
-        this.listaUsuarios = data;
+        this.listaPacientes = data;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log('Error al obtener los usuarios:', err);
+        console.log('Error al obtener los pacientes:', err);
+      },
+    });
+    this.uS.getMedicos().subscribe({
+      next: (data) => {
+        this.listaMedicos = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.log('Error al obtener los médicos:', err);
       },
     });
   }
 
-  listarRoles() {
-    this.rS.getListRoles().subscribe({
-      next: (data) => {
-        this.listaRoles = data;
+  // Al registrar, el médico de la cita es el que inició sesión
+  ponerMedicoLogueado() {
+    this.uS.getPerfil().subscribe({
+      next: (perfil) => {
+        this.idMedicoLogueado = perfil.idUsuario;
+        if (!this.isEditing) {
+          this.formCitas.patchValue({ medico: perfil.idUsuario });
+        }
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log('Error al obtener los roles:', err);
+        console.log('Error al obtener el perfil:', err);
       },
     });
-  }
-
-  usuariosPorRol(nombreRol: string): Usuarios[] {
-    const rol = this.listaRoles.find(r => r.nombre === nombreRol);
-    return rol ? this.listaUsuarios.filter(u => u.idRol === rol.idRol) : [];
   }
 
   insertarCita() {
@@ -111,7 +130,8 @@ export class Cinsertarcomponent implements OnInit {
     const cita: Citas = {
       idCita: this.isEditing ? this.formCitas.getRawValue().idCita : 0,
       idPaciente: this.formCitas.value.paciente,
-      idMedico: this.formCitas.value.medico,
+      // getRawValue: el médico está deshabilitado cuando registra un MÉDICO
+      idMedico: this.formCitas.getRawValue().medico,
       fechaHoraProgramada: this.formCitas.value.fecha,
       tiempoEsperaMinutos: this.formCitas.value.tiempoEspera,
       estado: this.formCitas.value.estado
@@ -127,6 +147,7 @@ export class Cinsertarcomponent implements OnInit {
         }
         this.mensaje = 'Cita registrada correctamente.';
         this.formCitas.reset({
+          medico: this.idMedicoLogueado,
           fecha: new Date(),
           tiempoEspera: 0,
           estado: 'PENDIENTE'

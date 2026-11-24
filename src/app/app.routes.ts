@@ -96,12 +96,15 @@ export const routes: Routes = [
         path: 'historiasclinicas',
         loadComponent: () => import('./components/historiasclinicascomponent/historiasclinicascomponent').then((module) => module.Historiasclinicascomponent),
         canActivate: [authGuard, roleGuard],
-        data: { roles: ['ADMIN', 'MEDICO'] },
+        // PACIENTE entra solo a "mi-historial"; el resto es del personal
+        data: { roles: ['ADMIN', 'MEDICO', 'PACIENTE'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', loadComponent: () => import('./components/historiasclinicascomponent/hlistarcomponent/hlistarcomponent').then((module) => module.Hlistarcomponent) },
-            { path: 'insertar', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent) },
-            { path: 'actualizar/:id', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent) },
+            { path: 'listar', loadComponent: () => import('./components/historiasclinicascomponent/hlistarcomponent/hlistarcomponent').then((module) => module.Hlistarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'insertar', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/historiasclinicascomponent/hinsertarcomponent/hinsertarcomponent').then((module) => module.Hinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'historial/:id', loadComponent: () => import('./components/historiasclinicascomponent/hhistorialcomponent/hhistorialcomponent').then((module) => module.Hhistorialcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'mi-historial', loadComponent: () => import('./components/historiasclinicascomponent/hhistorialcomponent/hhistorialcomponent').then((module) => module.Hhistorialcomponent), canActivate: [roleGuard], data: { roles: ['PACIENTE'] } },
         ],
     },
     {

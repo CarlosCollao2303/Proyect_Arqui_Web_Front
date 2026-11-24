@@ -9,10 +9,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
-import { Roles } from '../../../models/Roles';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
-import { Rolesservice } from '../../../services/rolesservice';
 import { fechaLocal } from '../../../utils/fechas';
 
 @Component({
@@ -25,13 +23,11 @@ import { fechaLocal } from '../../../utils/fechas';
 export class Hinsertarcomponent implements OnInit {
   formHistorias: any;
   mensaje: string = '';
-  listaUsuarios: Usuarios[] = [];
-  listaRoles: Roles[] = [];
+  listaPacientes: Usuarios[] = [];
   isEditing = false;
 
   constructor(private hS: Historiasclinicasservice,
     private uS: Usuariosservice,
-    private rS: Rolesservice,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -45,8 +41,7 @@ export class Hinsertarcomponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listarUsuarios();
-    this.listarRoles();
+    this.listarPacientes();
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (Number.isInteger(id) && id > 0) {
@@ -68,33 +63,17 @@ export class Hinsertarcomponent implements OnInit {
     }
   }
 
-  listarUsuarios() {
-    this.uS.getListUsuarios().subscribe({
+  // Solo los pacientes pueden tener historia clínica: el back ya los devuelve filtrados
+  listarPacientes() {
+    this.uS.getPacientes().subscribe({
       next: (data) => {
-        this.listaUsuarios = data;
+        this.listaPacientes = data;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log('Error al obtener los usuarios:', err);
+        console.log('Error al obtener los pacientes:', err);
       },
     });
-  }
-
-  listarRoles() {
-    this.rS.getListRoles().subscribe({
-      next: (data) => {
-        this.listaRoles = data;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.log('Error al obtener los roles:', err);
-      },
-    });
-  }
-
-  listaPacientes(): Usuarios[] {
-    const rol = this.listaRoles.find(r => r.nombre === 'PACIENTE');
-    return rol ? this.listaUsuarios.filter(u => u.idRol === rol.idRol) : [];
   }
 
   insertarHistoria() {

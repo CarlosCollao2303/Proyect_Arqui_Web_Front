@@ -7,6 +7,7 @@ import { Notificaciones } from '../../../models/Notificaciones';
 import { Usuarios } from '../../../models/Usuarios';
 import { Notificacionesservice } from '../../../services/notificacionesservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
+import { Loginservice } from '../../../services/loginservice';
 
 @Component({
   selector: 'app-nlistarcomponent',
@@ -24,10 +25,19 @@ export class Nlistarcomponent implements OnInit {
 
   constructor(private nS: Notificacionesservice,
     private uS: Usuariosservice,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loginService: Loginservice
   ) { }
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.listarNotificaciones();
     this.listarUsuarios();
   }

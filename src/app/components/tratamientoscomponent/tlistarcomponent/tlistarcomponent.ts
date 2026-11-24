@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { LucideCircleCheck, LucideClock3, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Tratamientos } from '../../../models/Tratamientos';
 import { Tratamientosservice } from '../../../services/tratamientosservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 
@@ -25,10 +26,19 @@ export class Tlistarcomponent implements OnInit {
   // Registro recién actualizado: se muestra primero y resaltado para no perderlo.
   idActualizado = idActualizadoDeLaNavegacion();
   constructor(private sService: Tratamientosservice,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loginService: Loginservice
   ) { }
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.obtenerTratamientos();
   }
 

@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
 import { LucideEye, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash } from '@lucide/angular';
 import { Diagnosticos } from '../../../models/Diagnosticos';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
@@ -28,9 +29,18 @@ export class Dlistarcomponent implements OnInit {
   constructor(
     private service: Diagnosticosservice,
     private cdr: ChangeDetectorRef,
+    private loginService: Loginservice,
   ) { }
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.obtenerDiagnosticos();
   }
 

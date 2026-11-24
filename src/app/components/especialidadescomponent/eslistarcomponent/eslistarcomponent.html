@@ -1,11 +1,11 @@
 <h2>Listado de especialidades</h2>
 <div class="busqueda-id">
-  <input #idEspecialidad type="number" min="1" placeholder="ID de la especialidad">
-  <button matButton type="button" class="btn-secondary" (click)="buscarEspecialidad(idEspecialidad.value)">
+  <input #nombreEspecialidad type="text" placeholder="Nombre de la especialidad" (keyup.enter)="buscarEspecialidad(nombreEspecialidad.value)">
+  <button matButton type="button" class="btn-secondary" (click)="buscarEspecialidad(nombreEspecialidad.value)">
     <svg lucideSearch aria-hidden="true"></svg>
-    Buscar por ID
+    Buscar por nombre
   </button>
-  <button matButton type="button" class="btn-outline" (click)="obtenerEspecialidades()">
+  <button matButton type="button" class="btn-outline" (click)="nombreEspecialidad.value = ''; obtenerEspecialidades()">
     <svg lucideRefreshCw aria-hidden="true"></svg>
     Mostrar todos
   </button>
@@ -26,10 +26,12 @@
         [routerLink]="['/especialidades/actualizar', item.idEspecialidad]">
         <svg lucidePencil size="18" aria-hidden="true"></svg>
       </button>
-      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar especialidad"
-        (click)="eliminarEspecialidad(item.idEspecialidad)">
-        <svg lucideTrash size="18" aria-hidden="true"></svg>
-      </button>
+      @if (esAdmin) {
+        <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar especialidad"
+          (click)="eliminarEspecialidad(item.idEspecialidad)">
+          <svg lucideTrash size="18" aria-hidden="true"></svg>
+        </button>
+      }
     </mat-card-actions>
   </mat-card>
   }

@@ -1,85 +1,100 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
+import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideSend } from '@lucide/angular';
-import { Notificaciones } from '../../../models/Notificaciones';
-import { Usuarios } from '../../../models/Usuarios';
+import { CitaEstado } from '../../../models/CitaEstado';
+import { MensajeCita } from '../../../models/MensajeCita';
+import { Citasservice } from '../../../services/citasservice';
 import { Notificacionesservice } from '../../../services/notificacionesservice';
-import { Usuariosservice } from '../../../services/usuariosservice';
+import { fechaLocal } from '../../../utils/fechas';
+
+// Nombre legible de cada tipo de notificación de cita
+const TIPOS: Record<string, string> = {
+  RECORDATORIO: 'Recordatorio de cita',
+  CITA_REGISTRADA: 'Cita registrada',
+  CITA_REPROGRAMADA: 'Cita reprogramada',
+  CITA_ATENDIDA: 'Cita atendida',
+  CITA_CANCELADA: 'Cita cancelada',
+};
 
 @Component({
   selector: 'app-nenviarcomponent',
-  imports: [MatInputModule, MatButtonModule, MatSelectModule, ReactiveFormsModule, LucideSend],
+  providers: [DatePipe],
+  imports: [MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, LucideSend],
   templateUrl: './nenviarcomponent.html',
   styleUrl: './nenviarcomponent.css',
 })
 export class Nenviarcomponent implements OnInit {
-  formNotificacion: any;
+  // ADMIN ve todas las citas; MÉDICO, las que atiende (lo filtra el back)
+  citas: CitaEstado[] = [];
+  idCitaSeleccionada: number | null = null;
+  // Mensaje armado por el back con los datos de la cita: nadie lo escribe
+  vistaPrevia: MensajeCita | null = null;
   mensaje: string = '';
   enviando: boolean = false;
-  listaUsuarios: Usuarios[] = [];
-
-  tipos = [
-    { value: 'RECORDATORIO', viewValue: 'Recordatorio de cita' },
-    { value: 'RESULTADO_EXAMEN', viewValue: 'Resultado de examen' },
-    { value: 'AVISO_GENERAL', viewValue: 'Aviso general' },
-  ];
 
   constructor(private nS: Notificacionesservice,
-    private uS: Usuariosservice,
-    private fb: FormBuilder,
+    private cS: Citasservice,
+    private datePipe: DatePipe,
     private cdr: ChangeDetectorRef
-  ) {
-    this.formNotificacion = this.fb.group({
-      usuario: ['', Validators.required],
-      tipo: ['RECORDATORIO', Validators.required],
-      mensaje: ['', [Validators.required, Validators.maxLength(1000)]],
-    });
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.listarUsuarios();
-  }
-
-  listarUsuarios() {
-    this.uS.getListUsuarios().subscribe({
+    this.cS.getEstados().subscribe({
       next: (data) => {
-        this.listaUsuarios = data;
+        this.citas = data;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.log('Error al obtener los usuarios:', err);
+        console.log('Error al obtener las citas:', err);
       },
     });
   }
 
-  enviarNotificacion() {
-    if (this.formNotificacion.invalid) {
-      this.mensaje = 'Por favor, complete todos los campos requeridos.';
+  // Texto de cada opción del desplegable armado con los datos de la cita
+  etiquetaCita(cita: CitaEstado): string {
+    const fecha = this.datePipe.transform(fechaLocal(cita.fecha), 'dd/MM/yyyy');
+    return `#${cita.idCita} · ${cita.paciente} · ${fecha} · ${cita.estado}`;
+  }
+
+  tipoLegible(tipo: string): string {
+    return TIPOS[tipo] ?? tipo;
+  }
+
+  seleccionarCita(idCita: number): void {
+    this.idCitaSeleccionada = idCita;
+    this.vistaPrevia = null;
+    this.mensaje = '';
+    this.nS.getVistaPrevia(idCita).subscribe({
+      next: (data) => {
+        this.vistaPrevia = data;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.mensaje = `No se pudo armar el mensaje: ${error.error?.message ?? error.message}`;
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  enviarNotificacion(): void {
+    if (!this.idCitaSeleccionada || !this.vistaPrevia) {
+      this.mensaje = 'Elija una cita para notificar.';
       return;
     }
 
-    const notificacion: Notificaciones = {
-      idNotificacion: 0,
-      idUsuario: this.formNotificacion.value.usuario,
-      tipo: this.formNotificacion.value.tipo,
-      mensaje: this.formNotificacion.value.mensaje,
-      fechaEnvio: new Date(),
-      estadoEnvio: '',
-    };
-
-    const correo = this.listaUsuarios.find(u => u.idUsuario === notificacion.idUsuario)?.correo ?? '';
+    const correo = this.vistaPrevia.correo;
     this.enviando = true;
     this.mensaje = 'Enviando correo...';
     this.cdr.detectChanges();
 
-    this.nS.enviarCorreo(notificacion).subscribe({
+    this.nS.enviarPorCita(this.idCitaSeleccionada).subscribe({
       next: () => {
         this.enviando = false;
         this.mensaje = `Correo enviado correctamente a ${correo}.`;
-        this.formNotificacion.reset({ usuario: '', tipo: 'RECORDATORIO', mensaje: '' });
         this.cdr.detectChanges();
       },
       error: (error) => {

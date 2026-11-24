@@ -19,10 +19,13 @@
   <mat-form-field>
     <mat-label>Médico</mat-label>
     <mat-select formControlName="medico">
-      @for (m of medicos(); track m.idUsuario) {
+      @for (m of listaMedicos; track m.idUsuario) {
       <mat-option [value]="m.idUsuario">{{ m.nombres }} {{ m.apellidos }}</mat-option>
       }
     </mat-select>
+    @if (esMedico) {
+    <mat-hint>{{ isEditing ? 'El detalle conserva su médico' : 'El detalle queda registrado a tu nombre' }}</mat-hint>
+    }
   </mat-form-field>
 
   <!-- Llaves foráneas opcionales -->

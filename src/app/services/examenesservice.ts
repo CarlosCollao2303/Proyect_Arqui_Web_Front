@@ -42,6 +42,11 @@ export class Examenesservice {
     return this.http.get<CantidadExamenes[]>(`${this.apiURL}/cantidad-por-paciente`);
   }
 
+  // Reporte filtrado por nombre del paciente (sin importar mayúsculas ni tildes)
+  buscarCantidadExamenesPorNombre(nombre: string): Observable<CantidadExamenes[]> {
+    return this.http.get<CantidadExamenes[]>(`${this.apiURL}/cantidad-por-paciente/buscar`, { params: { nombre } });
+  }
+
   getCantidadExamenesDePaciente(id: number): Observable<CantidadExamenes> {
     return this.http.get<CantidadExamenes>(`${this.apiURL}/cantidad-por-paciente/${id}`);
   }

@@ -36,10 +36,12 @@
         [routerLink]="['/recetas/actualizar', item.idReceta]">
         <svg lucidePencil size="18" aria-hidden="true"></svg>
       </button>
-      <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar receta"
-        (click)="eliminarReceta(item.idReceta)">
-        <svg lucideTrash size="18" aria-hidden="true"></svg>
-      </button>
+      @if (esAdmin) {
+        <button matIconButton class="btn-icon btn-icon-danger" aria-label="Eliminar receta"
+          (click)="eliminarReceta(item.idReceta)">
+          <svg lucideTrash size="18" aria-hidden="true"></svg>
+        </button>
+      }
     </mat-card-actions>
   </mat-card>
   }

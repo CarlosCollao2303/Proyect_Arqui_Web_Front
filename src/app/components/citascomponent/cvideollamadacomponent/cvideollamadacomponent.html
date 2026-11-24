@@ -11,16 +11,20 @@
 
     <div class="acciones">
         @if (!enLlamada) {
+        @if (puedeEntrarComoMedico) {
         <button matButton type="button" class="btn-primary" [disabled]="conectando"
             (click)="ingresar(videollamada.medico)">
             <svg lucideVideo aria-hidden="true"></svg>
             Ingresar como médico
         </button>
+        }
+        @if (puedeEntrarComoPaciente) {
         <button matButton type="button" class="btn-secondary" [disabled]="conectando"
             (click)="ingresar(videollamada.paciente)">
             <svg lucideVideo aria-hidden="true"></svg>
             Ingresar como paciente
         </button>
+        }
         } @else {
         <button matButton type="button" class="btn-danger" (click)="salir()">
             <svg lucidePhoneOff aria-hidden="true"></svg>
@@ -28,6 +32,36 @@
         </button>
         }
     </div>
+    }
+
+    @if (videollamada?.enlace) {
+    <!-- Cualquier dispositivo que abra el enlace entra a la misma sala de Jitsi -->
+    <section class="otro-dispositivo">
+        <h3>
+            <svg lucideSmartphone size="20" aria-hidden="true"></svg>
+            Unirse desde el celular u otra laptop
+        </h3>
+        <div class="otro-dispositivo-contenido">
+            @if (videollamada?.qr) {
+            <img class="qr" [src]="videollamada?.qr" alt="Código QR del enlace de la videollamada">
+            }
+            <div class="instrucciones">
+                <p>Escanea el código con la cámara del celular o abre el enlace en cualquier navegador.
+                    En el celular también se puede usar la app Jitsi Meet.</p>
+                <code class="enlace">{{ videollamada?.enlace }}</code>
+                <div class="acciones-enlace">
+                    <button matButton type="button" class="btn-secondary" (click)="copiarEnlace()">
+                        <svg lucideCopy aria-hidden="true"></svg>
+                        {{ copiado ? 'Enlace copiado' : 'Copiar enlace' }}
+                    </button>
+                    <a matButton class="btn-outline" [href]="videollamada?.enlace" target="_blank" rel="noopener">
+                        <svg lucideExternalLink aria-hidden="true"></svg>
+                        Abrir en una pestaña nueva
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
     }
 
     <!-- Aquí la API iframe de Jitsi Meet inserta la videollamada -->
@@ -38,9 +72,9 @@
     }
 
     <div class="acciones">
-        <button matButton type="button" class="btn-outline" routerLink="/citas/listar">
+        <button matButton type="button" class="btn-outline" [routerLink]="rutaVolver">
             <svg lucideArrowLeft aria-hidden="true"></svg>
-            Volver al listado
+            Volver
         </button>
     </div>
 </div>

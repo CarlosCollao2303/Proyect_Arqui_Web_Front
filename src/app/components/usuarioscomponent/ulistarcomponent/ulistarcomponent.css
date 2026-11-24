@@ -15,6 +15,15 @@ h2 {
   margin: 10px 0 25px;
 }
 
+/* Botones "Mis pacientes / Todos los pacientes" del médico */
+.vista {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
 .busqueda-id {
   display: flex;
   justify-content: center;

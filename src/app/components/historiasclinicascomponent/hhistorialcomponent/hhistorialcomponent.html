@@ -1,0 +1,193 @@
+<h2>{{ vistaPaciente ? 'Mi historia clínica' : 'Historial clínico' }}</h2>
+
+@if (mensaje) {
+<p class="mensaje">{{ mensaje }}</p>
+}
+
+@if (historial) {
+<mat-card class="resumen">
+  <mat-card-header>
+    <mat-card-title>{{ historial.paciente }}</mat-card-title>
+    <mat-card-subtitle>DNI {{ historial.dni }} · Historia #{{ historial.idHistoriaClinica }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Creada el {{ fecha(historial.fechaCreacion) | date:'dd/MM/yyyy' }}</p>
+  </mat-card-content>
+</mat-card>
+
+<!-- Citas: las ven todos -->
+<section class="seccion">
+  <h3>Citas</h3>
+  @if (historial.citas.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>Fecha</th><th>Hora</th><th>Médico</th><th>Especialidad</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        @for (c of historial.citas; track c.idCita) {
+        <tr>
+          <td>{{ fecha(c.fecha) | date:'dd/MM/yyyy' }}</td>
+          <td>{{ hora(c.hora) }}</td>
+          <td>{{ c.medico }}</td>
+          <td>{{ c.especialidad || 'Sin especialidad' }}</td>
+          <td>{{ c.estado }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin citas registradas.</p>
+  }
+</section>
+
+<!-- Consultas y diagnósticos: solo el personal (el back no se los manda al paciente) -->
+@if (historial.consultas) {
+<section class="seccion">
+  <h3>Consultas</h3>
+  @if (historial.consultas.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>Fecha</th><th>Médico</th><th>Motivo de consulta</th></tr>
+      </thead>
+      <tbody>
+        @for (c of historial.consultas; track c.idDetalleHistorial) {
+        <tr>
+          <td>{{ fecha(c.fecha) | date:'dd/MM/yyyy' }}</td>
+          <td>{{ c.medico }}</td>
+          <td>{{ c.motivoConsulta }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin consultas registradas.</p>
+  }
+</section>
+}
+
+@if (historial.diagnosticos) {
+<section class="seccion">
+  <h3>Diagnósticos</h3>
+  @if (historial.diagnosticos.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>CIE-10</th><th>Descripción</th><th>Fecha</th></tr>
+      </thead>
+      <tbody>
+        @for (d of historial.diagnosticos; track d.idDiagnostico) {
+        <tr>
+          <td>{{ d.codigoCie10 }}</td>
+          <td>{{ d.descripcion }}</td>
+          <td>{{ fecha(d.fechaRegistro) | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin diagnósticos registrados.</p>
+  }
+</section>
+}
+
+<!-- Exámenes: los ven todos -->
+<section class="seccion">
+  <h3>Exámenes</h3>
+  @if (historial.examenes.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>Examen</th><th>Resultado</th><th>Solicitado</th><th>Resultado el</th></tr>
+      </thead>
+      <tbody>
+        @for (e of historial.examenes; track e.idExamen) {
+        <tr>
+          <td>{{ e.tipoExamen }}</td>
+          <td>{{ e.descripcion || '-' }}</td>
+          <td>{{ fecha(e.fechaSolicitud) | date:'dd/MM/yyyy' }}</td>
+          <td>
+            @if (e.fechaResultado) {
+            {{ fecha(e.fechaResultado) | date:'dd/MM/yyyy' }}
+            } @else {
+            <span class="pendiente">Pendiente</span>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin exámenes registrados.</p>
+  }
+</section>
+
+@if (historial.tratamientos) {
+<section class="seccion">
+  <h3>Tratamientos</h3>
+  @if (historial.tratamientos.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>Descripción</th><th>Inicio</th><th>Fin</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        @for (t of historial.tratamientos; track t.idTratamiento) {
+        <tr>
+          <td>{{ t.descripcion }}</td>
+          <td>{{ fecha(t.fechaInicio) | date:'dd/MM/yyyy' }}</td>
+          <td>{{ fecha(t.fechaFin) | date:'dd/MM/yyyy' }}</td>
+          <td>{{ t.estado }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin tratamientos registrados.</p>
+  }
+</section>
+}
+
+<!-- Recetas: las ven todos -->
+<section class="seccion">
+  <h3>Recetas</h3>
+  @if (historial.recetas.length > 0) {
+  <div class="tabla-scroll">
+    <table class="tabla">
+      <thead>
+        <tr><th>Medicamento</th><th>Dosis</th><th>Frecuencia</th><th>Días</th><th>Indicaciones</th><th>Emitida</th></tr>
+      </thead>
+      <tbody>
+        @for (r of historial.recetas; track r.idReceta) {
+        <tr>
+          <td>{{ r.medicamento }}</td>
+          <td>{{ r.dosis }}</td>
+          <td>{{ r.frecuencia }}</td>
+          <td>{{ r.duracionDias }}</td>
+          <td>{{ r.indicaciones || '-' }}</td>
+          <td>{{ fecha(r.fechaEmision) | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="vacio">Sin recetas registradas.</p>
+  }
+</section>
+}
+
+@if (!vistaPaciente) {
+<div class="acciones">
+  <button matButton type="button" class="btn-outline" routerLink="/historiasclinicas/listar">
+    <svg lucideArrowLeft aria-hidden="true"></svg>
+    Volver al listado
+  </button>
+</div>
+}

@@ -77,24 +77,24 @@ export class Repexamenespacientecomponent implements OnInit {
     });
   }
 
-  buscarPaciente(idValue: string): void {
-    const id = Number(idValue);
-    if (!Number.isInteger(id) || id < 1) {
-      this.mensajeBusqueda = 'Ingrese un ID válido.';
+  // Busca por nombre: es más fácil que recordar el id del paciente
+  buscarPaciente(nombre: string): void {
+    if (!nombre.trim()) {
+      this.mensajeBusqueda = 'Escriba el nombre del paciente.';
       return;
     }
 
-    this.eS.getCantidadExamenesDePaciente(id).subscribe({
+    this.eS.buscarCantidadExamenesPorNombre(nombre.trim()).subscribe({
       next: (data) => {
-        this.dataSource.data = [data];
+        this.dataSource.data = data;
         this.dataSource.paginator?.firstPage();
-        this.mensajeBusqueda = '';
+        this.mensajeBusqueda = data.length === 0 ? 'No se encontraron pacientes con ese nombre.' : '';
         this.cdr.detectChanges();
       },
       error: (error) => {
         this.dataSource.data = [];
         this.dataSource.paginator?.firstPage();
-        this.mensajeBusqueda = `No se encontró el paciente: ${error.error?.message ?? error.message}`;
+        this.mensajeBusqueda = `Error al buscar el paciente: ${error.error?.message ?? error.message}`;
         this.cdr.detectChanges();
       },
     });

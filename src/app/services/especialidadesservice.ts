@@ -17,6 +17,11 @@ export class Especialidadesservice {
     return this.http.get<Especialidades[]>(`${this.apiURL}/Listar`);
   }
 
+  // Busca por nombre sin importar mayúsculas ni tildes ("cardiologia" encuentra "Cardiología")
+  buscarEspecialidades(nombre: string): Observable<Especialidades[]> {
+    return this.http.get<Especialidades[]>(`${this.apiURL}/Buscar`, { params: { nombre } });
+  }
+
   getEspecialidadById(id: number): Observable<Especialidades> {
     return this.http.get<Especialidades>(`${this.apiURL}/ListarPorId/${id}`);
   }
@@ -31,6 +36,16 @@ export class Especialidadesservice {
 
   deleteEspecialidad(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  // Todos los médicos activos con su especialidad
+  getTodosLosMedicos(): Observable<MedicoPorEspecialidad[]> {
+    return this.http.get<MedicoPorEspecialidad[]>(`${this.apiURL}/medicos`);
+  }
+
+  // Solo las especialidades que tienen médicos disponibles (para el desplegable)
+  getEspecialidadesConMedicos(): Observable<Especialidades[]> {
+    return this.http.get<Especialidades[]>(`${this.apiURL}/con-medicos`);
   }
 
   getMedicosPorEspecialidad(id: number): Observable<MedicoPorEspecialidad[]> {

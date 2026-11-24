@@ -26,6 +26,16 @@
                 <td mat-cell *matCellDef="let element"> {{element.fechaCreacion}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="historial">
+                <th mat-header-cell *matHeaderCellDef> Historial </th>
+                <td mat-cell *matCellDef="let element">
+                    <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Ver detalle del historial"
+                        [routerLink]="['/historiasclinicas/historial', element.idHistoriaClinica]">
+                        <svg lucideFileHeart size="18" aria-hidden="true"></svg>
+                    </button>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="actualizar">
                 <th mat-header-cell *matHeaderCellDef> Actualizar </th>
                 <td mat-cell *matCellDef="let element">
