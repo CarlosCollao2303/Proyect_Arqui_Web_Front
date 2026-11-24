@@ -120,6 +120,8 @@ export const routes: Routes = [
     {
         path: 'roles',
         loadComponent: () => import('./components/rolescomponent/rolescomponent').then((module) => module.Rolescomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/rolescomponent/rolistarcomponent/rolistarcomponent').then((module) => module.Rolistarcomponent) },
