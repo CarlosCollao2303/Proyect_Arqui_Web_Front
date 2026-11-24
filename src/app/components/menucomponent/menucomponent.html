@@ -5,6 +5,7 @@
       <span>Inicio</span>
     </button>
 
+    @if (esPersonal) {
     <button matButton class="nav-button" [matMenuTriggerFor]="menuTratamientos">
       <svg lucidePill size="20" aria-hidden="true"></svg>
       <span>Tratamientos</span>
@@ -40,17 +41,21 @@
       <button mat-menu-item routerLink="/recetas/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/recetas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
+    }
 
     <button matButton class="nav-button" [matMenuTriggerFor]="menuCitas">
       <svg lucideCalendarDays size="20" aria-hidden="true"></svg>
       <span>Citas</span>
     </button>
     <mat-menu #menuCitas="matMenu">
+      @if (esPersonal) {
       <button mat-menu-item routerLink="/citas/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/citas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
+      }
       <button mat-menu-item routerLink="/citas/estado"><svg lucideSearch aria-hidden="true"></svg>Consultar estado</button>
     </mat-menu>
 
+    @if (esPersonal) {
     <button matButton class="nav-button" [matMenuTriggerFor]="menuHistorias">
       <svg lucideClipboardList size="20" aria-hidden="true"></svg>
       <span>Historias clínicas</span>
@@ -59,16 +64,22 @@
       <button mat-menu-item routerLink="/historiasclinicas/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/historiasclinicas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
+    }
     <button matButton class="nav-button" [matMenuTriggerFor]="menuEspecialidades">
       <svg lucideStethoscope size="20" aria-hidden="true"></svg>
       <span>Especialidades</span>
     </button>
     <mat-menu #menuEspecialidades="matMenu">
+      @if (esPersonal) {
       <button mat-menu-item routerLink="/especialidades/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
+      }
+      @if (esAdmin) {
       <button mat-menu-item routerLink="/especialidades/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
+      }
       <button mat-menu-item routerLink="/especialidades/medicos"><svg lucideUsers aria-hidden="true"></svg>Médicos por especialidad</button>
     </mat-menu>
 
+    @if (esAdmin) {
     <button matButton class="nav-button" [matMenuTriggerFor]="menuRoles">
       <svg lucideShieldCheck size="20" aria-hidden="true"></svg>
       <span>Roles</span>
@@ -77,14 +88,18 @@
       <button mat-menu-item routerLink="/roles/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/roles/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
+    }
 
+    @if (esPersonal) {
     <button matButton class="nav-button" [matMenuTriggerFor]="menuUsuarios">
       <svg lucideUsers size="20" aria-hidden="true"></svg>
       <span>Usuarios</span>
     </button>
     <mat-menu #menuUsuarios="matMenu">
       <button mat-menu-item routerLink="/usuarios/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
+      @if (esAdmin) {
       <button mat-menu-item routerLink="/usuarios/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
+      }
     </mat-menu>
 
     <button matButton class="nav-button" [matMenuTriggerFor]="menuReportes">
@@ -95,7 +110,9 @@
       <button mat-menu-item routerLink="/reportes/examenes-pendientes"><svg lucideClock3 aria-hidden="true"></svg>Exámenes pendientes</button>
       <button mat-menu-item routerLink="/reportes/examenes-por-paciente"><svg lucideChartColumn aria-hidden="true"></svg>Exámenes por paciente</button>
       <button mat-menu-item routerLink="/reportes/citas-por-especialidad"><svg lucideChartColumnStacked aria-hidden="true"></svg>Citas por especialidad</button>
+      @if (esAdmin) {
       <button mat-menu-item routerLink="/reportes/espera-por-medico"><svg lucideTimer aria-hidden="true"></svg>Espera por médico</button>
+      }
     </mat-menu>
 
     <button matButton class="nav-button" [matMenuTriggerFor]="menuDetalleHistorial">
@@ -115,5 +132,18 @@
       <button mat-menu-item routerLink="/notificaciones/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/notificaciones/enviar"><svg lucideSend aria-hidden="true"></svg>Enviar correo</button>
     </mat-menu>
+    }
+
+    @if (username) {
+      <span class="user-info">
+        <svg lucideCircleUserRound size="20" aria-hidden="true"></svg>
+        {{ username }} <span class="role">Roles: {{ roles }}</span>
+      </span>
+
+      <button matButton class="nav-button logout-button" type="button" (click)="cerrarSesion()">
+        <svg lucideLogOut size="20" aria-hidden="true"></svg>
+        <span>Cerrar sesión</span>
+      </button>
+    }
   </mat-toolbar>
 </div>

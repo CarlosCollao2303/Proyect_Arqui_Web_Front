@@ -1,0 +1,14 @@
+<div class="denied-page">
+  <section class="denied-card" role="alert">
+    <span class="denied-icon"><svg lucideShieldX size="40" aria-hidden="true"></svg></span>
+    <h1>Acceso denegado</h1>
+    <p>Tu rol no tiene permiso para ver esta página.</p>
+
+    <div class="actions">
+      <a class="button primary" [routerLink]="rutaInicial">Ir a mi pantalla de inicio</a>
+      <button class="button outline" type="button" (click)="cerrarSesion()">
+        Iniciar sesión con otra cuenta
+      </button>
+    </div>
+  </section>
+</div>
