@@ -3,7 +3,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { LucidePencil, LucideTrash } from '@lucide/angular';
+import { LucideFileHeart, LucidePencil, LucideTrash } from '@lucide/angular';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
@@ -13,12 +13,12 @@ import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/list
 
 @Component({
   selector: 'app-hlistarcomponent',
-  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucidePencil, LucideTrash],
+  imports: [MatTableModule, MatPaginatorModule, MatButtonModule, RouterLink, LucideFileHeart, LucidePencil, LucideTrash],
   templateUrl: './hlistarcomponent.html',
   styleUrl: './hlistarcomponent.css',
 })
 export class Hlistarcomponent implements OnInit {
-  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'actualizar', 'eliminar'];
+  displayedColumns: string[] = ['c1', 'c2', 'c3', 'c4', 'historial', 'actualizar', 'eliminar'];
   dataSource = new MatTableDataSource<HistoriasClinicas>([]);
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) this.dataSource.paginator = paginator;
