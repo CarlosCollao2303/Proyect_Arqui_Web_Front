@@ -132,12 +132,14 @@ export const routes: Routes = [
     {
         path: 'usuarios',
         loadComponent: () => import('./components/usuarioscomponent/usuarioscomponent').then((module) => module.Usuarioscomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
             { path: 'listar', loadComponent: () => import('./components/usuarioscomponent/ulistarcomponent/ulistarcomponent').then((module) => module.Ulistarcomponent) },
-            { path: 'insertar', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
-            { path: 'actualizar/:id', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent) },
-            { path: 'asignar/:id', loadComponent: () => import('./components/usuarioscomponent/uasignarcomponent/uasignarcomponent').then((module) => module.Uasignarcomponent) },
+            { path: 'insertar', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/usuarioscomponent/uinsertarcomponent/uinsertarcomponent').then((module) => module.Uinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
+            { path: 'asignar/:id', loadComponent: () => import('./components/usuarioscomponent/uasignarcomponent/uasignarcomponent').then((module) => module.Uasignarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
         ],
     },
     {
