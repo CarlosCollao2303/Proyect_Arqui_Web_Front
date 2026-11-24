@@ -54,6 +54,10 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Client,
   },
   {
+    path: 'historiasclinicas/historial/:id',
+    renderMode: RenderMode.Client,
+  },
+  {
     path: 'roles/actualizar/:id',
     renderMode: RenderMode.Client,
   },
