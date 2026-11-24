@@ -11,6 +11,7 @@ import {
   LucideCircleUserRound,
   LucideClipboardList,
   LucideClock3,
+  LucideFileHeart,
   LucideFilePlus,
   LucideFileText,
   LucideHeartPulse,
@@ -41,6 +42,7 @@ import { Loginservice } from '../../services/loginservice';
     LucideCircleUserRound,
     LucideClipboardList,
     LucideClock3,
+    LucideFileHeart,
     LucideFilePlus,
     LucideFileText,
     LucideHeartPulse,
@@ -80,6 +82,11 @@ export class Menucomponent {
   // ADMIN o MEDICO: el personal que gestiona la informacion clinica
   get esPersonal(): boolean {
     return this.loginService.hasAnyRole(['ADMIN', 'MEDICO']);
+  }
+
+  // Solo PACIENTE: ve su propia historia clínica
+  get esPaciente(): boolean {
+    return !this.esPersonal && this.loginService.hasAnyRole(['PACIENTE']);
   }
 
   cerrarSesion(): void {

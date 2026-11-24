@@ -65,6 +65,12 @@
       <button mat-menu-item routerLink="/historiasclinicas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
     </mat-menu>
     }
+    @if (esPaciente) {
+    <button matButton class="nav-button" routerLink="/historiasclinicas/mi-historial">
+      <svg lucideFileHeart size="20" aria-hidden="true"></svg>
+      <span>Mi historia clínica</span>
+    </button>
+    }
     <button matButton class="nav-button" [matMenuTriggerFor]="menuEspecialidades">
       <svg lucideStethoscope size="20" aria-hidden="true"></svg>
       <span>Especialidades</span>
