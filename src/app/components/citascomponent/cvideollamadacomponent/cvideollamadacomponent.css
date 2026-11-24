@@ -49,6 +49,64 @@ h2 {
   margin: 10px 0;
 }
 
+/* Panel para entrar desde otro dispositivo (QR y enlace) */
+.otro-dispositivo {
+  margin: 18px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-background);
+}
+
+.otro-dispositivo h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px 0;
+  color: var(--color-text);
+  font-size: 17px;
+}
+
+.otro-dispositivo-contenido {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.qr {
+  width: 160px;
+  height: 160px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.instrucciones {
+  flex: 1 1 280px;
+  color: var(--color-text);
+}
+
+.instrucciones p {
+  margin: 0 0 10px 0;
+}
+
+.enlace {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.acciones-enlace {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .jitsi-contenedor {
   display: none;
   width: 100%;

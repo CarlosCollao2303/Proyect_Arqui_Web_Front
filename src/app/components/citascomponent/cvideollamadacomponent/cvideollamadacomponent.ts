@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, Inject, OnDestroy, OnInit, PL
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { LucideArrowLeft, LucideCalendarClock, LucidePhoneOff, LucideStethoscope, LucideUserRound, LucideVideo } from '@lucide/angular';
+import { LucideArrowLeft, LucideCalendarClock, LucideCopy, LucideExternalLink, LucidePhoneOff, LucideSmartphone, LucideStethoscope, LucideUserRound, LucideVideo } from '@lucide/angular';
 import { Videollamada } from '../../../models/Videollamada';
 import { Citasservice } from '../../../services/citasservice';
 
@@ -12,7 +12,7 @@ declare const JitsiMeetExternalAPI: any;
 
 @Component({
   selector: 'app-cvideollamadacomponent',
-  imports: [MatButtonModule, RouterLink, LucideArrowLeft, LucideCalendarClock, LucidePhoneOff, LucideStethoscope, LucideUserRound, LucideVideo],
+  imports: [MatButtonModule, RouterLink, LucideArrowLeft, LucideCalendarClock, LucideCopy, LucideExternalLink, LucidePhoneOff, LucideSmartphone, LucideStethoscope, LucideUserRound, LucideVideo],
   templateUrl: './cvideollamadacomponent.html',
   styleUrl: './cvideollamadacomponent.css',
 })
@@ -22,6 +22,7 @@ export class Cvideollamadacomponent implements OnInit, OnDestroy {
   mensaje: string = '';
   conectando: boolean = false;
   enLlamada: boolean = false;
+  copiado: boolean = false;
   private api: any = null;
 
   @ViewChild('contenedorJitsi') contenedorJitsi!: ElementRef<HTMLDivElement>;
@@ -92,6 +93,25 @@ export class Cvideollamadacomponent implements OnInit, OnDestroy {
       .catch(() => {
         this.conectando = false;
         this.mensaje = 'No se pudo cargar Jitsi Meet. Revisa tu conexión a internet.';
+        this.cdr.detectChanges();
+      });
+  }
+
+  // La sala de Jitsi es solo un enlace: abierto en otro dispositivo entra a la misma videollamada
+  copiarEnlace() {
+    if (!this.videollamada || !isPlatformBrowser(this.platformId)) return;
+
+    navigator.clipboard.writeText(this.videollamada.enlace)
+      .then(() => {
+        this.copiado = true;
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.copiado = false;
+          this.cdr.detectChanges();
+        }, 2500);
+      })
+      .catch(() => {
+        this.mensaje = 'No se pudo copiar el enlace. Selecciónalo y cópialo a mano.';
         this.cdr.detectChanges();
       });
   }
