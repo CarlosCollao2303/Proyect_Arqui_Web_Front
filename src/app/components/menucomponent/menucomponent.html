@@ -52,7 +52,7 @@
       <button mat-menu-item routerLink="/citas/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/citas/insertar"><svg lucideFilePlus aria-hidden="true"></svg>Insertar</button>
       }
-      <button mat-menu-item routerLink="/citas/estado"><svg lucideSearch aria-hidden="true"></svg>Consultar estado</button>
+      <button mat-menu-item routerLink="/citas/estado"><svg lucideSearch aria-hidden="true"></svg>{{ esPersonal ? 'Consultar estado' : 'Mis citas' }}</button>
     </mat-menu>
 
     @if (esPersonal) {
