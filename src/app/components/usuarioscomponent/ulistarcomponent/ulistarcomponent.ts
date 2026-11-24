@@ -10,6 +10,7 @@ import { Especialidades } from '../../../models/Especialidades';
 import { Usuariosservice } from '../../../services/usuariosservice';
 import { Rolesservice } from '../../../services/rolesservice';
 import { Especialidadesservice } from '../../../services/especialidadesservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
@@ -33,10 +34,19 @@ export class Ulistarcomponent implements OnInit {
   constructor(private uS: Usuariosservice,
     private rS: Rolesservice,
     private eS: Especialidadesservice,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loginService: Loginservice
   ) { }
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.obtenerUsuarios();
     this.listarRoles();
     this.listarEspecialidades();
