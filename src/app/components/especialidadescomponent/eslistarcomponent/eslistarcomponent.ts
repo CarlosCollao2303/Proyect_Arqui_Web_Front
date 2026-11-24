@@ -56,18 +56,17 @@ export class Eslistarcomponent implements OnInit {
     });
   }
 
-  buscarEspecialidad(idValue: string): void {
-    const id = Number(idValue);
-    if (!Number.isInteger(id) || id < 1) {
-      this.mensajeBusqueda = 'Ingrese un ID válido.';
+  buscarEspecialidad(nombre: string): void {
+    if (!nombre.trim()) {
+      this.mensajeBusqueda = 'Escriba el nombre de la especialidad.';
       return;
     }
 
-    this.service.getEspecialidadById(id).subscribe({
-      next: (especialidad) => {
-        this.dataSource.data = [especialidad];
+    this.service.buscarEspecialidades(nombre.trim()).subscribe({
+      next: (especialidades) => {
+        this.dataSource.data = especialidades;
         this.dataSource.paginator?.firstPage();
-        this.mensajeBusqueda = '';
+        this.mensajeBusqueda = especialidades.length === 0 ? 'No se encontraron especialidades con ese nombre.' : '';
         this.cdr.detectChanges();
       },
       error: (error) => {
