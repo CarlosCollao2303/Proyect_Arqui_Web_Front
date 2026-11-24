@@ -16,6 +16,30 @@ export class Usuariosservice {
     return this.http.get<Usuarios[]>(`${this.apiURL}/Listar`);
   }
 
+  // Todos los pacientes (para formularios y para "Todos los pacientes" del médico)
+  getPacientes(): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>(`${this.apiURL}/pacientes`);
+  }
+
+  // Pacientes con citas con el médico logueado (el back lo saca del token)
+  getMisPacientes(): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>(`${this.apiURL}/mis-pacientes`);
+  }
+
+  getMedicos(): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>(`${this.apiURL}/medicos`);
+  }
+
+  // Datos del usuario logueado
+  getPerfil(): Observable<Usuarios> {
+    return this.http.get<Usuarios>(`${this.apiURL}/perfil`);
+  }
+
+  // Busca por nombre o DNI; para un médico el back solo busca entre pacientes
+  buscarUsuarios(texto: string): Observable<Usuarios[]> {
+    return this.http.get<Usuarios[]>(`${this.apiURL}/Buscar`, { params: { texto } });
+  }
+
   getUsuarioById(id: number): Observable<Usuarios> {
     return this.http.get<Usuarios>(`${this.apiURL}/ListarPorId/${id}`);
   }
