@@ -44,6 +44,21 @@ export class Citasservice {
     return this.http.get<CitaEstado>(`${this.apiURL}/${id}/estado`);
   }
 
+  // Citas del paciente logueado con su estado (el back lo saca del token)
+  getMisEstados(): Observable<CitaEstado[]> {
+    return this.http.get<CitaEstado[]>(`${this.apiURL}/estados/mias`);
+  }
+
+  // Citas de un paciente elegido por el personal
+  getEstadosDePaciente(idPaciente: number): Observable<CitaEstado[]> {
+    return this.http.get<CitaEstado[]>(`${this.apiURL}/estados/paciente/${idPaciente}`);
+  }
+
+  // ADMIN: todas las citas; MÉDICO: las que atiende. Con los nombres ya resueltos.
+  getEstados(): Observable<CitaEstado[]> {
+    return this.http.get<CitaEstado[]>(`${this.apiURL}/estados`);
+  }
+
   getCitasPorEspecialidad(): Observable<CitasEspecialidad[]> {
     return this.http.get<CitasEspecialidad[]>(`${this.apiURL}/estado-por-especialidad`);
   }
