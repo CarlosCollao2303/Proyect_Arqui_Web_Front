@@ -107,11 +107,13 @@ export const routes: Routes = [
     {
         path: 'especialidades',
         loadComponent: () => import('./components/especialidadescomponent/especialidadescomponent').then((module) => module.Especialidadescomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO', 'PACIENTE'] },
         children: [
             { path: '', redirectTo: 'listar', pathMatch: 'full' },
-            { path: 'listar', loadComponent: () => import('./components/especialidadescomponent/eslistarcomponent/eslistarcomponent').then((module) => module.Eslistarcomponent) },
-            { path: 'insertar', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
-            { path: 'actualizar/:id', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent) },
+            { path: 'listar', loadComponent: () => import('./components/especialidadescomponent/eslistarcomponent/eslistarcomponent').then((module) => module.Eslistarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN', 'MEDICO'] } },
+            { path: 'insertar', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
+            { path: 'actualizar/:id', loadComponent: () => import('./components/especialidadescomponent/esinsertarcomponent/esinsertarcomponent').then((module) => module.Esinsertarcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
             { path: 'medicos', loadComponent: () => import('./components/especialidadescomponent/esmedicoscomponent/esmedicoscomponent').then((module) => module.Esmedicoscomponent) },
         ],
     },
