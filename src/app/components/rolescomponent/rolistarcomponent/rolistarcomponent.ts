@@ -10,6 +10,13 @@ import { Roles } from '../../../models/Roles';
 import { Rolesservice } from '../../../services/rolesservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
+// Imagen estática de cada rol del sistema (están en public/img/roles)
+const IMAGENES_ROLES: Record<string, string> = {
+  ADMIN: '/img/roles/administrador.jpg',
+  MEDICO: '/img/roles/medico.jpg',
+  PACIENTE: '/img/roles/paciente.webp',
+};
+
 @Component({
   selector: 'app-rolistarcomponent',
   imports: [AsyncPipe, MatButtonModule, MatCardModule, MatPaginatorModule, RouterLink, LucidePencil, LucideRefreshCw, LucideSearch, LucideTrash],
@@ -49,18 +56,17 @@ export class Rolistarcomponent implements OnInit {
     });
   }
 
-  buscarRol(idValue: string): void {
-    const id = Number(idValue);
-    if (!Number.isInteger(id) || id < 1) {
-      this.mensajeBusqueda = 'Ingrese un ID válido.';
+  buscarRol(nombre: string): void {
+    if (!nombre.trim()) {
+      this.mensajeBusqueda = 'Escriba el nombre del rol.';
       return;
     }
 
-    this.service.getRolById(id).subscribe({
-      next: (rol) => {
-        this.dataSource.data = [rol];
+    this.service.buscarRoles(nombre.trim()).subscribe({
+      next: (roles) => {
+        this.dataSource.data = roles;
         this.dataSource.paginator?.firstPage();
-        this.mensajeBusqueda = '';
+        this.mensajeBusqueda = roles.length === 0 ? 'No se encontraron roles con ese nombre.' : '';
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -70,6 +76,11 @@ export class Rolistarcomponent implements OnInit {
         this.cdr.detectChanges();
       },
     });
+  }
+
+  // Los roles creados a mano no tienen imagen
+  imagenRol(nombre: string): string | null {
+    return IMAGENES_ROLES[nombre] ?? null;
   }
 
   eliminarRol(id: number): void {

@@ -1,11 +1,11 @@
 <h2>Listado de roles</h2>
 <div class="busqueda-id">
-  <input #idRol type="number" min="1" placeholder="ID del rol">
-  <button matButton type="button" class="btn-secondary" (click)="buscarRol(idRol.value)">
+  <input #nombreRol type="text" placeholder="Nombre del rol" (keyup.enter)="buscarRol(nombreRol.value)">
+  <button matButton type="button" class="btn-secondary" (click)="buscarRol(nombreRol.value)">
     <svg lucideSearch aria-hidden="true"></svg>
-    Buscar por ID
+    Buscar por nombre
   </button>
-  <button matButton type="button" class="btn-outline" (click)="obtenerRoles()">
+  <button matButton type="button" class="btn-outline" (click)="nombreRol.value = ''; obtenerRoles()">
     <svg lucideRefreshCw aria-hidden="true"></svg>
     Mostrar todos
   </button>
@@ -21,6 +21,9 @@
       <mat-card-title>{{ item.nombre }}</mat-card-title>
       <mat-card-subtitle>Rol #{{ item.idRol }}</mat-card-subtitle>
     </mat-card-header>
+    @if (imagenRol(item.nombre); as imagen) {
+    <img class="rol-imagen" [src]="imagen" [alt]="'Imagen del rol ' + item.nombre">
+    }
     <mat-card-actions align="end">
       <button matIconButton class="btn-icon btn-icon-ghost" aria-label="Actualizar rol"
         [routerLink]="['/roles/actualizar', item.idRol]">
