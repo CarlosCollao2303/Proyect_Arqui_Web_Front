@@ -14,7 +14,7 @@
             <mat-form-field>
                 <mat-label>Paciente</mat-label>
                 <mat-select formControlName="paciente">
-                    @for (p of usuariosPorRol('PACIENTE'); track p.idUsuario) {
+                    @for (p of listaPacientes; track p.idUsuario) {
                     <mat-option [value]="p.idUsuario">{{p.nombres}} {{p.apellidos}}</mat-option>
                     }
                 </mat-select>
@@ -23,10 +23,13 @@
             <mat-form-field>
                 <mat-label>Médico</mat-label>
                 <mat-select formControlName="medico">
-                    @for (m of usuariosPorRol('MEDICO'); track m.idUsuario) {
+                    @for (m of listaMedicos; track m.idUsuario) {
                     <mat-option [value]="m.idUsuario">{{m.nombres}} {{m.apellidos}}</mat-option>
                     }
                 </mat-select>
+                @if (esMedico) {
+                <mat-hint>{{ isEditing ? 'La cita conserva su médico' : 'La cita queda registrada a tu nombre' }}</mat-hint>
+                }
             </mat-form-field>
             <br>
             <mat-form-field>
