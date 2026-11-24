@@ -12,12 +12,12 @@
     }
 
     <div class="busqueda-id">
-        <input #idPaciente type="number" min="1" placeholder="ID del paciente" (keyup.enter)="buscarPaciente(idPaciente.value)">
-        <button matButton type="button" class="btn-secondary" (click)="buscarPaciente(idPaciente.value)">
+        <input #nombrePaciente type="text" placeholder="Nombre del paciente" (keyup.enter)="buscarPaciente(nombrePaciente.value)">
+        <button matButton type="button" class="btn-secondary" (click)="buscarPaciente(nombrePaciente.value)">
             <svg lucideSearch aria-hidden="true"></svg>
             Buscar
         </button>
-        <button matButton type="button" class="btn-outline" (click)="idPaciente.value = ''; obtenerTodos()">
+        <button matButton type="button" class="btn-outline" (click)="nombrePaciente.value = ''; obtenerTodos()">
             <svg lucideRefreshCw aria-hidden="true"></svg>
             Mostrar todos
         </button>
