@@ -16,6 +16,11 @@ export class Rolesservice {
     return this.http.get<Roles[]>(`${this.apiURL}/Listar`);
   }
 
+  // Roles cuyo nombre contiene el texto (sin importar mayúsculas)
+  buscarRoles(nombre: string): Observable<Roles[]> {
+    return this.http.get<Roles[]>(`${this.apiURL}/Buscar`, { params: { nombre } });
+  }
+
   getRolById(id: number): Observable<Roles> {
     return this.http.get<Roles>(`${this.apiURL}/ListarPorId/${id}`);
   }
