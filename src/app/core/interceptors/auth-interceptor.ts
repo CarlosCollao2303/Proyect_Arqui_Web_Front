@@ -22,6 +22,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
+  // El registro de usuarios es publico y sin token siempre crea un PACIENTE, como
+  // indica el formulario de usuarios (el rol se asigna despues desde "Asignar").
+  // Con el token de un ADMIN el backend exigiria elegir el rol en el registro.
+  if (req.method === 'POST' && req.url.endsWith('/api/usuarios/Registrar')) {
+    return next(req);
+  }
+
   const token = sessionStorage.getItem('token');
   if (!token) {
     return next(req);
