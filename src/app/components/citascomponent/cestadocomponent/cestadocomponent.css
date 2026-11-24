@@ -15,20 +15,29 @@ h2 {
   margin: 10px 0 25px;
 }
 
-.busqueda-id {
+/* Desplegable para elegir al paciente por nombre (ADMIN y MÉDICO) */
+.filtro {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.busqueda-id input {
-  min-height: 38px;
-  padding: 0 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+.filtro mat-form-field {
+  width: min(420px, 100%);
+}
+
+/* Una tarjeta por cita */
+.citas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.citas-grid .estado-card {
+  max-width: none;
+  margin: 0;
 }
 
 .mensaje {

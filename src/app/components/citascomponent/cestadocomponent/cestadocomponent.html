@@ -1,37 +1,56 @@
-<h2>Consultar estado de cita</h2>
-<div class="busqueda-id">
-  <input #idCita type="number" min="1" placeholder="ID de la cita" (keyup.enter)="buscarEstado(idCita.value)">
-  <button matButton type="button" class="btn-secondary" (click)="buscarEstado(idCita.value)">
-    <svg lucideSearch aria-hidden="true"></svg>
-    Buscar
-  </button>
+<h2>{{ esPaciente ? 'Mis citas' : 'Consultar estado de citas' }}</h2>
+@if (!esPaciente) {
+<div class="filtro">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ esMedico ? 'Mis pacientes' : 'Paciente' }}</mat-label>
+    <mat-select [value]="pacienteSeleccionado" (selectionChange)="seleccionarPaciente($event.value)">
+      @for (p of pacientes; track p.idUsuario) {
+      <mat-option [value]="p.idUsuario">{{ p.nombres }} {{ p.apellidos }} (DNI {{ p.dni }})</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
-@if (mensajeBusqueda) {
-<p class="mensaje">{{ mensajeBusqueda }}</p>
 }
-@if (citaEstado) {
-<mat-card class="estado-card">
-  <mat-card-header>
-    <mat-card-title>Cita #{{ citaEstado.idCita }}</mat-card-title>
-    <mat-card-subtitle>
-      <span class="estado-cita">
-        @if (citaEstado.estado === 'PENDIENTE') {
-        <svg lucideClock3 class="estado-icon estado-pendiente" aria-hidden="true"></svg>
-        } @else if (citaEstado.estado === 'ATENDIDA') {
-        <svg lucideCircleCheck class="estado-icon estado-completado" aria-hidden="true"></svg>
-        } @else if (citaEstado.estado === 'CANCELADA') {
-        <svg lucideCircleX class="estado-icon estado-cancelado" aria-hidden="true"></svg>
-        }
-        {{ citaEstado.estado }}
-      </span>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p><strong>Fecha:</strong> {{ fecha(citaEstado.fecha) | date:'dd/MM/yyyy' }}</p>
-    <p><strong>Hora:</strong> {{ hora(citaEstado.hora) }}</p>
-    <p><strong>Paciente:</strong> {{ citaEstado.paciente }}</p>
-    <p><strong>Médico:</strong> {{ citaEstado.medico }}</p>
-    <p><strong>Especialidad:</strong> {{ citaEstado.especialidad?.trim() || 'Sin especialidad' }}</p>
-  </mat-card-content>
-</mat-card>
+@if (mensaje) {
+<p class="mensaje">{{ mensaje }}</p>
+}
+@if (citas.length > 0) {
+<div class="citas-grid">
+  @for (cita of citas; track cita.idCita) {
+  <mat-card class="estado-card">
+    <mat-card-header>
+      <mat-card-title>Cita #{{ cita.idCita }}</mat-card-title>
+      <mat-card-subtitle>
+        <span class="estado-cita">
+          @if (cita.estado === 'PENDIENTE') {
+          <svg lucideClock3 class="estado-icon estado-pendiente" aria-hidden="true"></svg>
+          } @else if (cita.estado === 'ATENDIDA') {
+          <svg lucideCircleCheck class="estado-icon estado-completado" aria-hidden="true"></svg>
+          } @else if (cita.estado === 'CANCELADA') {
+          <svg lucideCircleX class="estado-icon estado-cancelado" aria-hidden="true"></svg>
+          }
+          {{ cita.estado }}
+        </span>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Fecha:</strong> {{ fecha(cita.fecha) | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Hora:</strong> {{ hora(cita.hora) }}</p>
+      @if (!esPaciente) {
+      <p><strong>Paciente:</strong> {{ cita.paciente }}</p>
+      }
+      <p><strong>Médico:</strong> {{ cita.medico }}</p>
+      <p><strong>Especialidad:</strong> {{ cita.especialidad?.trim() || 'Sin especialidad' }}</p>
+    </mat-card-content>
+    @if (cita.estado === 'PENDIENTE') {
+    <mat-card-actions align="end">
+      <button matButton type="button" class="btn-primary" [routerLink]="['/citas/videollamada', cita.idCita]">
+        <svg lucideVideo aria-hidden="true"></svg>
+        Ingresar a la videollamada
+      </button>
+    </mat-card-actions>
+    }
+  </mat-card>
+  }
+</div>
 }
