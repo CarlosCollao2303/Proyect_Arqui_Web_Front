@@ -1,30 +1,32 @@
 <h2>Médicos por especialidad</h2>
-<div class="busqueda-id">
-  <input #idEspecialidad type="number" min="1" placeholder="ID de la especialidad" (keyup.enter)="buscarMedicos(idEspecialidad.value)">
-  <button matButton type="button" class="btn-secondary" (click)="buscarMedicos(idEspecialidad.value)">
-    <svg lucideSearch aria-hidden="true"></svg>
-    Buscar
-  </button>
+<div class="filtro">
+  <mat-form-field appearance="outline">
+    <mat-label>Especialidad</mat-label>
+    <mat-select [value]="especialidadSeleccionada" (selectionChange)="filtrarPorEspecialidad($event.value)">
+      <mat-option [value]="0">Todas las especialidades</mat-option>
+      @for (e of especialidades; track e.idEspecialidad) {
+      <mat-option [value]="e.idEspecialidad">{{ e.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 </div>
-@if (especialidad) {
-<h3 class="especialidad-titulo">{{ especialidad.nombre }} <span>(ID {{ especialidad.idEspecialidad }})</span></h3>
-}
-@if (mensajeBusqueda) {
-<p class="mensaje">{{ mensajeBusqueda }}</p>
+@if (mensaje) {
+<p class="mensaje">{{ mensaje }}</p>
 }
 @if (listaMedicos.length > 0) {
+<p class="total">{{ listaMedicos.length }} {{ listaMedicos.length === 1 ? 'médico disponible' : 'médicos disponibles' }}</p>
 <div class="medicos-grid">
   @for (m of listaMedicos; track m.idMedico) {
   <mat-card class="medico-card">
     <mat-card-header>
       <mat-card-title>{{ m.nombres }} {{ m.apellidos }}</mat-card-title>
-      <mat-card-subtitle>Médico #{{ m.idMedico }}</mat-card-subtitle>
+      <mat-card-subtitle>
+        <span class="especialidad">
+          <svg lucideStethoscope size="16" aria-hidden="true"></svg>
+          {{ m.especialidad }}
+        </span>
+      </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <p><strong>Nombres:</strong> {{ m.nombres }}</p>
-      <p><strong>Apellidos:</strong> {{ m.apellidos }}</p>
-      <p><strong>Especialidad:</strong> {{ m.especialidad }}</p>
-    </mat-card-content>
   </mat-card>
   }
 </div>

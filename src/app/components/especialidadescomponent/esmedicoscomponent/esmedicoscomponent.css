@@ -15,33 +15,27 @@ h2 {
   margin: 10px 0 25px;
 }
 
-.busqueda-id {
+/* Desplegable de especialidades sobre la lista de médicos */
+.filtro {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.busqueda-id input {
-  min-height: 38px;
-  padding: 0 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+.filtro mat-form-field {
+  width: min(360px, 100%);
 }
 
-.especialidad-titulo {
+.total {
   text-align: center;
-  color: var(--color-text);
-  font-size: 20px;
-  margin: 0 0 20px;
+  color: var(--color-text-secondary);
+  margin: 0 0 18px;
 }
 
-.especialidad-titulo span {
-  color: var(--color-text-secondary);
-  font-size: 15px;
-  font-weight: normal;
+.especialidad {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .mensaje {
