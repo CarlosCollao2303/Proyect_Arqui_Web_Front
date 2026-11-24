@@ -145,12 +145,14 @@ export const routes: Routes = [
     {
         path: 'reportes',
         loadComponent: () => import('./components/reportescomponent/reportescomponent').then((module) => module.Reportescomponent),
+        canActivate: [authGuard, roleGuard],
+        data: { roles: ['ADMIN', 'MEDICO'] },
         children: [
             { path: '', redirectTo: 'examenes-pendientes', pathMatch: 'full' },
             { path: 'examenes-pendientes', loadComponent: () => import('./components/reportescomponent/repexamenespendientescomponent/repexamenespendientescomponent').then((module) => module.Repexamenespendientescomponent) },
             { path: 'examenes-por-paciente', loadComponent: () => import('./components/reportescomponent/repexamenespacientecomponent/repexamenespacientecomponent').then((module) => module.Repexamenespacientecomponent) },
             { path: 'citas-por-especialidad', loadComponent: () => import('./components/reportescomponent/repcitasespecialidadcomponent/repcitasespecialidadcomponent').then((module) => module.Repcitasespecialidadcomponent) },
-            { path: 'espera-por-medico', loadComponent: () => import('./components/reportescomponent/repesperamedicocomponent/repesperamedicocomponent').then((module) => module.Repesperamedicocomponent) },
+            { path: 'espera-por-medico', loadComponent: () => import('./components/reportescomponent/repesperamedicocomponent/repesperamedicocomponent').then((module) => module.Repesperamedicocomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
         ],
     },
     {
