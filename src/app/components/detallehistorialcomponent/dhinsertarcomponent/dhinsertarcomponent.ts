@@ -9,7 +9,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LucideCalendarDays, LucideCircleX, LucideSave } from '@lucide/angular';
 import { DetalleHistorial } from '../../../models/DetalleHistorial';
 import { Usuarios } from '../../../models/Usuarios';
-import { Roles } from '../../../models/Roles';
 import { HistoriasClinicas } from '../../../models/HistoriasClinicas';
 import { Examenes } from '../../../models/Examenes';
 import { Diagnosticos } from '../../../models/Diagnosticos';
@@ -17,7 +16,7 @@ import { Tratamientos } from '../../../models/Tratamientos';
 import { Recetas } from '../../../models/Recetas';
 import { Detallehistorialservice } from '../../../services/detallehistorialservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
-import { Rolesservice } from '../../../services/rolesservice';
+import { Loginservice } from '../../../services/loginservice';
 import { Historiasclinicasservice } from '../../../services/historiasclinicasservice';
 import { Examenesservice } from '../../../services/examenesservice';
 import { Diagnosticosservice } from '../../../services/diagnosticosservice';
@@ -38,8 +37,10 @@ export class Dhinsertarcomponent implements OnInit {
   isEditing = false;
 
   // Listas para llenar los mat-select (tablas foráneas)
-  listaUsuarios: Usuarios[] = [];
-  listaRoles: Roles[] = [];
+  listaPacientes: Usuarios[] = [];
+  listaMedicos: Usuarios[] = [];
+  // id del médico logueado (solo si quien registra es MÉDICO)
+  idMedicoLogueado: number | null = null;
   listaHistorias: HistoriasClinicas[] = [];
   listaExamenes: Examenes[] = [];
   listaDiagnosticos: Diagnosticos[] = [];
@@ -49,7 +50,7 @@ export class Dhinsertarcomponent implements OnInit {
   constructor(
     private service: Detallehistorialservice,
     private uS: Usuariosservice,
-    private rolS: Rolesservice,
+    private loginService: Loginservice,
     private hS: Historiasclinicasservice,
     private eS: Examenesservice,
     private dS: Diagnosticosservice,
@@ -76,6 +77,10 @@ export class Dhinsertarcomponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarTablasForaneas();
+    if (this.esMedico) {
+      this.formDetalle.get('medico')?.disable();
+      this.ponerMedicoLogueado();
+    }
 
     // Si la ruta trae un id, estamos en modo actualizar
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -106,8 +111,8 @@ export class Dhinsertarcomponent implements OnInit {
   }
 
   cargarTablasForaneas(): void {
-    this.uS.getListUsuarios().subscribe((data) => { this.listaUsuarios = data; this.cdr.detectChanges(); });
-    this.rolS.getListRoles().subscribe((data) => { this.listaRoles = data; this.cdr.detectChanges(); });
+    this.uS.getPacientes().subscribe((data) => { this.listaPacientes = data; this.cdr.detectChanges(); });
+    this.uS.getMedicos().subscribe((data) => { this.listaMedicos = data; this.cdr.detectChanges(); });
     this.hS.getListHistorias().subscribe((data) => { this.listaHistorias = data; this.cdr.detectChanges(); });
     this.eS.getListExamenes().subscribe((data) => { this.listaExamenes = data; this.cdr.detectChanges(); });
     this.dS.getListDiagnosticos().subscribe((data) => { this.listaDiagnosticos = data; this.cdr.detectChanges(); });
@@ -115,14 +120,28 @@ export class Dhinsertarcomponent implements OnInit {
     this.rS.getListRecetas().subscribe((data) => { this.listaRecetas = data; this.cdr.detectChanges(); });
   }
 
-  // El backend solo acepta usuarios con rol MEDICO
-  medicos(): Usuarios[] {
-    const rol = this.listaRoles.find((r) => r.nombre === 'MEDICO');
-    return rol ? this.listaUsuarios.filter((u) => u.idRol === rol.idRol) : [];
+
+  // Un MÉDICO registra a su nombre: el campo médico se llena solo y no se puede cambiar
+  get esMedico(): boolean {
+    return !this.loginService.hasAnyRole(['ADMIN']) && this.loginService.hasAnyRole(['MEDICO']);
+  }
+
+  // Al registrar, el detalle queda a nombre del médico que inició sesión
+  ponerMedicoLogueado(): void {
+    this.uS.getPerfil().subscribe({
+      next: (perfil) => {
+        this.idMedicoLogueado = perfil.idUsuario;
+        if (!this.isEditing) {
+          this.formDetalle.patchValue({ medico: perfil.idUsuario });
+        }
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log('Error al obtener el perfil:', err),
+    });
   }
 
   nombrePaciente(idPaciente: number): string {
-    const u = this.listaUsuarios.find((x) => x.idUsuario === idPaciente);
+    const u = this.listaPacientes.find((x) => x.idUsuario === idPaciente);
     return u ? `${u.nombres} ${u.apellidos}` : `Paciente #${idPaciente}`;
   }
 
@@ -133,7 +152,8 @@ export class Dhinsertarcomponent implements OnInit {
       return;
     }
 
-    const v = this.formDetalle.value;
+    // getRawValue: el médico está deshabilitado cuando registra un MÉDICO
+    const v = this.formDetalle.getRawValue();
     const detalle: DetalleHistorial = {
       idDetalleHistorial: this.isEditing ? v.idDetalleHistorial : 0,
       idHistoriaClinica: v.historia,
@@ -157,7 +177,7 @@ export class Dhinsertarcomponent implements OnInit {
           return;
         }
         this.mensaje = 'Detalle de historial registrado correctamente.';
-        this.formDetalle.reset({ idDetalleHistorial: 0, fechaRegistro: new Date(), cifradoDatos: '' });
+        this.formDetalle.reset({ idDetalleHistorial: 0, medico: this.idMedicoLogueado, fechaRegistro: new Date(), cifradoDatos: '' });
         this.cdr.detectChanges();
       },
       error: (error) => {
