@@ -7,4 +7,6 @@ export class Videollamada {
     medico: string = '';
     fecha: Date = new Date();
     estado: string = '';
+    // Código QR del enlace (imagen PNG en base64) para abrirlo con el celular
+    qr: string | null = null;
 }
