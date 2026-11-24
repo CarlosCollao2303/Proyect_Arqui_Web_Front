@@ -6,6 +6,14 @@ export const routes: Routes = [
         loadComponent: () => import('./components/homecomponent/homecomponent').then((module) => module.Homecomponent),
     },
     {
+        path: 'login',
+        loadComponent: () => import('./components/logincomponent/logincomponent').then((module) => module.Logincomponent),
+    },
+    {
+        path: 'acceso-denegado',
+        loadComponent: () => import('./components/accesodenegadocomponent/accesodenegadocomponent').then((module) => module.Accesodenegadocomponent),
+    },
+    {
         path: 'tratamientos',
         loadComponent: () => import('./components/tratamientoscomponent/tratamientoscomponent').then((module) => module.Tratamientoscomponent),
         children: [
