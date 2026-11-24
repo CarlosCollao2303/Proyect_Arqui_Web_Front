@@ -23,6 +23,30 @@ mat-toolbar {
  background: rgba(117, 183, 158, 0.2);
 }
 
+.user-info {
+ margin-left: auto;
+ display: inline-flex;
+ align-items: center;
+ gap: 6px;
+ white-space: nowrap;
+ font-size: 0.9rem;
+}
+
+.user-info .role {
+ margin-left: 0.4rem;
+ padding-left: 0.6rem;
+ border-left: 1px solid rgb(255 255 255 / 0.4);
+ font-weight: 400;
+ opacity: 0.9;
+}
+
+.logout-button {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.4rem;
+ white-space: nowrap;
+}
+
 @media (max-width: 600px) {
  mat-toolbar {
   justify-content: flex-start;

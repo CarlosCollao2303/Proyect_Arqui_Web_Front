@@ -115,5 +115,17 @@
       <button mat-menu-item routerLink="/notificaciones/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
       <button mat-menu-item routerLink="/notificaciones/enviar"><svg lucideSend aria-hidden="true"></svg>Enviar correo</button>
     </mat-menu>
+
+    @if (username) {
+      <span class="user-info">
+        <svg lucideCircleUserRound size="20" aria-hidden="true"></svg>
+        {{ username }} <span class="role">Roles: {{ roles }}</span>
+      </span>
+
+      <button matButton class="nav-button logout-button" type="button" (click)="cerrarSesion()">
+        <svg lucideLogOut size="20" aria-hidden="true"></svg>
+        <span>Cerrar sesión</span>
+      </button>
+    }
   </mat-toolbar>
 </div>
