@@ -8,6 +8,7 @@ import { Citas } from '../../../models/Citas';
 import { Usuarios } from '../../../models/Usuarios';
 import { Citasservice } from '../../../services/citasservice';
 import { Usuariosservice } from '../../../services/usuariosservice';
+import { Loginservice } from '../../../services/loginservice';
 import { idActualizadoDeLaNavegacion, ordenarListado } from '../../../utils/listados';
 
 @Component({
@@ -28,10 +29,19 @@ export class Clistarcomponent implements OnInit {
 
   constructor(private cS: Citasservice,
     private uS: Usuariosservice,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loginService: Loginservice
   ) { }
 
+  // Solo el ADMIN puede eliminar registros: a los demás roles ni se les muestra el botón
+  get esAdmin(): boolean {
+    return this.loginService.hasAnyRole(['ADMIN']);
+  }
+
   ngOnInit(): void {
+    if (!this.esAdmin) {
+      this.displayedColumns = this.displayedColumns.filter((columna) => columna !== 'eliminar');
+    }
     this.listarCitas();
     this.listarUsuarios();
   }
