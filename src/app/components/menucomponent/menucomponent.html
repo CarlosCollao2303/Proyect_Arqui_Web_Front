@@ -93,7 +93,8 @@
     @if (esPersonal) {
     <button matButton class="nav-button" [matMenuTriggerFor]="menuUsuarios">
       <svg lucideUsers size="20" aria-hidden="true"></svg>
-      <span>Usuarios</span>
+      <!-- El médico solo ve pacientes, así que el menú se llama como lo que encuentra -->
+      <span>{{ esAdmin ? 'Usuarios' : 'Mis pacientes' }}</span>
     </button>
     <mat-menu #menuUsuarios="matMenu">
       <button mat-menu-item routerLink="/usuarios/listar"><svg lucideList aria-hidden="true"></svg>Listar</button>
