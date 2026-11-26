@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Especialidades } from '../models/Especialidades';
 import { MedicoPorEspecialidad } from '../models/MedicoPorEspecialidad';
+import { MedicosEspecialidad } from '../models/MedicosEspecialidad';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,10 @@ export class Especialidadesservice {
 
   getMedicosPorEspecialidad(id: number): Observable<MedicoPorEspecialidad[]> {
     return this.http.get<MedicoPorEspecialidad[]>(`${this.apiURL}/${id}/medicos`);
+  }
+
+  // Reporte: médicos activos e inactivos de cada especialidad (solo ADMIN)
+  getReporteMedicos(): Observable<MedicosEspecialidad[]> {
+    return this.http.get<MedicosEspecialidad[]>(`${this.apiURL}/reporte-medicos`);
   }
 }
