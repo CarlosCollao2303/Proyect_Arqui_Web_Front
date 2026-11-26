@@ -1,0 +1,80 @@
+<div class="container">
+    <h2>Médicos por especialidad</h2>
+    <p class="descripcion">Cuántos médicos activos atienden en cada especialidad, para ver dónde hay más cobertura y qué especialidades se quedaron sin médicos.</p>
+
+    @if (mensaje) {
+    <p class="aviso">{{ mensaje }}</p>
+    } @else if (!cargando) {
+    @if (lista.length > 0) {
+    <div class="resumen">
+        <div class="tarjeta">
+            <span class="valor">{{ totalActivos }}</span>
+            <span class="etiqueta">Médicos activos</span>
+        </div>
+        <div class="tarjeta">
+            @if (mayorCobertura) {
+            <span class="valor">{{ mayorCobertura.especialidad }}</span>
+            <span class="etiqueta">Más médicos ({{ mayorCobertura.activos }})</span>
+            } @else {
+            <span class="valor">Ninguna</span>
+            <span class="etiqueta">Especialidades con médicos activos</span>
+            }
+        </div>
+        <div class="tarjeta" [class.alerta]="especialidadesSinMedicos.length > 0">
+            <span class="valor">{{ especialidadesSinMedicos.length }}</span>
+            <span class="etiqueta">Especialidades sin médicos activos</span>
+        </div>
+    </div>
+
+    @if (esNavegador && totalActivos > 0) {
+    <div class="grafico">
+        <canvas baseChart type="doughnut" [data]="chartData" [options]="chartOptions"
+            aria-label="Gráfico de dona de médicos activos por especialidad" role="img"></canvas>
+    </div>
+    } @else if (totalActivos === 0) {
+    <p class="aviso">Todavía no hay médicos activos para graficar.</p>
+    }
+
+    <table mat-table [dataSource]="lista" class="mat-shadow-2">
+
+        <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td mat-cell *matCellDef="let element" [class.sin-especialidad]="element.idEspecialidad === null">
+                {{element.especialidad}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef> Activos </th>
+            <td mat-cell *matCellDef="let element" [class.alerta]="element.idEspecialidad !== null && element.activos === 0">
+                <strong>{{element.activos}}</strong>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef> Inactivos </th>
+            <td mat-cell *matCellDef="let element"> {{element.inactivos}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c4">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c5">
+            <th mat-header-cell *matHeaderCellDef> % de activos </th>
+            <td mat-cell *matCellDef="let element"> {{ porcentaje(element.activos) | number: '1.0-1' }}% </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <p class="nota">Se resaltan las especialidades sin médicos activos: los pacientes no pueden pedir citas en ellas.</p>
+    @if (medicosSinEspecialidad > 0) {
+    <p class="nota">{{ medicosSinEspecialidad }} médico(s) activo(s) todavía no tienen especialidad asignada.</p>
+    }
+    } @else {
+    <p class="aviso">Todavía no hay especialidades registradas.</p>
+    }
+    }
+</div>
