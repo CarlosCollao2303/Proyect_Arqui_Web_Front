@@ -1,0 +1,83 @@
+<div class="container">
+    <h2>Diagnósticos por historia clínica</h2>
+    <p class="descripcion">Cantidad de diagnósticos registrados en las atenciones de cada historia clínica, para identificar a los pacientes con más antecedentes.</p>
+
+    @if (mensaje) {
+    <p class="aviso">{{ mensaje }}</p>
+    } @else if (!cargando) {
+    @if (listaTodos.length > 0) {
+    <div class="resumen">
+        <div class="tarjeta">
+            <span class="valor">{{ totalDiagnosticos }}</span>
+            <span class="etiqueta">Diagnósticos en {{ listaTodos.length }} historias</span>
+        </div>
+        <div class="tarjeta">
+            <span class="valor">{{ promedioPorHistoria | number: '1.0-1' }}</span>
+            <span class="etiqueta">Promedio por historia</span>
+        </div>
+        <div class="tarjeta" [class.alerta]="mayorCantidad">
+            @if (mayorCantidad) {
+            <span class="valor">{{ mayorCantidad.paciente }}</span>
+            <span class="etiqueta">Más antecedentes ({{ mayorCantidad.cantidadDiagnosticos }} diagnósticos)</span>
+            } @else {
+            <span class="valor">Ninguno</span>
+            <span class="etiqueta">Pacientes con diagnósticos</span>
+            }
+        </div>
+    </div>
+
+    @if (esNavegador) {
+    <div class="grafico" [style.height.px]="altoGrafico">
+        <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions"
+            aria-label="Gráfico de barras horizontales de diagnósticos por historia clínica" role="img"></canvas>
+    </div>
+    }
+
+    <div class="busqueda-id">
+        <input #idHistoria type="number" min="1" placeholder="ID de la historia clínica"
+            (keyup.enter)="buscarHistoria(idHistoria.value)">
+        <button matButton type="button" class="btn-secondary" (click)="buscarHistoria(idHistoria.value)">
+            <svg lucideSearch aria-hidden="true"></svg>
+            Buscar por ID
+        </button>
+        <button matButton type="button" class="btn-outline" (click)="idHistoria.value = ''; obtenerTodos()">
+            <svg lucideRefreshCw aria-hidden="true"></svg>
+            Mostrar todos
+        </button>
+    </div>
+    @if (mensajeBusqueda) {
+    <p class="aviso">{{ mensajeBusqueda }}</p>
+    }
+
+    @if (lista.length > 0) {
+    <table mat-table [dataSource]="lista" class="mat-shadow-2">
+
+        <ng-container matColumnDef="c1">
+            <th mat-header-cell *matHeaderCellDef> ID historia </th>
+            <td mat-cell *matCellDef="let element"> {{element.idHistoriaClinica}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c2">
+            <th mat-header-cell *matHeaderCellDef> Paciente </th>
+            <td mat-cell *matCellDef="let element"> {{element.paciente}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="c3">
+            <th mat-header-cell *matHeaderCellDef> Diagnósticos </th>
+            <td mat-cell *matCellDef="let element" [class.sin-datos]="element.cantidadDiagnosticos === 0">
+                <strong>{{element.cantidadDiagnosticos}}</strong>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    @if (historiasSinDiagnosticos > 0 && lista.length > 1) {
+    <p class="nota">{{ historiasSinDiagnosticos }} historia(s) todavía no tienen diagnósticos registrados.</p>
+    }
+    }
+    } @else {
+    <p class="aviso">Todavía no hay historias clínicas registradas.</p>
+    }
+    }
+</div>
