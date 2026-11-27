@@ -159,6 +159,8 @@ export const routes: Routes = [
             { path: 'evolucion-mensual-citas', loadComponent: () => import('./components/reportescomponent/repevolucioncitascomponent/repevolucioncitascomponent').then((module) => module.Repevolucioncitascomponent) },
             { path: 'espera-por-medico', loadComponent: () => import('./components/reportescomponent/repesperamedicocomponent/repesperamedicocomponent').then((module) => module.Repesperamedicocomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
             { path: 'diagnosticos-por-historia', loadComponent: () => import('./components/reportescomponent/repdiagnosticoshistoriacomponent/repdiagnosticoshistoriacomponent').then((module) => module.Repdiagnosticoshistoriacomponent) },
+            { path: 'notificaciones-por-estado', loadComponent: () => import('./components/reportescomponent/repnotificacionesestadocomponent/repnotificacionesestadocomponent').then((module) => module.Repnotificacionesestadocomponent) },
+            { path: 'diagnosticos-frecuentes', loadComponent: () => import('./components/reportescomponent/repdiagnosticosfrecuentescomponent/repdiagnosticosfrecuentescomponent').then((module) => module.Repdiagnosticosfrecuentescomponent) },
             { path: 'medicos-por-especialidad', loadComponent: () => import('./components/reportescomponent/repmedicosespecialidadcomponent/repmedicosespecialidadcomponent').then((module) => module.Repmedicosespecialidadcomponent), canActivate: [roleGuard], data: { roles: ['ADMIN'] } },
         ],
     },
