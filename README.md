@@ -2,6 +2,24 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.16.
 
+## Correr SaludCerca en local
+
+1. Levanta primero el backend en IntelliJ (ver el README del repositorio
+   `Proyect_Arqui_Backend`). Queda en `http://localhost:8080`.
+2. En esta carpeta ejecuta `npm install` y después `ng serve`.
+3. Abre `http://localhost:4200` y entra con un usuario de prueba, por ejemplo
+   `admin@saludcerca.pe` / `Admin123`.
+
+A qué backend llama el front:
+
+| Comando | Archivo de entorno | Backend |
+|---|---|---|
+| `ng serve` | `src/environments/environment.development.ts` | `http://localhost:8080` (local) |
+| `ng build` (producción) | `src/environments/environment.ts` | `https://proyect-arqui-backend.onrender.com` (Render) |
+
+Para probar el envío de correos ve a **Notificaciones > Enviar**, elige la cita
+**#69 · Daniel Orellana Gutiérrez** y dale **Enviar correo**.
+
 ## Development server
 
 To start a local development server, run:
