@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HistoriasClinicas } from '../models/HistoriasClinicas';
 import { HistorialClinico } from '../models/HistorialClinico';
+import { CantidadDiagnosticos } from '../models/CantidadDiagnosticos';
 
 @Injectable({
   providedIn: 'root',
@@ -41,5 +42,14 @@ export class Historiasclinicasservice {
 
   deleteHistoria(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  // Reporte HU-24: cantidad de diagnósticos de cada historia clínica (de mayor a menor)
+  getCantidadDiagnosticos(): Observable<CantidadDiagnosticos[]> {
+    return this.http.get<CantidadDiagnosticos[]>(`${this.apiURL}/cantidad-diagnosticos`);
+  }
+
+  getCantidadDiagnosticosDeHistoria(id: number): Observable<CantidadDiagnosticos> {
+    return this.http.get<CantidadDiagnosticos>(`${this.apiURL}/${id}/cantidad-diagnosticos`);
   }
 }
