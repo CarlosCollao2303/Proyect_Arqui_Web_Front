@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>Notificaciones por estado</h2>
+  <p class="descripcion">Cantidad de notificaciones agrupadas según su estado de envío.</p>
+
+  @if (mensaje) {
+  <p class="aviso">{{ mensaje }}</p>
+  } @else if (!cargando) {
+  @if (lista.length > 0) {
+  <div class="resumen">
+    <div class="tarjeta">
+      <span class="valor">{{ totalNotificaciones }}</span>
+      <span class="etiqueta">Notificaciones registradas</span>
+    </div>
+    <div class="tarjeta">
+      <span class="valor">{{ lista.length }}</span>
+      <span class="etiqueta">Estados de envío</span>
+    </div>
+    <div class="tarjeta" [class.alerta]="lista[0].total > 0">
+      <span class="valor">{{ lista[0].estadoEnvio }}</span>
+      <span class="etiqueta">Estado más frecuente ({{ lista[0].total }} notificaciones)</span>
+    </div>
+  </div>
+
+  @if (esNavegador) {
+  <div class="grafico">
+    <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions"
+      aria-label="Gráfico de notificaciones agrupadas por estado de envío" role="img"></canvas>
+  </div>
+  }
+
+  <table mat-table [dataSource]="lista">
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado de envío</th>
+      <td mat-cell *matCellDef="let fila">{{ fila.estadoEnvio }}</td>
+    </ng-container>
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+      <td mat-cell *matCellDef="let fila"><strong>{{ fila.total }}</strong></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  } @else {
+  <p class="aviso">Todavía no hay notificaciones registradas.</p>
+  }
+  }
+</div>

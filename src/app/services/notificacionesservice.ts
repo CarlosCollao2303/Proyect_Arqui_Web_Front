@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Notificaciones } from '../models/Notificaciones';
 import { MensajeCita } from '../models/MensajeCita';
+import { ConteoNotificacionesEstadoDTO } from '../models/ConteoNotificacionesEstadoDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,10 @@ export class Notificacionesservice {
 
   getListNotificaciones(): Observable<Notificaciones[]> {
     return this.http.get<Notificaciones[]>(this.apiURL);
+  }
+
+  getConteoPorEstado(): Observable<ConteoNotificacionesEstadoDTO[]> {
+    return this.http.get<ConteoNotificacionesEstadoDTO[]>(`${this.apiURL}/PorEstado`);
   }
 
   // El backend envía el correo con Resend y guarda la notificación con su estado.

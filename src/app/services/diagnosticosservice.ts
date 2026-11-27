@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Diagnosticos } from '../models/Diagnosticos';
+import { DiagnosticoFrecuenteDTO } from '../models/DiagnosticoFrecuenteDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,10 @@ export class Diagnosticosservice {
 
   getListDiagnosticos(): Observable<Diagnosticos[]> {
     return this.http.get<Diagnosticos[]>(`${this.apiURL}/Listar`);
+  }
+
+  getDiagnosticosFrecuentes(): Observable<DiagnosticoFrecuenteDTO[]> {
+    return this.http.get<DiagnosticoFrecuenteDTO[]>(`${this.apiURL}/Frecuentes`);
   }
 
   getDiagnosticoById(id: number): Observable<Diagnosticos> {

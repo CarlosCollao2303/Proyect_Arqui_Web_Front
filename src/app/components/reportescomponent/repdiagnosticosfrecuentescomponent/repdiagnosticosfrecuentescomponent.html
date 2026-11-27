@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Diagnósticos frecuentes</h2>
+  <p class="descripcion">Diagnósticos ordenados por frecuencia, identificados por su código CIE-10.</p>
+
+  @if (mensaje) {
+  <p class="aviso">{{ mensaje }}</p>
+  } @else if (!cargando) {
+  @if (lista.length > 0) {
+  <div class="resumen">
+    <div class="tarjeta">
+      <span class="valor">{{ totalDiagnosticos }}</span>
+      <span class="etiqueta">Registros de diagnósticos</span>
+    </div>
+    <div class="tarjeta">
+      <span class="valor">{{ lista.length }}</span>
+      <span class="etiqueta">Diagnósticos distintos</span>
+    </div>
+    <div class="tarjeta alerta">
+      <span class="valor">{{ lista[0].codigoCie10 }}</span>
+      <span class="etiqueta">Más frecuente ({{ lista[0].cantidad }} registros)</span>
+    </div>
+  </div>
+
+  @if (esNavegador) {
+  <div class="grafico" [style.height.px]="altoGrafico">
+    <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions"
+      aria-label="Gráfico de diagnósticos frecuentes por código CIE-10" role="img"></canvas>
+  </div>
+  }
+
+  <table mat-table [dataSource]="lista">
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef>Código CIE-10</th>
+      <td mat-cell *matCellDef="let fila">{{ fila.codigoCie10 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let fila">{{ fila.descripcion }}</td>
+    </ng-container>
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef>Frecuencia</th>
+      <td mat-cell *matCellDef="let fila"><strong>{{ fila.cantidad }}</strong></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  } @else {
+  <p class="aviso">Todavía no hay diagnósticos registrados.</p>
+  }
+  }
+</div>
