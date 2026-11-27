@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Examenes } from '../models/Examenes';
 import { ExamenPendiente } from '../models/ExamenPendiente';
 import { CantidadExamenes } from '../models/CantidadExamenes';
+import { TiempoExamen } from '../models/TiempoExamen';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,9 @@ export class Examenesservice {
 
   getCantidadExamenesDePaciente(id: number): Observable<CantidadExamenes> {
     return this.http.get<CantidadExamenes>(`${this.apiURL}/cantidad-por-paciente/${id}`);
+  }
+
+  getTiempoEntregaExamenes(): Observable<TiempoExamen[]> {
+    return this.http.get<TiempoExamen[]>(`${this.apiURL}/tiempo-entrega`);
   }
 }
