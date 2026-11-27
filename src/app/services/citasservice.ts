@@ -7,6 +7,7 @@ import { Videollamada } from '../models/Videollamada';
 import { CitaEstado } from '../models/CitaEstado';
 import { CitasEspecialidad } from '../models/CitasEspecialidad';
 import { EsperaMedico } from '../models/EsperaMedico';
+import { CitasMes } from '../models/CitasMes';
 
 @Injectable({
   providedIn: 'root',
@@ -65,5 +66,15 @@ export class Citasservice {
 
   getEsperaPorMedico(): Observable<EsperaMedico[]> {
     return this.http.get<EsperaMedico[]>(`${this.apiURL}/espera-por-medico`);
+  }
+
+  // Siempre trae los 12 meses del año, los que no tienen citas en cero
+  getEvolucionMensual(anio: number): Observable<CitasMes[]> {
+    return this.http.get<CitasMes[]>(`${this.apiURL}/evolucion-mensual`, { params: { anio } });
+  }
+
+  // Años con al menos una cita, del más reciente al más antiguo
+  getAniosConCitas(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiURL}/anios-con-citas`);
   }
 }
